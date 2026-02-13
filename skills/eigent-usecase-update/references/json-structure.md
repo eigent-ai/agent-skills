@@ -34,28 +34,34 @@ Complete specification for Eigent usecase JSON files.
 - **Location**: Store in `/gallery/` directory
 - **Format**: PNG, JPG, WebP
 - **Recommended size**: 800x600px or 16:9 aspect ratio
-- **Example**: `"/gallery/q2-report-card.png"`
+- **Example**: `"/gallery/generate_q2_report_from_csv_bank_data.png"`
 
 ### videoSrc
 - **Type**: string (path)
 - **Description**: Path to video file demonstrating the usecase
 - **Location**: Store in `/gallery/` directory
 - **Format**: MP4 (recommended for browser compatibility)
-- **Example**: `"/gallery/q2-report-demo.mp4"`
+- **Example**: `"/gallery/generate_q2_report_from_csv_bank_data.mp4"`
 
 ### videoPoster
 - **Type**: string (path)
 - **Description**: Path to poster image shown before video plays
 - **Location**: Store in `/gallery/` directory
 - **Format**: PNG, JPG
-- **Recommended size**: Match video dimensions
-- **Example**: `"/gallery/q2-report-poster.png"`
+- **Recommended size**: Match video dimensions (can reuse `image`)
+- **Example**: `"/gallery/generate_q2_report_from_csv_bank_data.png"`
 
 ### videoTitle
 - **Type**: string
 - **Description**: Accessibility title for the video
 - **Purpose**: Used for screen readers and video metadata
-- **Example**: `"Demo: Generating Q2 Financial Report"`
+- **Example**: `"Generate Q2 Report from CSV Bank Data"`
+
+### uploadDate
+- **Type**: string
+- **Description**: Upload/publication date for the usecase
+- **Format**: `YYYY-MM-DD`
+- **Example**: `"2025-08-01"`
 
 ### featured
 - **Type**: boolean
@@ -93,11 +99,12 @@ Complete specification for Eigent usecase JSON files.
   "title": "Generate Q2 Report from CSV Bank Data",
   "prompt": "Analyze financial data and create quarterly reports",
   "description": "Generate a comprehensive Q2 financial report by analyzing CSV bank transaction data, identifying trends, and creating visualized summaries with charts and insights.",
-  "image": "/gallery/q2-report-card.png",
-  "videoSrc": "/gallery/q2-report-demo.mp4",
-  "videoPoster": "/gallery/q2-report-poster.png",
-  "videoTitle": "Demo: Generating Q2 Financial Report from Bank Data",
+  "image": "/gallery/generate_q2_report_from_csv_bank_data.png",
+  "videoSrc": "/gallery/generate_q2_report_from_csv_bank_data.mp4",
+  "videoPoster": "/gallery/generate_q2_report_from_csv_bank_data.png",
+  "videoTitle": "Generate Q2 Report from CSV Bank Data",
   "replayUrl": "https://app.eigent.com/replay/q2-report-demo",
+  "uploadDate": "2025-08-01",
   "featured": true,
   "keywords": [
     "financial reporting",
@@ -119,10 +126,11 @@ Complete specification for Eigent usecase JSON files.
   "title": "Simple Usecase",
   "prompt": "Brief description",
   "description": "Full description of what this usecase does.",
-  "image": "/gallery/simple-card.png",
-  "videoSrc": "/gallery/simple-demo.mp4",
-  "videoPoster": "/gallery/simple-poster.png",
+  "image": "/gallery/simple_usecase.png",
+  "videoSrc": "/gallery/simple_usecase.mp4",
+  "videoPoster": "/gallery/simple_usecase.png",
   "videoTitle": "Simple Usecase Demo",
+  "uploadDate": "2025-08-01",
   "featured": false,
   "keywords": ["keyword1", "keyword2"],
   "metaDescription": "Simple usecase demonstration with Eigent."
@@ -139,6 +147,7 @@ Complete specification for Eigent usecase JSON files.
 - **videoSrc**: Must be valid path starting with `/`
 - **videoPoster**: Must be valid path starting with `/`
 - **videoTitle**: Required for accessibility
+- **uploadDate**: Required, must be `YYYY-MM-DD`
 - **featured**: Must be boolean (true/false)
 - **keywords**: Must be array, recommended 5-10 items
 - **metaDescription**: Required, recommended 150-160 chars

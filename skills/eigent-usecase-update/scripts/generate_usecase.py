@@ -3,12 +3,13 @@
 Generate a new usecase JSON file with proper structure.
 
 Usage:
-    python generate_usecase.py "Usecase Title" [--featured] [--keywords keyword1,keyword2]
+    python generate_usecase.py "Usecase Title" [--featured] [--keywords keyword1,keyword2] [--replay-url URL] [--upload-date YYYY-MM-DD]
 """
 
 import argparse
 import json
 import re
+from datetime import date
 from pathlib import Path
 
 
@@ -25,6 +26,8 @@ def generate_usecase_json(
     usecase_id=None,
     prompt=None,
     description=None,
+    replay_url=None,
+    upload_date=None,
     featured=False,
     keywords=None,
     meta_description=None,
@@ -51,18 +54,27 @@ def generate_usecase_json(
     # Generate default meta description if not provided
     if not meta_description:
         meta_description = f"{title} - Automate workflows with Eigent's multi-agent system."
-    
+
+    # Generate upload date if not provided
+    if not upload_date:
+        upload_date = date.today().isoformat()
+
+    # Default replay URL to empty string when omitted
+    if replay_url is None:
+        replay_url = ""
+
     # Build usecase JSON structure
     usecase_data = {
         "id": usecase_id,
         "title": title,
         "prompt": prompt,
         "description": description,
-        "image": f"/gallery/{usecase_id.replace('_', '-')}-card.png",
-        "videoSrc": f"/gallery/{usecase_id.replace('_', '-')}-demo.mp4",
-        "videoPoster": f"/gallery/{usecase_id.replace('_', '-')}-poster.png",
-        "videoTitle": f"Demo: {title}",
-        "replayUrl": "",
+        "image": f"/gallery/{usecase_id}.png",
+        "videoSrc": f"/gallery/{usecase_id}.mp4",
+        "videoPoster": f"/gallery/{usecase_id}.png",
+        "videoTitle": title,
+        "replayUrl": replay_url,
+        "uploadDate": upload_date,
         "featured": featured,
         "keywords": keywords,
         "metaDescription": meta_description
@@ -104,6 +116,16 @@ def main():
         help="Full detailed description"
     )
     parser.add_argument(
+        "--replay-url",
+        dest="replay_url",
+        help="Replay URL for the usecase demo"
+    )
+    parser.add_argument(
+        "--upload-date",
+        dest="upload_date",
+        help="Upload date in YYYY-MM-DD format (defaults to today)"
+    )
+    parser.add_argument(
         "--featured",
         action="store_true",
         help="Mark usecase as featured"
@@ -128,12 +150,21 @@ def main():
     keywords = None
     if args.keywords:
         keywords = [k.strip() for k in args.keywords.split(',')]
-    
+
+    # Validate upload date format if provided
+    if args.upload_date:
+        try:
+            date.fromisoformat(args.upload_date)
+        except ValueError:
+            parser.error("--upload-date must be in YYYY-MM-DD format")
+
     output_path, usecase_id = generate_usecase_json(
         title=args.title,
         usecase_id=args.usecase_id,
         prompt=args.prompt,
         description=args.description,
+        replay_url=args.replay_url,
+        upload_date=args.upload_date,
         featured=args.featured,
         keywords=keywords,
         meta_description=args.meta_description,
@@ -146,9 +177,9 @@ def main():
     print(f"🔗 URL will be: /usecases/{usecase_id}")
     print(f"\n📋 Next steps:")
     print(f"1. Edit {output_path} to update prompt and description")
-    print(f"2. Create card image: /gallery/{usecase_id.replace('_', '-')}-card.png (800x600px)")
-    print(f"3. Create demo video: /gallery/{usecase_id.replace('_', '-')}-demo.mp4")
-    print(f"4. Create video poster: /gallery/{usecase_id.replace('_', '-')}-poster.png")
+    print(f"2. Create card image: /gallery/{usecase_id}.png (800x600px)")
+    print(f"3. Create demo video: /gallery/{usecase_id}.mp4")
+    print(f"4. Set video poster: /gallery/{usecase_id}.png (or provide a dedicated poster path)")
     print(f"5. Update keywords and meta description")
     print(f"6. Move file to public/usecase/posts/")
 

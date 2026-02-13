@@ -16,13 +16,13 @@ Skills follow the [Agent Skills](https://agentskills.io/) format.
 2. **eigent-blog** (`skills/eigent-blog-update/SKILL.md`)
    - **Use when:** You need to create, edit, or structure blog posts for Eigent.
    - **Category covered:** Blog content operations, frontmatter metadata, blog asset organization.
-   - **Feature:** Includes `generate_post.py` template generation and frontmatter/directory rules.
-   - **How it works:** Generates or validates post structure (`.md/.mdx`), required metadata, and correct asset paths.
-   - **Result:** Publish-ready blog posts with consistent formatting and SEO-friendly metadata.
+   - **Feature:** Includes `generate_post.py` template generation, frontmatter/directory rules, and optional Git PR handoff.
+   - **How it works:** Generates or validates post structure (`.md/.mdx`), required metadata, asset paths, and can optionally guide branch/commit/PR flow.
+   - **Result:** Publish-ready blog posts with consistent formatting and SEO-friendly metadata, with optional PR ready for review.
 
 3. **eigent-usecases** (`skills/eigent-usecase-update/SKILL.md`)
    - **Use when:** You need to create, edit, or manage usecase entries for Eigent.
    - **Category covered:** Usecase JSON authoring, media asset linkage, SEO metadata.
-   - **Feature:** Includes `generate_usecase.py` plus JSON/template and naming conventions.
-   - **How it works:** Builds valid usecase JSON with required fields and maps image/video assets in `public/gallery/`.
-   - **Result:** Valid, display-ready usecase entries with consistent structure and discoverability.
+   - **Feature:** Includes `generate_usecase.py`, updated JSON/template schema (`uploadDate`, replay URL, media paths), and optional Git PR handoff.
+   - **How it works:** Builds valid usecase JSON with required fields and maps image/video assets in `public/gallery/`, then can optionally guide branch/commit/PR flow.
+   - **Result:** Valid, display-ready usecase entries with consistent structure and discoverability, with optional PR ready for review.

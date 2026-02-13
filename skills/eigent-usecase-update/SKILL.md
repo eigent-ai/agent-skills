@@ -20,6 +20,8 @@ Use the generate_usecase.py script to create a properly formatted JSON file:
 ```bash
 python scripts/generate_usecase.py "Usecase Title" \
   --keywords "keyword1,keyword2,keyword3" \
+  --upload-date "2025-08-01" \
+  --replay-url "https://www.eigent.ai/download?share_token=YOUR_SHARE_TOKEN" \
   --featured
 ```
 
@@ -31,10 +33,12 @@ Or create manually with the template:
   "title": "Usecase Title",
   "prompt": "Short description",
   "description": "Full description",
-  "image": "/gallery/card-image.png",
-  "videoSrc": "/gallery/demo-video.mp4",
-  "videoPoster": "/gallery/poster-image.png",
-  "videoTitle": "Demo: Usecase Title",
+  "image": "/gallery/usecase_id_in_snake_case.png",
+  "videoSrc": "/gallery/usecase_id_in_snake_case.mp4",
+  "videoPoster": "/gallery/usecase_id_in_snake_case.png",
+  "videoTitle": "Usecase Title",
+  "replayUrl": "https://www.eigent.ai/download?share_token=YOUR_SHARE_TOKEN",
+  "uploadDate": "2025-08-01",
   "featured": false,
   "keywords": ["keyword1", "keyword2"],
   "metaDescription": "SEO description"
@@ -59,6 +63,7 @@ Or create manually with the template:
 - `videoSrc` (string): Path to demo video (e.g., `/gallery/demo.mp4`)
 - `videoPoster` (string): Path to video poster image
 - `videoTitle` (string): Accessibility title for video
+- `uploadDate` (string): Upload/publication date in `YYYY-MM-DD` format
 - `featured` (boolean): Mark as featured usecase
 - `keywords` (array): SEO keywords
 - `metaDescription` (string): SEO meta description (150-160 chars)
@@ -89,20 +94,20 @@ See [directory-structure.md](references/directory-structure.md) for detailed org
 ### Card Images
 - **Size**: 800x600px or 16:9 aspect ratio
 - **Location**: `public/gallery/`
-- **Naming**: `{usecase-id}-card.png`
-- **Reference**: `"/gallery/usecase-card.png"`
+- **Naming**: `{usecase-id}.png`
+- **Reference**: `"/gallery/usecase_id_in_snake_case.png"`
 
 ### Demo Videos
 - **Format**: MP4 (H.264 codec recommended)
 - **Location**: `public/gallery/`
-- **Naming**: `{usecase-id}-demo.mp4`
-- **Reference**: `"/gallery/usecase-demo.mp4"`
+- **Naming**: `{usecase-id}.mp4`
+- **Reference**: `"/gallery/usecase_id_in_snake_case.mp4"`
 
 ### Video Posters
-- **Size**: Match video dimensions
+- **Size**: Match video dimensions (can reuse the same image used by `image`)
 - **Location**: `public/gallery/`
-- **Naming**: `{usecase-id}-poster.png`
-- **Reference**: `"/gallery/usecase-poster.png"`
+- **Naming**: `{usecase-id}.png` (or a dedicated poster file if needed)
+- **Reference**: `"/gallery/usecase_id_in_snake_case.png"`
 
 ## Workflow Steps
 
@@ -114,20 +119,26 @@ When creating a usecase:
    - `title`: Display title
    - `prompt`: Short card description (50-100 chars)
    - `description`: Full copyable description
+   - `uploadDate`: Date string in `YYYY-MM-DD`
    - `featured`: Boolean for featured status
    - `keywords`: Array of 5-10 SEO keywords
    - `metaDescription`: 150-160 char SEO description
 
 3. **Create media assets**:
-   - Card image (800x600px) → `public/gallery/{id}-card.png`
-   - Demo video (MP4) → `public/gallery/{id}-demo.mp4`
-   - Video poster → `public/gallery/{id}-poster.png`
+   - Card/listing image (800x600px) → `public/gallery/{id}.png`
+   - Demo video (MP4) → `public/gallery/{id}.mp4`
+   - Video poster → `public/gallery/{id}.png` (or dedicated poster file)
 
 4. **Update JSON paths** to reference media assets
 
 5. **Save to** `public/usecase/posts/{id}.json`
 
 6. **Verify** JSON syntax and asset paths
+
+7. **Optional: Open a PR**:
+   - Create a branch (for example: `codex/usecase-{id}`)
+   - Commit JSON and media path updates with a clear message
+   - Push the branch and open a pull request for review
 
 ## Naming Conventions
 
@@ -138,9 +149,9 @@ When creating a usecase:
 
 ### File Names
 - **JSON**: `{id}.json` (e.g., `generate_report.json`)
-- **Card**: `{id}-card.png` (with hyphens, e.g., `generate-report-card.png`)
-- **Video**: `{id}-demo.mp4` (with hyphens, e.g., `generate-report-demo.mp4`)
-- **Poster**: `{id}-poster.png` (with hyphens, e.g., `generate-report-poster.png`)
+- **Image**: `{id}.png` (e.g., `generate_report.png`)
+- **Video**: `{id}.mp4` (e.g., `generate_report.mp4`)
+- **Poster**: `{id}.png` (or a dedicated poster file path if needed)
 
 ## Best Practices
 
@@ -151,7 +162,7 @@ When creating a usecase:
 5. **SEO optimization**: Include relevant keywords and meta descriptions
 6. **Featured sparingly**: Only feature top usecases
 7. **Optimize media**: Compress videos and images
-8. **Consistent naming**: Follow snake_case/kebab-case conventions
+8. **Consistent naming**: Prefer snake_case IDs and matching media filenames
 
 ## Template Features
 
@@ -187,8 +198,20 @@ The UsecaseTemplate component provides:
 - **generate_usecase.py**: Generate usecase JSON files with proper structure
   - Automatically creates valid JSON with all required fields
   - Generates snake_case IDs from titles
-  - Supports custom keywords, descriptions, featured status
+  - Supports custom keywords, descriptions, replay URL, upload date, and featured status
   - Provides next steps for asset creation
+
+## Git Handoff (Optional)
+
+Use this when the user asks to ship changes via GitHub:
+
+1. Create a branch with prefix `codex/`.
+2. Stage only intended usecase JSON and related media changes.
+3. Commit with a clear summary.
+4. Open a PR with:
+   - Usecase ID/title updated
+   - Media assets added or changed
+   - Any follow-up items (if applicable)
 
 ## Assets
 

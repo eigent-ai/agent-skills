@@ -108,6 +108,10 @@ When creating a blog post:
    - Place content images in `/blog/`
 5. **Save to** `view/public/blog/posts/[slug].mdx`
 6. **Verify** frontmatter formatting and image paths
+7. **Optional: Open a PR**:
+   - Create a branch (for example: `codex/blog-[slug]`)
+   - Commit the blog and asset changes with a clear message
+   - Push the branch and open a pull request for review
 
 ## Common Issues
 
@@ -131,6 +135,18 @@ When creating a blog post:
   - Automatically creates frontmatter with defaults
   - Generates URL-friendly slugs
   - Supports custom categories, authors, featured status
+
+## Git Handoff (Optional)
+
+Use this when the user asks to ship changes via GitHub:
+
+1. Create a branch with prefix `codex/`.
+2. Stage only intended blog-related files.
+3. Commit with a clear summary.
+4. Open a PR with:
+   - What post was added/updated
+   - Which assets were added/updated
+   - Any follow-up items (if applicable)
 
 ## References
 

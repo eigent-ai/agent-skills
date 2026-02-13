@@ -42,14 +42,14 @@ public/gallery/         # Media assets for usecases
   - `automate_email_responses.json`
 
 ### Media Assets
-- **Card images**: `{usecase-id}-card.png`
-- **Videos**: `{usecase-id}-demo.mp4`
-- **Posters**: `{usecase-id}-poster.png`
+- **Card images**: `{usecase-id}.png`
+- **Videos**: `{usecase-id}.mp4`
+- **Posters**: `{usecase-id}.png` (or dedicated poster file if needed)
 
 **Examples**:
-- `/gallery/q2-report-card.png`
-- `/gallery/q2-report-demo.mp4`
-- `/gallery/q2-report-poster.png`
+- `/gallery/generate_q2_report.png`
+- `/gallery/generate_q2_report.mp4`
+- `/gallery/generate_q2_report.png`
 
 ## URL Structure
 
@@ -60,9 +60,9 @@ public/gallery/         # Media assets for usecases
 
 ### Asset URLs
 All assets referenced in JSON files use absolute paths:
-- Card image: `/gallery/usecase-card.png`
-- Video: `/gallery/usecase-demo.mp4`
-- Poster: `/gallery/usecase-poster.png`
+- Card image: `/gallery/usecase_id_in_snake_case.png`
+- Video: `/gallery/usecase_id_in_snake_case.mp4`
+- Poster: `/gallery/usecase_id_in_snake_case.png`
 
 ## Path Examples
 
@@ -72,11 +72,11 @@ All assets referenced in JSON files use absolute paths:
 - `public/usecase/posts/automate_workflows.json`
 
 ### Media Assets
-- `public/gallery/q2-report-card.png`
-- `public/gallery/q2-report-demo.mp4`
-- `public/gallery/q2-report-poster.png`
-- `public/gallery/customer-data-card.png`
-- `public/gallery/customer-data-demo.mp4`
+- `public/gallery/generate_q2_report.png`
+- `public/gallery/generate_q2_report.mp4`
+- `public/gallery/generate_q2_report.png`
+- `public/gallery/customer_data.png`
+- `public/gallery/customer_data.mp4`
 
 ## Template File
 
@@ -112,23 +112,23 @@ Located at `public/usecase/_template.json`, this file serves as:
 When adding a new usecase "analyze_sales_data":
 
 1. **Create JSON**: `public/usecase/posts/analyze_sales_data.json`
-2. **Add card image**: `public/gallery/analyze-sales-card.png`
-3. **Add video**: `public/gallery/analyze-sales-demo.mp4`
-4. **Add poster**: `public/gallery/analyze-sales-poster.png`
+2. **Add card image**: `public/gallery/analyze_sales_data.png`
+3. **Add video**: `public/gallery/analyze_sales_data.mp4`
+4. **Add poster**: `public/gallery/analyze_sales_data.png` (or dedicated poster file)
 5. **Set paths in JSON**:
    ```json
    {
      "id": "analyze_sales_data",
-     "image": "/gallery/analyze-sales-card.png",
-     "videoSrc": "/gallery/analyze-sales-demo.mp4",
-     "videoPoster": "/gallery/analyze-sales-poster.png"
+     "image": "/gallery/analyze_sales_data.png",
+     "videoSrc": "/gallery/analyze_sales_data.mp4",
+     "videoPoster": "/gallery/analyze_sales_data.png"
    }
    ```
 6. **Access at**: `/usecases/analyze_sales_data`
 
 ## Best Practices
 
-1. **Consistent naming**: Use snake_case for IDs, kebab-case for files
+1. **Consistent naming**: Use snake_case for IDs and matching media filenames
 2. **Logical organization**: Group related assets together
 3. **Descriptive names**: Make file purposes clear
 4. **Asset optimization**: Compress images and videos
