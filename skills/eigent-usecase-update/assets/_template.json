@@ -1,0 +1,20 @@
+{
+  "id": "your_usecase_id_in_snake_case",
+  "title": "Your Usecase Title",
+  "prompt": "Short description for the card (50-100 characters)",
+  "description": "Full detailed description that will be copyable by users. Explain what this usecase does and how it helps users.",
+  "image": "/gallery/your-card-image.png",
+  "videoSrc": "/gallery/your-demo-video.mp4",
+  "videoPoster": "/gallery/your-video-poster.png",
+  "videoTitle": "Demo: Your Usecase Title",
+  "replayUrl": "",
+  "featured": false,
+  "keywords": [
+    "keyword1",
+    "keyword2",
+    "keyword3",
+    "keyword4",
+    "keyword5"
+  ],
+  "metaDescription": "SEO meta description (150-160 characters) explaining what this usecase does and its benefits."
+}
