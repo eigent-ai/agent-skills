@@ -1,6 +1,10 @@
 ---
-name: ui-ux-design
+name: eigent-design
 description: UI/UX design companion for the Eigent product. Use this skill whenever the user wants to design a new UI component, page, or feature — it generates a design guide BEFORE implementation. Also use when the user wants to review an existing or newly built UI — it produces a structured review checklist. Trigger on phrases like "design guide", "design review", "UI review", "review this component", "plan the UI for", "design spec", "how should this look", "check the design", or any request to plan or evaluate a user interface. Even if the user just says "I'm building a new page" or "let me add a settings panel", proactively offer to generate a design guide first.
+license: Apache-2.0
+metadata:
+  author: eigent-ai
+  version: "1.0"
 ---
 
 # UI/UX Design Skill

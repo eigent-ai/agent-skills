@@ -14,11 +14,11 @@ Packaged ZIP artifacts for one-click download are stored in `packages/`.
 skills/
   eigent-design/
     SKILL.md
-    reference/
+    references/
   eigent-blog-update/
     SKILL.md
     scripts/
-    reference/
+    references/
   eigent-usecase-update/
     SKILL.md
     scripts/
@@ -39,7 +39,7 @@ skills/
   {skill-name}/
     SKILL.md              # Required: skill definition
     scripts/              # Optional: helper automation scripts
-    references/           # Optional: supporting docs (some existing skills use reference/)
+    references/           # Optional: supporting docs
     assets/               # Optional: templates/static resources
 packages/
   {skill-name}.zip        # Distribution artifact for one-click download
@@ -67,7 +67,7 @@ Then define concise workflow instructions in markdown.
 
 ## Best Practices for Context Efficiency
 
-- Keep `SKILL.md` concise; put detailed docs in `reference/` or `references/`.
+- Keep `SKILL.md` concise; put detailed docs in `references/`.
 - Make descriptions explicit so agents can trigger the correct skill reliably.
 - Prefer scripts for repeated deterministic operations.
 - Load only the references needed for the current task.

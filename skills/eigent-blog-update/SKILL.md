@@ -1,6 +1,10 @@
 ---
-name: eigent-blog
+name: eigent-blog-update
 description: Create and manage blog posts for the Eigent website. Use when the user wants to add, edit, or work with blog posts in the Eigent repository. Triggers include requests to create blog posts, add content to the blog, edit existing posts, generate blog post templates, or work with blog frontmatter and metadata. Also use when asked about blog post structure, formatting requirements, or asset organization.
+license: Apache-2.0
+metadata:
+  author: eigent-ai
+  version: "1.0"
 ---
 
 # Eigent Blog Post Management
