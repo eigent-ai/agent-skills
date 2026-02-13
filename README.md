@@ -26,3 +26,38 @@ Skills follow the [Agent Skills](https://agentskills.io/) format.
    - **Feature:** Includes `generate_usecase.py`, updated JSON/template schema (`uploadDate`, replay URL, media paths), and optional Git PR handoff.
    - **How it works:** Builds valid usecase JSON with required fields and maps image/video assets in `public/gallery/`, then can optionally guide branch/commit/PR flow.
    - **Result:** Valid, display-ready usecase entries with consistent structure and discoverability, with optional PR ready for review.
+
+## Available Packages (ZIP)
+
+- `ui-ux-design` - [Download ZIP](./packages/eigent-design.zip)
+- `eigent-blog` - [Download ZIP](./packages/eigent-blog-update.zip)
+- `eigent-usecases` - [Download ZIP](./packages/eigent-usecase-update.zip)
+
+## Installation
+
+```bash
+npx skills add eigent-ai/agent-skills
+```
+
+## Usage
+
+Skills are automatically available once installed. The agent will use them when relevant tasks are detected.
+
+Examples:
+
+- "Create a design guide for this new settings page."
+- "Create a new blog post for this feature launch."
+- "Create or update a usecase JSON and prepare an optional PR."
+
+## Skill Structure
+
+Each skill contains:
+
+- `SKILL.md` - Instructions for the agent
+- `scripts/` - Helper scripts for automation (optional)
+- `references/` - Supporting documentation (optional)
+- `assets/` - Templates or static resources used by the skill (optional)
+
+## License
+
+Apache License 2.0. See `LICENSE` for the full text.
