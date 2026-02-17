@@ -6,26 +6,37 @@ Skills follow the [Agent Skills](https://agentskills.io/) format.
 
 ## Available Skills
 
-1. **eigent-design** (`skills/eigent-design/SKILL.md`)
-   - **Use when:** You need to plan a new UI (design guide) or audit an existing UI (design review).
-   - **Category covered:** UI/UX design, token compliance, interaction quality, accessibility.
-   - **Feature:** Two modes: `Design Guide` (pre-build spec) and `Design Review` (post-build checklist with severity).
-   - **How it works:** Reads design references and outputs a structured markdown guide/review with concrete tokens, states, and fixes.
-   - **Result:** Implementation-ready design specs or actionable UI review findings.
+Skills are organized by department under `skills/{department}/{skill-name}`:
 
-2. **eigent-blog-update** (`skills/eigent-blog-update/SKILL.md`)
-   - **Use when:** You need to create, edit, or structure blog posts for Eigent.
-   - **Category covered:** Blog content operations, frontmatter metadata, blog asset organization.
-   - **Feature:** Includes `generate_post.py` template generation, frontmatter/directory rules, and optional Git PR handoff.
-   - **How it works:** Generates or validates post structure (`.md/.mdx`), required metadata, asset paths, and can optionally guide branch/commit/PR flow.
-   - **Result:** Publish-ready blog posts with consistent formatting and SEO-friendly metadata, with optional PR ready for review.
+- **engineering**
+- **growth**
+- **operation-finance**
+- **product**
 
-3. **eigent-usecase-update** (`skills/eigent-usecase-update/SKILL.md`)
-   - **Use when:** You need to create, edit, or manage usecase entries for Eigent.
-   - **Category covered:** Usecase JSON authoring, media asset linkage, SEO metadata.
-   - **Feature:** Includes `generate_usecase.py`, updated JSON/template schema (`uploadDate`, replay URL, media paths), and optional Git PR handoff.
-   - **How it works:** Builds valid usecase JSON with required fields and maps image/video assets in `public/gallery/`, then can optionally guide branch/commit/PR flow.
-   - **Result:** Valid, display-ready usecase entries with consistent structure and discoverability, with optional PR ready for review.
+### Engineering
+
+| Skill | Description |
+| --- | --- |
+| [`eigent-design`](skills/engineering/eigent-design/SKILL.md) | Plan new UIs or audit existing UIs. Covers UI/UX design, token compliance, interaction quality, and accessibility with `Design Guide` (pre-build spec) and `Design Review` (post-build checklist) modes. |
+
+### Growth
+
+| Skill | Description |
+| --- | --- |
+| [`eigent-blog-update`](skills/growth/eigent-blog-update/SKILL.md) | Create, edit, and structure blog posts for Eigent. Handles blog content operations, frontmatter metadata, asset organization, and includes `generate_post.py` plus optional Git PR handoff. |
+| [`eigent-usecase-update`](skills/growth/eigent-usecase-update/SKILL.md) | Create, edit, and manage usecase entries for Eigent. Covers usecase JSON authoring, media asset linkage, SEO metadata, and includes `generate_usecase.py` plus optional Git PR handoff. |
+
+### Operation-Finance
+
+| Skill | Description |
+| --- | --- |
+| _TBD_ | Department placeholder for future skills. |
+
+### Product
+
+| Skill | Description |
+| --- | --- |
+| _TBD_ | Department placeholder for future skills. |
 
 ## Available Packages (ZIP)
 
@@ -35,9 +46,13 @@ Skills follow the [Agent Skills](https://agentskills.io/) format.
 
 ## Installation
 
+Install the full skill pack (all departments) with:
+
 ```bash
 npx skills add eigent-ai/agent-skills
 ```
+
+After installation, skills are available under the departmental layout `skills/{engineering,growth,operation-finance,product}/{skill-name}/SKILL.md`.
 
 ## Usage
 
