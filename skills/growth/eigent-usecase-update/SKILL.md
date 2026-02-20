@@ -3,7 +3,7 @@ name: eigent-usecase-update
 description: Create and manage usecases for the Eigent website. Use when the user wants to add, edit, or work with usecases in the Eigent repository. Triggers include requests to create usecases, add usecase demonstrations, edit existing usecases, generate usecase JSON files, or work with usecase metadata and media assets. Also use when asked about usecase structure, JSON format, or asset organization.
 license: Apache-2.0
 metadata:
-  author: eigent-ai
+  author: Douglas Lai
   version: "1.0"
 ---
 
