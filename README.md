@@ -19,6 +19,7 @@ Skills are organized by department under `skills/{department}/{skill-name}`:
 | --- | --- | --- |
 | [`eigent-design`](skills/engineering/eigent-design/SKILL.md) | Plan new UIs or audit existing UIs. Covers UI/UX design, token compliance, interaction quality, and accessibility with `Design Guide` (pre-build spec) and `Design Review` (post-build checklist) modes. | Douglas Lai |
 | [`eigent-server-sync`](skills/engineering/eigent-server-sync/SKILL.md) | Transfer eigent server PRs to eigent_server. Use when syncing changes from eigent/server/ to eigent_server, when an eigent PR modifies server code that needs to be reflected in eigent_server, or when porting eigent server features. | Ahmed Awelkair |
+| [`mintlify-docs-updater`](skills/engineering/mintlify-docs-updater/SKILL.md) | Maintain Mintlify documentation from uploaded Markdown files. Handles page placement under `docs/`, required frontmatter checks, and `docs/docs.json` navigation updates via `ingest_markdown_doc.py`. | Douglas Lai |
 
 ### Growth
 
@@ -44,6 +45,7 @@ Skills are organized by department under `skills/{department}/{skill-name}`:
 
 - `eigent-design` - [Download ZIP](./packages/eigent-design.zip)
 - `eigent-server-sync` - [Download ZIP](./packages/eigent-server-sync.zip)
+- `mintlify-docs-updater` - [Download ZIP](./packages/mintlify-docs-updater.zip)
 - `eigent-blog-update` - [Download ZIP](./packages/eigent-blog-update.zip)
 - `eigent-usecase-update` - [Download ZIP](./packages/eigent-usecase-update.zip)
 - `weekly-growth-tweet` - [Download ZIP](./packages/weekly-growth-tweet.zip)
@@ -66,6 +68,7 @@ Examples:
 
 - "Create a design guide for this new settings page."
 - "Sync this eigent PR's server changes to eigent_server."
+- "Ingest this Markdown file into Mintlify docs and update docs.json navigation."
 - "Create a new blog post for this feature launch."
 - "Create or update a usecase JSON and prepare an optional PR."
 - "Draft the weekly growth tweet from #growth channel posts."
