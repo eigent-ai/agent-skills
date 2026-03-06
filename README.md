@@ -6,59 +6,64 @@ Skills follow the [Agent Skills](https://agentskills.io/) format.
 
 ## Available Skills
 
-Skills are organized by department under `skills/{department}/{skill-name}`:
+Skills are organized by category under `skills/{category}/{skill-name}`:
 
-- **engineering**
-- **growth**
-- **operation-finance**
-- **product**
+- **developer-tools**
+- **ai-and-agent-systems**
+- **productivity-and-knowledge-work**
+- **personal-and-consumer-use-cases**
+- **ecosystem-specific**
 
-### Engineering
-
-| Skill | Description | Author |
-| --- | --- | --- |
-| [`eigent-design`](skills/engineering/eigent-design/SKILL.md) | Plan new UIs or audit existing UIs. Covers UI/UX design, token compliance, interaction quality, and accessibility with `Design Guide` (pre-build spec) and `Design Review` (post-build checklist) modes. | Douglas Lai |
-| [`eigent-server-sync`](skills/engineering/eigent-server-sync/SKILL.md) | Transfer eigent server PRs to eigent_server. Use when syncing changes from eigent/server/ to eigent_server, when an eigent PR modifies server code that needs to be reflected in eigent_server, or when porting eigent server features. | Ahmed Awelkair |
-| [`mintlify-docs-updater`](skills/engineering/mintlify-docs-updater/SKILL.md) | Maintain Mintlify documentation from uploaded Markdown files. Handles page placement under `docs/`, required frontmatter checks, and `docs/docs.json` navigation updates via `ingest_markdown_doc.py`. | Douglas Lai |
-
-### Growth
+### Developer Tools
 
 | Skill | Description | Author |
 | --- | --- | --- |
-| [`eigent-blog-update`](skills/growth/eigent-blog-update/SKILL.md) | Create, edit, and structure blog posts for Eigent. Handles blog content operations, frontmatter metadata, asset organization, and includes `generate_post.py` plus optional Git PR handoff. | Douglas Lai |
-| [`eigent-usecase-update`](skills/growth/eigent-usecase-update/SKILL.md) | Create, edit, and manage usecase entries for Eigent. Covers usecase JSON authoring, media asset linkage, SEO metadata, and includes `generate_usecase.py` plus optional Git PR handoff. | Douglas Lai |
-| [`weekly-growth-tweet`](skills/growth/weekly-growth-tweet/SKILL.md) | Collect feature announcement posts from the Eigent #growth Slack channel (by Wendong Fan), filter for posts with the 1️⃣ emoji reaction, and generate a weekly summary tweet. Triggers: weekly tweet, growth channel summary, weekly update tweet, collect growth posts, Eigent weekly recap, summarize #growth, draft weekly tweet. | Waleed Alzarooni |
+| [`mintlify-docs-updater`](skills/developer-tools/mintlify-docs-updater/SKILL.md) | Maintain Mintlify documentation from uploaded Markdown files. Handles page placement under `docs/`, required frontmatter checks, and `docs/docs.json` navigation updates via `ingest_markdown_doc.py`. | Douglas Lai |
 
-### Operation-Finance
+### AI and Agent Systems
 
 | Skill | Description | Author |
 | --- | --- | --- |
-| _TBD_ | Department placeholder for future skills. | — |
+| [`eigent-design`](skills/ai-and-agent-systems/eigent-design/SKILL.md) | Plan new UIs or audit existing UIs. Covers UI/UX design, token compliance, interaction quality, and accessibility with `Design Guide` (pre-build spec) and `Design Review` (post-build checklist) modes. | Douglas Lai |
 
-### Product
+### Productivity and Knowledge Work
 
 | Skill | Description | Author |
 | --- | --- | --- |
-| _TBD_ | Department placeholder for future skills. | — |
+| [`weekly-growth-tweet`](skills/productivity-and-knowledge-work/weekly-growth-tweet/SKILL.md) | Collect feature announcement posts from the Eigent #growth Slack channel (by Wendong Fan), filter for posts with the 1️⃣ emoji reaction, and generate a weekly summary tweet. Triggers: weekly tweet, growth channel summary, weekly update tweet, collect growth posts, Eigent weekly recap, summarize #growth, draft weekly tweet. | Waleed Alzarooni |
+
+### Personal and Consumer Use Cases
+
+| Skill | Description | Author |
+| --- | --- | --- |
+| _TBD_ | Category placeholder for future skills. | — |
+
+### Ecosystem-Specific
+
+| Skill | Description | Author |
+| --- | --- | --- |
+| [`eigent-server-sync`](skills/ecosystem-specific/eigent-server-sync/SKILL.md) | Transfer eigent server PRs to eigent_server. Use when syncing changes from eigent/server/ to eigent_server, when an eigent PR modifies server code that needs to be reflected in eigent_server, or when porting eigent server features. | Ahmed Awelkair |
+| [`eigent-blog-update`](skills/ecosystem-specific/eigent-blog-update/SKILL.md) | Create, edit, and structure blog posts for Eigent. Handles blog content operations, frontmatter metadata, asset organization, and includes `generate_post.py` plus optional Git PR handoff. | Douglas Lai |
+| [`eigent-usecase-update`](skills/ecosystem-specific/eigent-usecase-update/SKILL.md) | Create, edit, and manage usecase entries for Eigent. Covers usecase JSON authoring, media asset linkage, SEO metadata, and includes `generate_usecase.py` plus optional Git PR handoff. | Douglas Lai |
 
 ## Available Packages (ZIP)
 
-- `eigent-design` - [Download ZIP](./packages/eigent-design.zip)
-- `eigent-server-sync` - [Download ZIP](./packages/eigent-server-sync.zip)
-- `mintlify-docs-updater` - [Download ZIP](./packages/mintlify-docs-updater.zip)
-- `eigent-blog-update` - [Download ZIP](./packages/eigent-blog-update.zip)
-- `eigent-usecase-update` - [Download ZIP](./packages/eigent-usecase-update.zip)
-- `weekly-growth-tweet` - [Download ZIP](./packages/weekly-growth-tweet.zip)
+- `eigent-design` - [Download ZIP](./packages/ai-and-agent-systems/eigent-design.zip)
+- `mintlify-docs-updater` - [Download ZIP](./packages/developer-tools/mintlify-docs-updater.zip)
+- `weekly-growth-tweet` - [Download ZIP](./packages/productivity-and-knowledge-work/weekly-growth-tweet.zip)
+- `eigent-server-sync` - [Download ZIP](./packages/ecosystem-specific/eigent-server-sync.zip)
+- `eigent-blog-update` - [Download ZIP](./packages/ecosystem-specific/eigent-blog-update.zip)
+- `eigent-usecase-update` - [Download ZIP](./packages/ecosystem-specific/eigent-usecase-update.zip)
 
 ## Installation
 
-Install the full skill pack (all departments) with:
+Install the full skill pack (all categories) with:
 
 ```bash
 npx skills add eigent-ai/agent-skills
 ```
 
-After installation, skills are available under the departmental layout `skills/{engineering,growth,operation-finance,product}/{skill-name}/SKILL.md`.
+After installation, skills are available under the category layout `skills/{developer-tools,ai-and-agent-systems,productivity-and-knowledge-work,personal-and-consumer-use-cases,ecosystem-specific}/{skill-name}/SKILL.md`.
 
 ## Usage
 
