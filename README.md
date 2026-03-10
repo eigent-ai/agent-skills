@@ -103,11 +103,20 @@ npx @eigent-ai/agent-skills install
 
 This auto-detects installed agents (Claude Code, Cursor, Windsurf, Codex, Copilot) and installs skills to each.
 
+### Install specific skills only
+
+```bash
+npx @eigent-ai/agent-skills install eigent-design
+npx @eigent-ai/agent-skills install eigent-design mintlify-docs-updater eigent-blog-update
+```
+
+Use `npx @eigent-ai/agent-skills list` to see all available skills.
+
 ### Install for a specific agent
 
 ```bash
 npx @eigent-ai/agent-skills install -a claude-code
-npx @eigent-ai/agent-skills install -a cursor
+npx @eigent-ai/agent-skills install -a cursor eigent-design
 ```
 
 ### Install globally (user-level)
@@ -147,9 +156,9 @@ This prints the cron line to add to your crontab.
 
 | Command | Description |
 | --- | --- |
-| `install` | Install all skills to detected agents |
+| `install [skill...]` | Install all skills (or specific skills) to detected agents |
 | `update` | Fetch latest from GitHub and update |
-| `uninstall` | Remove installed Eigent skills |
+| `uninstall [skill...]` | Remove all or specific installed skills |
 | `list` | List available skills in this package |
 | `status` | Show install status per agent |
 | `auto-update` | Print cron setup for scheduled updates |

@@ -7,10 +7,10 @@
  * Claude Code, Cursor, Windsurf, Codex, and other AI coding agents.
  *
  * Usage:
- *   npx @eigent-ai/agent-skills install [--agent <name>] [--global]
+ *   npx @eigent-ai/agent-skills install [skill1 [skill2 ...]] [--agent <name>] [--global]
  *   npx @eigent-ai/agent-skills update  [--agent <name>] [--global]
  *   npx @eigent-ai/agent-skills list
- *   npx @eigent-ai/agent-skills uninstall [--agent <name>] [--global]
+ *   npx @eigent-ai/agent-skills uninstall [skill1 [skill2 ...]] [--agent <name>] [--global]
  */
 
 const fs = require("fs");
@@ -168,6 +168,33 @@ function discoverSkills(skillsRoot) {
   return skills;
 }
 
+/** Resolve skill names (e.g. "eigent-design" or "category/eigent-design") to skill objects. */
+function resolveSkillNames(skillsRoot, skillNames) {
+  if (!skillNames || skillNames.length === 0) return null;
+  const all = discoverSkills(skillsRoot);
+  const resolved = [];
+  const notFound = [];
+  for (const name of skillNames) {
+    const norm = name.trim().toLowerCase();
+    const skill = all.find(
+      (s) =>
+        s.name.toLowerCase() === norm ||
+        `${s.category}/${s.name}`.toLowerCase() === norm
+    );
+    if (skill) {
+      resolved.push(skill);
+    } else {
+      notFound.push(name);
+    }
+  }
+  if (notFound.length > 0) {
+    console.error(`Unknown skill(s): ${notFound.join(", ")}`);
+    console.error(`Run 'npx @eigent-ai/agent-skills list' to see available skills.`);
+    process.exit(1);
+  }
+  return resolved;
+}
+
 function parseSkillMeta(skillMdPath) {
   const content = fs.readFileSync(skillMdPath, "utf-8");
   const match = content.match(/^---\n([\s\S]*?)\n---/);
@@ -245,8 +272,12 @@ function resolveTargetAgents(agentFlag) {
   return detected;
 }
 
-function installSkills(skillsRoot, agents, isGlobal, projectRoot) {
-  const skills = discoverSkills(skillsRoot);
+function installSkills(skillsRoot, agents, isGlobal, projectRoot, skillFilter) {
+  const allSkills = discoverSkills(skillsRoot);
+  const skills = skillFilter
+    ? resolveSkillNames(skillsRoot, skillFilter)
+    : allSkills;
+
   if (skills.length === 0) {
     console.error("No skills found to install.");
     process.exit(1);
@@ -257,6 +288,8 @@ function installSkills(skillsRoot, agents, isGlobal, projectRoot) {
   for (const agentId of agents) {
     const agent = AGENTS[agentId];
     const targetBase = isGlobal ? agent.globalDir() : agent.projectDir(projectRoot);
+    const lockPath = path.join(targetBase, LOCK_FILE);
+    const existingLock = readLock(lockPath);
 
     console.log(`\n  Installing to ${agent.name}${isGlobal ? " (global)" : ""}...`);
     console.log(`  Target: ${targetBase}`);
@@ -268,17 +301,18 @@ function installSkills(skillsRoot, agents, isGlobal, projectRoot) {
       totalInstalled++;
     }
 
-    // Write lock file for update tracking
-    const lockPath = path.join(targetBase, LOCK_FILE);
+    // Merge with existing lock when installing specific skills; otherwise replace
+    const existingSkills = (existingLock.skills || []).filter(
+      (s) => !skills.some((n) => n.category === s.category && n.name === s.name)
+    );
+    const mergedSkills = [...existingSkills, ...skills.map((s) => ({ name: s.name, category: s.category }))];
+
     const lockData = {
       version: getPackageVersion(),
       installedAt: new Date().toISOString(),
-      hash: hashDir(skillsRoot),
+      hash: skillFilter ? existingLock.hash || hashDir(skillsRoot) : hashDir(skillsRoot),
       source: REPO_URL,
-      skills: skills.map((s) => ({
-        name: s.name,
-        category: s.category,
-      })),
+      skills: mergedSkills,
     };
     writeLock(lockPath, lockData);
   }
@@ -343,7 +377,7 @@ function updateSkills(agents, isGlobal, projectRoot) {
   return updatedCount;
 }
 
-function uninstallSkills(agents, isGlobal, projectRoot) {
+function uninstallSkills(agents, isGlobal, projectRoot, skillFilter) {
   let removed = 0;
 
   for (const agentId of agents) {
@@ -357,8 +391,26 @@ function uninstallSkills(agents, isGlobal, projectRoot) {
       continue;
     }
 
+    const toRemove = skillFilter
+      ? lock.skills.filter((s) => {
+          const norm = (n) => n.trim().toLowerCase();
+          return skillFilter.some(
+            (f) =>
+              norm(f) === s.name.toLowerCase() ||
+              norm(f) === `${s.category}/${s.name}`.toLowerCase()
+          );
+        })
+      : lock.skills;
+
+    if (toRemove.length === 0) {
+      if (skillFilter) {
+        console.log(`  ${agent.name}: No matching skills to remove.`);
+      }
+      continue;
+    }
+
     console.log(`  ${agent.name}: Removing skills...`);
-    for (const s of lock.skills) {
+    for (const s of toRemove) {
       const dir = path.join(targetBase, s.category, s.name);
       removeDir(dir);
       console.log(`    - ${s.category}/${s.name}`);
@@ -366,7 +418,7 @@ function uninstallSkills(agents, isGlobal, projectRoot) {
     }
 
     // Clean up empty category dirs
-    for (const s of lock.skills) {
+    for (const s of toRemove) {
       const catDir = path.join(targetBase, s.category);
       if (dirExists(catDir)) {
         const entries = fs.readdirSync(catDir);
@@ -374,8 +426,14 @@ function uninstallSkills(agents, isGlobal, projectRoot) {
       }
     }
 
-    // Remove lock file
-    if (fileExists(lockPath)) fs.unlinkSync(lockPath);
+    const remaining = lock.skills.filter(
+      (s) => !toRemove.some((r) => r.category === s.category && r.name === s.name)
+    );
+    if (remaining.length > 0) {
+      writeLock(lockPath, { ...lock, skills: remaining });
+    } else {
+      if (fileExists(lockPath)) fs.unlinkSync(lockPath);
+    }
   }
 
   return removed;
@@ -467,7 +525,7 @@ function setupAutoUpdate(interval) {
 // ── CLI parsing ──────────────────────────────────────────────────────────────
 
 function parseArgs(argv) {
-  const args = { command: null, agent: null, global: false, yes: false, interval: null };
+  const args = { command: null, agent: null, global: false, yes: false, interval: null, skills: [] };
   const positional = [];
 
   for (let i = 0; i < argv.length; i++) {
@@ -491,6 +549,7 @@ function parseArgs(argv) {
 
   if (!args.command && positional.length > 0) {
     args.command = positional[0];
+    args.skills = positional.slice(1);
   }
 
   return args;
@@ -505,9 +564,9 @@ function printHelp() {
     npx @eigent-ai/agent-skills <command> [options]
 
   COMMANDS
-    install       Install all skills to detected agents
+    install       Install all skills (or specific skills) to detected agents
     update        Fetch latest skills from GitHub and update
-    uninstall     Remove installed Eigent skills
+    uninstall     Remove installed Eigent skills (all or specific)
     list          List available skills in this package
     status        Show installation status per agent
     auto-update   Show instructions for scheduled auto-updates
@@ -522,11 +581,13 @@ function printHelp() {
     --version, -v        Show version
 
   EXAMPLES
-    npx @eigent-ai/agent-skills install                     # Install to all detected agents (project)
+    npx @eigent-ai/agent-skills install                     # Install all skills to detected agents
+    npx @eigent-ai/agent-skills install eigent-design        # Install only eigent-design
+    npx @eigent-ai/agent-skills install eigent-design mintlify-docs-updater  # Install multiple
     npx @eigent-ai/agent-skills install -g                  # Install globally
-    npx @eigent-ai/agent-skills install -a claude-code      # Install for Claude Code only
+    npx @eigent-ai/agent-skills install -a cursor eigent-design  # Install one skill for Cursor only
+    npx @eigent-ai/agent-skills uninstall eigent-design      # Remove one skill
     npx @eigent-ai/agent-skills update                      # Update to latest
-    npx @eigent-ai/agent-skills update -g                   # Update global install
     npx @eigent-ai/agent-skills auto-update --interval daily # Show daily auto-update cron
 
   SUPPORTED AGENTS
@@ -575,8 +636,12 @@ function main() {
         process.exit(1);
       }
       const agents = resolveTargetAgents(args.agent);
+      const skillFilter = args.skills.length > 0 ? args.skills : null;
+      if (skillFilter) {
+        console.log(`  Installing skill(s): ${skillFilter.join(", ")}`);
+      }
       console.log(`  Detected agents: ${agents.map((a) => AGENTS[a].name).join(", ")}`);
-      const count = installSkills(skillsRoot, agents, args.global, projectRoot);
+      const count = installSkills(skillsRoot, agents, args.global, projectRoot, skillFilter);
       console.log(`\n  Done! Installed ${count} skill(s).`);
       console.log(`  Run 'npx @eigent-ai/agent-skills update' anytime to get the latest.\n`);
       break;
@@ -597,7 +662,11 @@ function main() {
 
     case "uninstall": {
       const agents = resolveTargetAgents(args.agent);
-      const count = uninstallSkills(agents, args.global, projectRoot);
+      const skillFilter = args.skills.length > 0 ? args.skills : null;
+      if (skillFilter) {
+        console.log(`  Uninstalling skill(s): ${skillFilter.join(", ")}`);
+      }
+      const count = uninstallSkills(agents, args.global, projectRoot, skillFilter);
       console.log(`\n  Removed ${count} skill(s).\n`);
       break;
     }
