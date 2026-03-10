@@ -53,6 +53,9 @@ skills/
       SKILL.md
     brand-guidelines/
       SKILL.md
+    web-artifacts-builder/
+      SKILL.md
+      scripts/
   coding-agents-and-ides/
     mintlify-docs-updater/
       SKILL.md
@@ -82,14 +85,22 @@ skills/
     canvas-design/
       SKILL.md
       canvas-fonts/
+    slack-gif-creator/
+      SKILL.md
+      core/
   pdf-and-documents/
     docx/
       SKILL.md
       scripts/
+  communication/
+    internal-comms/
+      SKILL.md
+      examples/
 packages/
   web-and-frontend-development/eigent-design.zip
   web-and-frontend-development/frontend-design.zip
   web-and-frontend-development/brand-guidelines.zip
+  web-and-frontend-development/web-artifacts-builder.zip
   coding-agents-and-ides/mintlify-docs-updater.zip
   marketing-and-sales/eigent-blog-update.zip
   marketing-and-sales/eigent-usecase-update.zip
@@ -97,7 +108,9 @@ packages/
   git-and-github/eigent-server-sync.zip
   image-and-video-generation/algorithmic-art.zip
   image-and-video-generation/canvas-design.zip
+  image-and-video-generation/slack-gif-creator.zip
   pdf-and-documents/docx.zip
+  communication/internal-comms.zip
 ```
 
 ## Creating or Updating a Skill
@@ -163,6 +176,7 @@ For this repo, keep these package artifacts updated:
 - `packages/web-and-frontend-development/eigent-design.zip`
 - `packages/web-and-frontend-development/frontend-design.zip`
 - `packages/web-and-frontend-development/brand-guidelines.zip`
+- `packages/web-and-frontend-development/web-artifacts-builder.zip`
 - `packages/coding-agents-and-ides/mintlify-docs-updater.zip`
 - `packages/marketing-and-sales/eigent-blog-update.zip`
 - `packages/marketing-and-sales/eigent-usecase-update.zip`
@@ -170,7 +184,9 @@ For this repo, keep these package artifacts updated:
 - `packages/git-and-github/eigent-server-sync.zip`
 - `packages/image-and-video-generation/algorithmic-art.zip`
 - `packages/image-and-video-generation/canvas-design.zip`
+- `packages/image-and-video-generation/slack-gif-creator.zip`
 - `packages/pdf-and-documents/docx.zip`
+- `packages/communication/internal-comms.zip`
 
 ## README Sync Requirements
 
