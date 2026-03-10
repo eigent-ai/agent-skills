@@ -49,6 +49,10 @@ skills/
     eigent-design/
       SKILL.md
       references/
+    frontend-design/
+      SKILL.md
+    brand-guidelines/
+      SKILL.md
   coding-agents-and-ides/
     mintlify-docs-updater/
       SKILL.md
@@ -71,13 +75,29 @@ skills/
       SKILL.md
       scripts/
       references/
+  image-and-video-generation/
+    algorithmic-art/
+      SKILL.md
+      templates/
+    canvas-design/
+      SKILL.md
+      canvas-fonts/
+  pdf-and-documents/
+    docx/
+      SKILL.md
+      scripts/
 packages/
   web-and-frontend-development/eigent-design.zip
+  web-and-frontend-development/frontend-design.zip
+  web-and-frontend-development/brand-guidelines.zip
   coding-agents-and-ides/mintlify-docs-updater.zip
   marketing-and-sales/eigent-blog-update.zip
   marketing-and-sales/eigent-usecase-update.zip
   marketing-and-sales/weekly-growth-tweet.zip
   git-and-github/eigent-server-sync.zip
+  image-and-video-generation/algorithmic-art.zip
+  image-and-video-generation/canvas-design.zip
+  pdf-and-documents/docx.zip
 ```
 
 ## Creating or Updating a Skill
@@ -141,11 +161,16 @@ zip -rq packages/{category}/{skill-name}.zip skills/{category}/{skill-name} -x "
 For this repo, keep these package artifacts updated:
 
 - `packages/web-and-frontend-development/eigent-design.zip`
+- `packages/web-and-frontend-development/frontend-design.zip`
+- `packages/web-and-frontend-development/brand-guidelines.zip`
 - `packages/coding-agents-and-ides/mintlify-docs-updater.zip`
 - `packages/marketing-and-sales/eigent-blog-update.zip`
 - `packages/marketing-and-sales/eigent-usecase-update.zip`
 - `packages/marketing-and-sales/weekly-growth-tweet.zip`
 - `packages/git-and-github/eigent-server-sync.zip`
+- `packages/image-and-video-generation/algorithmic-art.zip`
+- `packages/image-and-video-generation/canvas-design.zip`
+- `packages/pdf-and-documents/docx.zip`
 
 ## README Sync Requirements
 

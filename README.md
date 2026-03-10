@@ -24,6 +24,8 @@ _TBD — Category placeholder for future skills._
 | Skill | Description |
 | --- | --- |
 | [`eigent-design`](skills/web-and-frontend-development/eigent-design/SKILL.md) | Plan new UIs or audit existing UIs. Covers UI/UX design, token compliance, interaction quality, and accessibility with `Design Guide` (pre-build spec) and `Design Review` (post-build checklist) modes. |
+| [`frontend-design`](skills/web-and-frontend-development/frontend-design/SKILL.md) | Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished web components, pages, and applications that avoid generic AI aesthetics. |
+| [`brand-guidelines`](skills/web-and-frontend-development/brand-guidelines/SKILL.md) | Apply Anthropic's official brand colors and typography to artifacts. Use when brand styling, visual formatting, or company design standards apply. |
 
 #### DevOps & Cloud
 _TBD — Category placeholder for future skills._
@@ -46,7 +48,11 @@ _TBD — Category placeholder for future skills._
 _TBD — Category placeholder for future skills._
 
 #### Image & Video Generation
-_TBD — Category placeholder for future skills._
+
+| Skill | Description |
+| --- | --- |
+| [`algorithmic-art`](skills/image-and-video-generation/algorithmic-art/SKILL.md) | Create algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Generates generative art from algorithmic philosophies expressed as flow fields, particle systems, and noise fields. |
+| [`canvas-design`](skills/image-and-video-generation/canvas-design/SKILL.md) | Create beautiful visual art in .png and .pdf documents using design philosophy. Generates posters, artwork, and static visual pieces with curated typography and intentional composition. |
 
 #### Git & GitHub
 
@@ -60,7 +66,10 @@ _TBD — Category placeholder for future skills._
 _TBD — Category placeholder for future skills._
 
 #### PDF & Documents
-_TBD — Category placeholder for future skills._
+
+| Skill | Description |
+| --- | --- |
+| [`docx`](skills/pdf-and-documents/docx/SKILL.md) | Create, read, edit, and manipulate Word documents (.docx files). Handles professional formatting, tracked changes, comments, tables of contents, and includes helper scripts for document operations. |
 
 #### Speech & Transcription
 _TBD — Category placeholder for future skills._
@@ -178,6 +187,11 @@ Examples:
 - "Create a new blog post for this feature launch."
 - "Create or update a usecase JSON and prepare an optional PR."
 - "Draft the weekly growth tweet from #growth channel posts."
+- "Create a generative art piece with flow fields and particle systems."
+- "Design a poster with bold typography and intentional composition."
+- "Build a landing page with distinctive, production-grade design."
+- "Create a Word document with tracked changes and comments."
+- "Apply Anthropic brand colors to this component."
 
 ## Skill Structure
 
