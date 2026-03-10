@@ -1,0 +1,29 @@
+{
+  "name": "@eigent-ai/agent-skills",
+  "version": "1.0.0",
+  "description": "Install Eigent agent skills for Claude Code, Cursor, Windsurf, Codex, and other AI coding agents",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eigent-ai/agent-skills.git"
+  },
+  "homepage": "https://github.com/eigent-ai/agent-skills",
+  "keywords": [
+    "agent-skills",
+    "claude-code",
+    "cursor",
+    "windsurf",
+    "codex",
+    "ai-agent",
+    "mcp",
+    "eigent"
+  ],
+  "bin": {
+    "eigent-skills": "bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "skills/",
+    "LICENSE"
+  ]
+}

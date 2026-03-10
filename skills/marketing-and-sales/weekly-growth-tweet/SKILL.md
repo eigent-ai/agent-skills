@@ -3,9 +3,6 @@ name: weekly-growth-tweet
 description: |
   Collects feature announcement posts from the Eigent #growth Slack channel by Wendong Fan, filters for posts with the 1️⃣ (Keycap: 1) emoji reaction, and generates a weekly summary tweet. TRIGGERS: "weekly tweet", "growth channel summary", "weekly update tweet", "collect growth posts", "Eigent weekly recap", "summarize #growth", "draft weekly tweet".
 license: Apache-2.0
-metadata:
-  author: Waleed Alzarooni
-  version: "1.0"
 ---
 
 # Weekly Growth Tweet Skill

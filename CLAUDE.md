@@ -8,26 +8,76 @@ This repository contains reusable AI agent skills for Eigent workflows.
 Each skill is defined in a `SKILL.md` file and may include helper scripts, references, and assets.  
 Packaged ZIP artifacts for one-click download are stored in `packages/`.
 
+## Category Structure
+
+Skills and packages are organized into tiered categories:
+
+### Tier 1 — High Priority
+- `ai-and-llms`
+- `coding-agents-and-ides`
+- `web-and-frontend-development`
+- `devops-and-cloud`
+- `browser-and-automation`
+- `search-and-research`
+- `marketing-and-sales`
+- `data-and-analytics`
+- `image-and-video-generation`
+- `git-and-github`
+
+### Tier 2 — Strong Supporting
+- `productivity-and-tasks`
+- `pdf-and-documents`
+- `speech-and-transcription`
+- `communication`
+- `security-and-passwords`
+
+### Tier 3 — Niche but Valuable
+- `cli-utilities`
+- `notes-and-knowledge-management`
+- `apple-and-mobile-development`
+- `shopping-and-ecommerce`
+- `finance`
+
+### Bonus / Future
+- `agent-to-agent-protocols`
+
 ## Current Skill Layout
 
 ```text
 skills/
-  eigent-design/
-    SKILL.md
-    references/
-  eigent-blog-update/
-    SKILL.md
-    scripts/
-    references/
-  eigent-usecase-update/
-    SKILL.md
-    scripts/
-    references/
-    assets/
+  web-and-frontend-development/
+    eigent-design/
+      SKILL.md
+      references/
+  coding-agents-and-ides/
+    mintlify-docs-updater/
+      SKILL.md
+      scripts/
+      references/
+  marketing-and-sales/
+    eigent-blog-update/
+      SKILL.md
+      scripts/
+      references/
+    eigent-usecase-update/
+      SKILL.md
+      scripts/
+      references/
+      assets/
+    weekly-growth-tweet/
+      SKILL.md
+  git-and-github/
+    eigent-server-sync/
+      SKILL.md
+      scripts/
+      references/
 packages/
-  eigent-design.zip
-  eigent-blog-update.zip
-  eigent-usecase-update.zip
+  web-and-frontend-development/eigent-design.zip
+  coding-agents-and-ides/mintlify-docs-updater.zip
+  marketing-and-sales/eigent-blog-update.zip
+  marketing-and-sales/eigent-usecase-update.zip
+  marketing-and-sales/weekly-growth-tweet.zip
+  git-and-github/eigent-server-sync.zip
 ```
 
 ## Creating or Updating a Skill
@@ -36,13 +86,14 @@ packages/
 
 ```text
 skills/
-  {skill-name}/
-    SKILL.md              # Required: skill definition
-    scripts/              # Optional: helper automation scripts
-    references/           # Optional: supporting docs
-    assets/               # Optional: templates/static resources
+  {category}/
+    {skill-name}/
+      SKILL.md              # Required: skill definition
+      scripts/              # Optional: helper automation scripts
+      references/           # Optional: supporting docs
+      assets/               # Optional: templates/static resources
 packages/
-  {skill-name}.zip        # Distribution artifact for one-click download
+  {category}/{skill-name}.zip  # Distribution artifact for one-click download
 ```
 
 ### Naming Conventions
@@ -50,7 +101,8 @@ packages/
 - Skill directory: `kebab-case` (for example: `eigent-blog-update`)
 - Skill file: always `SKILL.md` (uppercase)
 - Scripts: use clear task-oriented names (existing scripts use `snake_case.py`)
-- Package file: `packages/{skill-name}.zip`
+- Category directory: `kebab-case` (for example: `marketing-and-sales`)
+- Package file: `packages/{category}/{skill-name}.zip`
 
 ### SKILL.md Format
 
@@ -83,14 +135,17 @@ Then define concise workflow instructions in markdown.
 After creating or updating a skill, regenerate its ZIP package:
 
 ```bash
-zip -rq packages/{skill-name}.zip skills/{skill-name} -x "*.DS_Store"
+zip -rq packages/{category}/{skill-name}.zip skills/{category}/{skill-name} -x "*.DS_Store"
 ```
 
 For this repo, keep these package artifacts updated:
 
-- `packages/eigent-design.zip`
-- `packages/eigent-blog-update.zip`
-- `packages/eigent-usecase-update.zip`
+- `packages/web-and-frontend-development/eigent-design.zip`
+- `packages/coding-agents-and-ides/mintlify-docs-updater.zip`
+- `packages/marketing-and-sales/eigent-blog-update.zip`
+- `packages/marketing-and-sales/eigent-usecase-update.zip`
+- `packages/marketing-and-sales/weekly-growth-tweet.zip`
+- `packages/git-and-github/eigent-server-sync.zip`
 
 ## README Sync Requirements
 
@@ -100,9 +155,21 @@ When skill behavior changes, update `README.md` accordingly:
 - `Available Packages (ZIP)` links
 - `Installation`, `Usage`, `Skill Structure`, and `License` sections when relevant
 
-## Installation (End Users)
+## CLI (`bin/cli.js`)
 
-Primary install method:
+The repo includes a zero-dependency Node.js CLI at `bin/cli.js` (npm bin: `eigent-skills`).
+
+Key commands:
+- `npx @eigent-ai/agent-skills install` — install all skills to detected agents
+- `npx @eigent-ai/agent-skills update` — fetch latest from GitHub and update
+- `npx @eigent-ai/agent-skills uninstall` — remove installed skills
+- `npx @eigent-ai/agent-skills list` — list available skills
+- `npx @eigent-ai/agent-skills doctor` — check agent detection
+
+The CLI auto-detects Claude Code, Cursor, Windsurf, Codex, and Copilot.
+It stores `.eigent-skills.lock.json` in each agent's skill directory for update tracking.
+
+Also compatible with the Skills ecosystem:
 
 ```bash
 npx skills add eigent-ai/agent-skills

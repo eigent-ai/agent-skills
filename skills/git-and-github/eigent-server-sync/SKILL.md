@@ -2,9 +2,6 @@
 name: eigent-server-sync
 description: Transfer eigent server PRs to eigent_server. Use when syncing changes from eigent/server/ to eigent_server, when an eigent PR modifies server code that needs to be reflected in eigent_server, or when porting eigent server features.
 license: Apache-2.0
-metadata:
-  author: Ahmed Awelkair
-  version: "1.0"
 ---
 
 # Eigent Server Sync

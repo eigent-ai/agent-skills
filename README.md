@@ -1,6 +1,6 @@
 # Agent Skills
 
-A collection of skills for AI coding agents when building Eigent. 
+A collection of skills for AI coding agents when building Eigent.
 
 Skills follow the [Agent Skills](https://agentskills.io/) format.
 
@@ -8,62 +8,154 @@ Skills follow the [Agent Skills](https://agentskills.io/) format.
 
 Skills are organized by category under `skills/{category}/{skill-name}`:
 
-- **developer-tools**
-- **ai-and-agent-systems**
-- **productivity-and-knowledge-work**
-- **personal-and-consumer-use-cases**
-- **ecosystem-specific**
+### Tier 1 — High Priority
 
-### Developer Tools
+#### AI & LLMs
+_TBD — Category placeholder for future skills._
 
-| Skill | Description | Author |
-| --- | --- | --- |
-| [`mintlify-docs-updater`](skills/developer-tools/mintlify-docs-updater/SKILL.md) | Maintain Mintlify documentation from uploaded Markdown files. Handles page placement under `docs/`, required frontmatter checks, and `docs/docs.json` navigation updates via `ingest_markdown_doc.py`. | Douglas Lai |
+#### Coding Agents & IDEs
 
-### AI and Agent Systems
+| Skill | Description |
+| --- | --- |
+| [`mintlify-docs-updater`](skills/coding-agents-and-ides/mintlify-docs-updater/SKILL.md) | Maintain Mintlify documentation from uploaded Markdown files. Handles page placement under `docs/`, required frontmatter checks, and `docs/docs.json` navigation updates via `ingest_markdown_doc.py`. |
 
-| Skill | Description | Author |
-| --- | --- | --- |
-| [`eigent-design`](skills/ai-and-agent-systems/eigent-design/SKILL.md) | Plan new UIs or audit existing UIs. Covers UI/UX design, token compliance, interaction quality, and accessibility with `Design Guide` (pre-build spec) and `Design Review` (post-build checklist) modes. | Douglas Lai |
+#### Web & Frontend Development
 
-### Productivity and Knowledge Work
+| Skill | Description |
+| --- | --- |
+| [`eigent-design`](skills/web-and-frontend-development/eigent-design/SKILL.md) | Plan new UIs or audit existing UIs. Covers UI/UX design, token compliance, interaction quality, and accessibility with `Design Guide` (pre-build spec) and `Design Review` (post-build checklist) modes. |
 
-| Skill | Description | Author |
-| --- | --- | --- |
-| [`weekly-growth-tweet`](skills/productivity-and-knowledge-work/weekly-growth-tweet/SKILL.md) | Collect feature announcement posts from the Eigent #growth Slack channel (by Wendong Fan), filter for posts with the 1️⃣ emoji reaction, and generate a weekly summary tweet. Triggers: weekly tweet, growth channel summary, weekly update tweet, collect growth posts, Eigent weekly recap, summarize #growth, draft weekly tweet. | Waleed Alzarooni |
+#### DevOps & Cloud
+_TBD — Category placeholder for future skills._
 
-### Personal and Consumer Use Cases
+#### Browser & Automation
+_TBD — Category placeholder for future skills._
 
-| Skill | Description | Author |
-| --- | --- | --- |
-| _TBD_ | Category placeholder for future skills. | — |
+#### Search & Research
+_TBD — Category placeholder for future skills._
 
-### Ecosystem-Specific
+#### Marketing & Sales
 
-| Skill | Description | Author |
-| --- | --- | --- |
-| [`eigent-server-sync`](skills/ecosystem-specific/eigent-server-sync/SKILL.md) | Transfer eigent server PRs to eigent_server. Use when syncing changes from eigent/server/ to eigent_server, when an eigent PR modifies server code that needs to be reflected in eigent_server, or when porting eigent server features. | Ahmed Awelkair |
-| [`eigent-blog-update`](skills/ecosystem-specific/eigent-blog-update/SKILL.md) | Create, edit, and structure blog posts for Eigent. Handles blog content operations, frontmatter metadata, asset organization, and includes `generate_post.py` plus optional Git PR handoff. | Douglas Lai |
-| [`eigent-usecase-update`](skills/ecosystem-specific/eigent-usecase-update/SKILL.md) | Create, edit, and manage usecase entries for Eigent. Covers usecase JSON authoring, media asset linkage, SEO metadata, and includes `generate_usecase.py` plus optional Git PR handoff. | Douglas Lai |
+| Skill | Description |
+| --- | --- |
+| [`weekly-growth-tweet`](skills/marketing-and-sales/weekly-growth-tweet/SKILL.md) | Collect feature announcement posts from the Eigent #growth Slack channel (by Wendong Fan), filter for posts with the 1️⃣ emoji reaction, and generate a weekly summary tweet. |
+| [`eigent-blog-update`](skills/marketing-and-sales/eigent-blog-update/SKILL.md) | Create, edit, and structure blog posts for Eigent. Handles blog content operations, frontmatter metadata, asset organization, and includes `generate_post.py` plus optional Git PR handoff. |
+| [`eigent-usecase-update`](skills/marketing-and-sales/eigent-usecase-update/SKILL.md) | Create, edit, and manage usecase entries for Eigent. Covers usecase JSON authoring, media asset linkage, SEO metadata, and includes `generate_usecase.py` plus optional Git PR handoff. |
 
-## Available Packages (ZIP)
+#### Data & Analytics
+_TBD — Category placeholder for future skills._
 
-- `eigent-design` - [Download ZIP](./packages/ai-and-agent-systems/eigent-design.zip)
-- `mintlify-docs-updater` - [Download ZIP](./packages/developer-tools/mintlify-docs-updater.zip)
-- `weekly-growth-tweet` - [Download ZIP](./packages/productivity-and-knowledge-work/weekly-growth-tweet.zip)
-- `eigent-server-sync` - [Download ZIP](./packages/ecosystem-specific/eigent-server-sync.zip)
-- `eigent-blog-update` - [Download ZIP](./packages/ecosystem-specific/eigent-blog-update.zip)
-- `eigent-usecase-update` - [Download ZIP](./packages/ecosystem-specific/eigent-usecase-update.zip)
+#### Image & Video Generation
+_TBD — Category placeholder for future skills._
+
+#### Git & GitHub
+
+| Skill | Description |
+| --- | --- |
+| [`eigent-server-sync`](skills/git-and-github/eigent-server-sync/SKILL.md) | Transfer eigent server PRs to eigent_server. Use when syncing changes from eigent/server/ to eigent_server, when an eigent PR modifies server code that needs to be reflected in eigent_server, or when porting eigent server features. |
+
+### Tier 2 — Strong Supporting Pages
+
+#### Productivity & Tasks
+_TBD — Category placeholder for future skills._
+
+#### PDF & Documents
+_TBD — Category placeholder for future skills._
+
+#### Speech & Transcription
+_TBD — Category placeholder for future skills._
+
+#### Communication
+_TBD — Category placeholder for future skills._
+
+#### Security & Passwords
+_TBD — Category placeholder for future skills._
+
+### Tier 3 — Niche but Valuable
+
+#### CLI Utilities
+_TBD — Category placeholder for future skills._
+
+#### Notes & Knowledge Management
+_TBD — Category placeholder for future skills._
+
+#### Apple & Mobile Development
+_TBD — Category placeholder for future skills._
+
+#### Shopping & E-commerce
+_TBD — Category placeholder for future skills._
+
+#### Finance
+_TBD — Category placeholder for future skills._
+
+### Bonus / Future
+
+#### Agent-to-Agent Protocols
+_TBD — Category placeholder for future skills._
 
 ## Installation
 
-Install the full skill pack (all categories) with:
+### Quick Install (all agents)
+
+```bash
+npx @eigent-ai/agent-skills install
+```
+
+This auto-detects installed agents (Claude Code, Cursor, Windsurf, Codex, Copilot) and installs skills to each.
+
+### Install for a specific agent
+
+```bash
+npx @eigent-ai/agent-skills install -a claude-code
+npx @eigent-ai/agent-skills install -a cursor
+```
+
+### Install globally (user-level)
+
+```bash
+npx @eigent-ai/agent-skills install -g
+```
+
+### Via the Skills ecosystem
 
 ```bash
 npx skills add eigent-ai/agent-skills
 ```
 
-After installation, skills are available under the category layout `skills/{developer-tools,ai-and-agent-systems,productivity-and-knowledge-work,personal-and-consumer-use-cases,ecosystem-specific}/{skill-name}/SKILL.md`.
+## Updating
+
+Pull the latest skills from GitHub:
+
+```bash
+npx @eigent-ai/agent-skills update
+```
+
+The CLI tracks a content hash so it only writes when there are actual changes.
+
+### Auto-update
+
+Set up scheduled updates with a cron job:
+
+```bash
+npx @eigent-ai/agent-skills auto-update              # weekly (default)
+npx @eigent-ai/agent-skills auto-update --interval daily
+```
+
+This prints the cron line to add to your crontab.
+
+## CLI Reference
+
+| Command | Description |
+| --- | --- |
+| `install` | Install all skills to detected agents |
+| `update` | Fetch latest from GitHub and update |
+| `uninstall` | Remove installed Eigent skills |
+| `list` | List available skills in this package |
+| `status` | Show install status per agent |
+| `auto-update` | Print cron setup for scheduled updates |
+| `doctor` | Check which agents are detected |
+
+**Flags:** `--agent, -a` (target agent), `--global, -g` (user-level), `--yes, -y` (skip prompts)
 
 ## Usage
 
