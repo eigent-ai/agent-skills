@@ -26,6 +26,7 @@ _TBD — Category placeholder for future skills._
 | [`eigent-design`](skills/web-and-frontend-development/eigent-design/SKILL.md) | Plan new UIs or audit existing UIs. Covers UI/UX design, token compliance, interaction quality, and accessibility with `Design Guide` (pre-build spec) and `Design Review` (post-build checklist) modes. |
 | [`frontend-design`](skills/web-and-frontend-development/frontend-design/SKILL.md) | Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished web components, pages, and applications that avoid generic AI aesthetics. |
 | [`brand-guidelines`](skills/web-and-frontend-development/brand-guidelines/SKILL.md) | Apply Anthropic's official brand colors and typography to artifacts. Use when brand styling, visual formatting, or company design standards apply. |
+| [`web-artifacts-builder`](skills/web-and-frontend-development/web-artifacts-builder/SKILL.md) | Build elaborate, multi-component claude.ai HTML artifacts using React, Tailwind CSS, and shadcn/ui. Includes project scaffolding and single-file bundling scripts. |
 
 #### DevOps & Cloud
 _TBD — Category placeholder for future skills._
@@ -53,6 +54,7 @@ _TBD — Category placeholder for future skills._
 | --- | --- |
 | [`algorithmic-art`](skills/image-and-video-generation/algorithmic-art/SKILL.md) | Create algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Generates generative art from algorithmic philosophies expressed as flow fields, particle systems, and noise fields. |
 | [`canvas-design`](skills/image-and-video-generation/canvas-design/SKILL.md) | Create beautiful visual art in .png and .pdf documents using design philosophy. Generates posters, artwork, and static visual pieces with curated typography and intentional composition. |
+| [`slack-gif-creator`](skills/image-and-video-generation/slack-gif-creator/SKILL.md) | Create animated GIFs optimized for Slack with proper dimensions, frame rates, and file sizes. Includes PIL-based utilities for frame composition, easing, and validation. |
 
 #### Git & GitHub
 
@@ -75,7 +77,10 @@ _TBD — Category placeholder for future skills._
 _TBD — Category placeholder for future skills._
 
 #### Communication
-_TBD — Category placeholder for future skills._
+
+| Skill | Description |
+| --- | --- |
+| [`internal-comms`](skills/communication/internal-comms/SKILL.md) | Write internal communications including 3P updates, company newsletters, FAQ responses, status reports, and leadership updates using company-standard formats. |
 
 #### Security & Passwords
 _TBD — Category placeholder for future skills._
@@ -192,6 +197,9 @@ Examples:
 - "Build a landing page with distinctive, production-grade design."
 - "Create a Word document with tracked changes and comments."
 - "Apply Anthropic brand colors to this component."
+- "Make me a GIF of a spinning logo for Slack."
+- "Write a 3P update for this week's sprint."
+- "Build a complex multi-component artifact with shadcn/ui."
 
 ## Skill Structure
 
