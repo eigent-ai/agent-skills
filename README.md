@@ -27,12 +27,16 @@ _TBD — Category placeholder for future skills._
 | [`frontend-design`](skills/web-and-frontend-development/frontend-design/SKILL.md) | Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished web components, pages, and applications that avoid generic AI aesthetics. |
 | [`brand-guidelines`](skills/web-and-frontend-development/brand-guidelines/SKILL.md) | Apply Anthropic's official brand colors and typography to artifacts. Use when brand styling, visual formatting, or company design standards apply. |
 | [`web-artifacts-builder`](skills/web-and-frontend-development/web-artifacts-builder/SKILL.md) | Build elaborate, multi-component claude.ai HTML artifacts using React, Tailwind CSS, and shadcn/ui. Includes project scaffolding and single-file bundling scripts. |
+| [`theme-factory`](skills/web-and-frontend-development/theme-factory/SKILL.md) | Apply professional color and font themes to artifacts like slides, docs, reports, and landing pages. Includes 10 curated themes with a visual showcase PDF. |
 
 #### DevOps & Cloud
 _TBD — Category placeholder for future skills._
 
 #### Browser & Automation
-_TBD — Category placeholder for future skills._
+
+| Skill | Description |
+| --- | --- |
+| [`webapp-testing`](skills/browser-and-automation/webapp-testing/SKILL.md) | Test local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing screenshots, and viewing browser logs with server lifecycle helpers. |
 
 #### Search & Research
 _TBD — Category placeholder for future skills._
@@ -72,6 +76,7 @@ _TBD — Category placeholder for future skills._
 | Skill | Description |
 | --- | --- |
 | [`docx`](skills/pdf-and-documents/docx/SKILL.md) | Create, read, edit, and manipulate Word documents (.docx files). Handles professional formatting, tracked changes, comments, tables of contents, and includes helper scripts for document operations. |
+| [`doc-coauthoring`](skills/pdf-and-documents/doc-coauthoring/SKILL.md) | Guide users through structured co-authoring of documentation, proposals, technical specs, and decision docs via context gathering, iterative refinement, and reader testing. |
 
 #### Speech & Transcription
 _TBD — Category placeholder for future skills._
@@ -200,6 +205,9 @@ Examples:
 - "Make me a GIF of a spinning logo for Slack."
 - "Write a 3P update for this week's sprint."
 - "Build a complex multi-component artifact with shadcn/ui."
+- "Test my local web app with Playwright and capture screenshots."
+- "Apply the Ocean Depths theme to my slide deck."
+- "Help me co-author a technical design doc."
 
 ## Skill Structure
 

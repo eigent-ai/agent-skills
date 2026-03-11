@@ -56,6 +56,9 @@ skills/
     web-artifacts-builder/
       SKILL.md
       scripts/
+    theme-factory/
+      SKILL.md
+      themes/
   coding-agents-and-ides/
     mintlify-docs-updater/
       SKILL.md
@@ -78,6 +81,11 @@ skills/
       SKILL.md
       scripts/
       references/
+  browser-and-automation/
+    webapp-testing/
+      SKILL.md
+      scripts/
+      examples/
   image-and-video-generation/
     algorithmic-art/
       SKILL.md
@@ -92,6 +100,8 @@ skills/
     docx/
       SKILL.md
       scripts/
+    doc-coauthoring/
+      SKILL.md
   communication/
     internal-comms/
       SKILL.md
@@ -101,15 +111,18 @@ packages/
   web-and-frontend-development/frontend-design.zip
   web-and-frontend-development/brand-guidelines.zip
   web-and-frontend-development/web-artifacts-builder.zip
+  web-and-frontend-development/theme-factory.zip
   coding-agents-and-ides/mintlify-docs-updater.zip
   marketing-and-sales/eigent-blog-update.zip
   marketing-and-sales/eigent-usecase-update.zip
   marketing-and-sales/weekly-growth-tweet.zip
   git-and-github/eigent-server-sync.zip
+  browser-and-automation/webapp-testing.zip
   image-and-video-generation/algorithmic-art.zip
   image-and-video-generation/canvas-design.zip
   image-and-video-generation/slack-gif-creator.zip
   pdf-and-documents/docx.zip
+  pdf-and-documents/doc-coauthoring.zip
   communication/internal-comms.zip
 ```
 
@@ -177,15 +190,18 @@ For this repo, keep these package artifacts updated:
 - `packages/web-and-frontend-development/frontend-design.zip`
 - `packages/web-and-frontend-development/brand-guidelines.zip`
 - `packages/web-and-frontend-development/web-artifacts-builder.zip`
+- `packages/web-and-frontend-development/theme-factory.zip`
 - `packages/coding-agents-and-ides/mintlify-docs-updater.zip`
 - `packages/marketing-and-sales/eigent-blog-update.zip`
 - `packages/marketing-and-sales/eigent-usecase-update.zip`
 - `packages/marketing-and-sales/weekly-growth-tweet.zip`
 - `packages/git-and-github/eigent-server-sync.zip`
+- `packages/browser-and-automation/webapp-testing.zip`
 - `packages/image-and-video-generation/algorithmic-art.zip`
 - `packages/image-and-video-generation/canvas-design.zip`
 - `packages/image-and-video-generation/slack-gif-creator.zip`
 - `packages/pdf-and-documents/docx.zip`
+- `packages/pdf-and-documents/doc-coauthoring.zip`
 - `packages/communication/internal-comms.zip`
 
 ## README Sync Requirements
