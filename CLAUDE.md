@@ -64,6 +64,10 @@ skills/
       SKILL.md
       scripts/
       references/
+    skill-creator/
+      SKILL.md
+      scripts/
+      references/
   marketing-and-sales/
     eigent-blog-update/
       SKILL.md
@@ -97,7 +101,16 @@ skills/
       SKILL.md
       core/
   pdf-and-documents/
+    pdf/
+      SKILL.md
+      scripts/
     docx/
+      SKILL.md
+      scripts/
+    xlsx/
+      SKILL.md
+      scripts/
+    pptx/
       SKILL.md
       scripts/
     doc-coauthoring/
@@ -113,6 +126,7 @@ packages/
   web-and-frontend-development/web-artifacts-builder.zip
   web-and-frontend-development/theme-factory.zip
   coding-agents-and-ides/mintlify-docs-updater.zip
+  coding-agents-and-ides/skill-creator.zip
   marketing-and-sales/eigent-blog-update.zip
   marketing-and-sales/eigent-usecase-update.zip
   marketing-and-sales/weekly-growth-tweet.zip
@@ -121,7 +135,10 @@ packages/
   image-and-video-generation/algorithmic-art.zip
   image-and-video-generation/canvas-design.zip
   image-and-video-generation/slack-gif-creator.zip
+  pdf-and-documents/pdf.zip
   pdf-and-documents/docx.zip
+  pdf-and-documents/xlsx.zip
+  pdf-and-documents/pptx.zip
   pdf-and-documents/doc-coauthoring.zip
   communication/internal-comms.zip
 ```
@@ -192,6 +209,7 @@ For this repo, keep these package artifacts updated:
 - `packages/web-and-frontend-development/web-artifacts-builder.zip`
 - `packages/web-and-frontend-development/theme-factory.zip`
 - `packages/coding-agents-and-ides/mintlify-docs-updater.zip`
+- `packages/coding-agents-and-ides/skill-creator.zip`
 - `packages/marketing-and-sales/eigent-blog-update.zip`
 - `packages/marketing-and-sales/eigent-usecase-update.zip`
 - `packages/marketing-and-sales/weekly-growth-tweet.zip`
@@ -200,7 +218,10 @@ For this repo, keep these package artifacts updated:
 - `packages/image-and-video-generation/algorithmic-art.zip`
 - `packages/image-and-video-generation/canvas-design.zip`
 - `packages/image-and-video-generation/slack-gif-creator.zip`
+- `packages/pdf-and-documents/pdf.zip`
 - `packages/pdf-and-documents/docx.zip`
+- `packages/pdf-and-documents/xlsx.zip`
+- `packages/pdf-and-documents/pptx.zip`
 - `packages/pdf-and-documents/doc-coauthoring.zip`
 - `packages/communication/internal-comms.zip`
 
