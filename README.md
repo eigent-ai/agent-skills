@@ -18,6 +18,7 @@ _TBD — Category placeholder for future skills._
 | Skill | Description |
 | --- | --- |
 | [`mintlify-docs-updater`](skills/coding-agents-and-ides/mintlify-docs-updater/SKILL.md) | Maintain Mintlify documentation from uploaded Markdown files. Handles page placement under `docs/`, required frontmatter checks, and `docs/docs.json` navigation updates via `ingest_markdown_doc.py`. |
+| [`skill-creator`](skills/coding-agents-and-ides/skill-creator/SKILL.md) | Create, modify, and evaluate skills. Covers authoring `SKILL.md` files, bundling scripts and references, running evals, and benchmarking skill performance. |
 
 #### Web & Frontend Development
 
@@ -75,7 +76,10 @@ _TBD — Category placeholder for future skills._
 
 | Skill | Description |
 | --- | --- |
-| [`docx`](skills/pdf-and-documents/docx/SKILL.md) | Create, read, edit, and manipulate Word documents (.docx files). Handles professional formatting, tracked changes, comments, tables of contents, and includes helper scripts for document operations. |
+| [`pdf`](skills/pdf-and-documents/pdf/SKILL.md) | Work with PDF files: extract text/tables, merge/split, rotate pages, add watermarks, fill forms, encrypt/decrypt, extract images, and OCR scanned PDFs. |
+| [`docx`](skills/pdf-and-documents/docx/SKILL.md) | Create, read, edit, and manipulate Word documents (.docx). Covers document creation, tracked changes, comments, find-and-replace, tables of contents, and professional formatting. |
+| [`xlsx`](skills/pdf-and-documents/xlsx/SKILL.md) | Work with spreadsheet files (.xlsx, .xlsm, .csv, .tsv): create, edit, format, compute formulas, clean messy data, and convert between tabular formats. |
+| [`pptx`](skills/pdf-and-documents/pptx/SKILL.md) | Create, read, edit, and manipulate PowerPoint presentations (.pptx). Covers slide decks, pitch decks, templates, layouts, speaker notes, thumbnails, and content extraction. |
 | [`doc-coauthoring`](skills/pdf-and-documents/doc-coauthoring/SKILL.md) | Guide users through structured co-authoring of documentation, proposals, technical specs, and decision docs via context gathering, iterative refinement, and reader testing. |
 
 #### Speech & Transcription
