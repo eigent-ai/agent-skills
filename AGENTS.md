@@ -12,22 +12,18 @@ Packaged ZIP artifacts for one-click download are stored in `packages/`.
 
 ```text
 skills/
-  eigent-design/
-    SKILL.md
-    references/
-  eigent-blog-update/
-    SKILL.md
-    scripts/
-    references/
-  eigent-usecase-update/
-    SKILL.md
-    scripts/
-    references/
-    assets/
+  coding-agents-and-ides/
+    mintlify-docs-updater/
+      SKILL.md
+      scripts/
+      references/
+    skill-creator/
+      SKILL.md
+      scripts/
+      references/
 packages/
-  eigent-design.zip
-  eigent-blog-update.zip
-  eigent-usecase-update.zip
+  coding-agents-and-ides/mintlify-docs-updater.zip
+  coding-agents-and-ides/skill-creator.zip
 ```
 
 ## Creating or Updating a Skill
@@ -36,21 +32,23 @@ packages/
 
 ```text
 skills/
-  {skill-name}/
-    SKILL.md              # Required: skill definition
-    scripts/              # Optional: helper automation scripts
-    references/           # Optional: supporting docs
-    assets/               # Optional: templates/static resources
+  {category}/
+    {skill-name}/
+      SKILL.md              # Required: skill definition
+      scripts/              # Optional: helper automation scripts
+      references/           # Optional: supporting docs
+      assets/               # Optional: templates/static resources
 packages/
-  {skill-name}.zip        # Distribution artifact for one-click download
+  {category}/{skill-name}.zip  # Distribution artifact for one-click download
 ```
 
 ### Naming Conventions
 
-- Skill directory: `kebab-case` (for example: `eigent-blog-update`)
+- Skill directory: `kebab-case` (for example: `mintlify-docs-updater`)
 - Skill file: always `SKILL.md` (uppercase)
 - Scripts: use clear task-oriented names (existing scripts use `snake_case.py`)
-- Package file: `packages/{skill-name}.zip`
+- Category directory: `kebab-case` (for example: `coding-agents-and-ides`)
+- Package file: `packages/{category}/{skill-name}.zip`
 
 ### SKILL.md Format
 
@@ -83,21 +81,19 @@ Then define concise workflow instructions in markdown.
 After creating or updating a skill, regenerate its ZIP package:
 
 ```bash
-zip -rq packages/{skill-name}.zip skills/{skill-name} -x "*.DS_Store"
+zip -rq packages/{category}/{skill-name}.zip skills/{category}/{skill-name} -x "*.DS_Store"
 ```
 
 For this repo, keep these package artifacts updated:
 
-- `packages/eigent-design.zip`
-- `packages/eigent-blog-update.zip`
-- `packages/eigent-usecase-update.zip`
+- `packages/coding-agents-and-ides/mintlify-docs-updater.zip`
+- `packages/coding-agents-and-ides/skill-creator.zip`
 
 ## README Sync Requirements
 
 When skill behavior changes, update `README.md` accordingly:
 
 - `Available Skills` descriptions (capabilities and outcomes)
-- `Available Packages (ZIP)` links
 - `Installation`, `Usage`, `Skill Structure`, and `License` sections when relevant
 
 ## Installation (End Users)

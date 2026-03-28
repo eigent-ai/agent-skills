@@ -24,7 +24,6 @@ _TBD — Category placeholder for future skills._
 
 | Skill | Description |
 | --- | --- |
-| [`eigent-design`](skills/web-and-frontend-development/eigent-design/SKILL.md) | Plan new UIs or audit existing UIs. Covers UI/UX design, token compliance, interaction quality, and accessibility with `Design Guide` (pre-build spec) and `Design Review` (post-build checklist) modes. |
 | [`frontend-design`](skills/web-and-frontend-development/frontend-design/SKILL.md) | Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished web components, pages, and applications that avoid generic AI aesthetics. |
 | [`brand-guidelines`](skills/web-and-frontend-development/brand-guidelines/SKILL.md) | Apply Anthropic's official brand colors and typography to artifacts. Use when brand styling, visual formatting, or company design standards apply. |
 | [`web-artifacts-builder`](skills/web-and-frontend-development/web-artifacts-builder/SKILL.md) | Build elaborate, multi-component claude.ai HTML artifacts using React, Tailwind CSS, and shadcn/ui. Includes project scaffolding and single-file bundling scripts. |
@@ -44,11 +43,7 @@ _TBD — Category placeholder for future skills._
 
 #### Marketing & Sales
 
-| Skill | Description |
-| --- | --- |
-| [`weekly-growth-tweet`](skills/marketing-and-sales/weekly-growth-tweet/SKILL.md) | Collect feature announcement posts from the Eigent #growth Slack channel (by Wendong Fan), filter for posts with the 1️⃣ emoji reaction, and generate a weekly summary tweet. |
-| [`eigent-blog-update`](skills/marketing-and-sales/eigent-blog-update/SKILL.md) | Create, edit, and structure blog posts for Eigent. Handles blog content operations, frontmatter metadata, asset organization, and includes `generate_post.py` plus optional Git PR handoff. |
-| [`eigent-usecase-update`](skills/marketing-and-sales/eigent-usecase-update/SKILL.md) | Create, edit, and manage usecase entries for Eigent. Covers usecase JSON authoring, media asset linkage, SEO metadata, and includes `generate_usecase.py` plus optional Git PR handoff. |
+_TBD — Category placeholder for future skills._
 
 #### Data & Analytics
 _TBD — Category placeholder for future skills._
@@ -63,9 +58,7 @@ _TBD — Category placeholder for future skills._
 
 #### Git & GitHub
 
-| Skill | Description |
-| --- | --- |
-| [`eigent-server-sync`](skills/git-and-github/eigent-server-sync/SKILL.md) | Transfer eigent server PRs to eigent_server. Use when syncing changes from eigent/server/ to eigent_server, when an eigent PR modifies server code that needs to be reflected in eigent_server, or when porting eigent server features. |
+_TBD — Category placeholder for future skills._
 
 ### Tier 2 — Strong Supporting Pages
 
@@ -129,8 +122,8 @@ This auto-detects installed agents (Claude Code, Cursor, Windsurf, Codex, Copilo
 ### Install specific skills only
 
 ```bash
-npx @eigent-ai/agent-skills install eigent-design
-npx @eigent-ai/agent-skills install eigent-design mintlify-docs-updater eigent-blog-update
+npx @eigent-ai/agent-skills install mintlify-docs-updater
+npx @eigent-ai/agent-skills install mintlify-docs-updater webapp-testing
 ```
 
 Use `npx @eigent-ai/agent-skills list` to see all available skills.
@@ -139,7 +132,7 @@ Use `npx @eigent-ai/agent-skills list` to see all available skills.
 
 ```bash
 npx @eigent-ai/agent-skills install -a claude-code
-npx @eigent-ai/agent-skills install -a cursor eigent-design
+npx @eigent-ai/agent-skills install -a cursor mintlify-docs-updater
 ```
 
 ### Install globally (user-level)
@@ -195,12 +188,8 @@ Skills are automatically available once installed. The agent will use them when 
 
 Examples:
 
-- "Create a design guide for this new settings page."
-- "Sync this eigent PR's server changes to eigent_server."
+- "Create a distinctive settings page interface for this product."
 - "Ingest this Markdown file into Mintlify docs and update docs.json navigation."
-- "Create a new blog post for this feature launch."
-- "Create or update a usecase JSON and prepare an optional PR."
-- "Draft the weekly growth tweet from #growth channel posts."
 - "Create a generative art piece with flow fields and particle systems."
 - "Design a poster with bold typography and intentional composition."
 - "Build a landing page with distinctive, production-grade design."
