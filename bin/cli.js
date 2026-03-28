@@ -168,7 +168,7 @@ function discoverSkills(skillsRoot) {
   return skills;
 }
 
-/** Resolve skill names (e.g. "eigent-design" or "category/eigent-design") to skill objects. */
+/** Resolve skill names (e.g. "mintlify-docs-updater" or "category/mintlify-docs-updater") to skill objects. */
 function resolveSkillNames(skillsRoot, skillNames) {
   if (!skillNames || skillNames.length === 0) return null;
   const all = discoverSkills(skillsRoot);
@@ -582,11 +582,11 @@ function printHelp() {
 
   EXAMPLES
     npx @eigent-ai/agent-skills install                     # Install all skills to detected agents
-    npx @eigent-ai/agent-skills install eigent-design        # Install only eigent-design
-    npx @eigent-ai/agent-skills install eigent-design mintlify-docs-updater  # Install multiple
+    npx @eigent-ai/agent-skills install mintlify-docs-updater # Install only mintlify-docs-updater
+    npx @eigent-ai/agent-skills install mintlify-docs-updater webapp-testing  # Install multiple
     npx @eigent-ai/agent-skills install -g                  # Install globally
-    npx @eigent-ai/agent-skills install -a cursor eigent-design  # Install one skill for Cursor only
-    npx @eigent-ai/agent-skills uninstall eigent-design      # Remove one skill
+    npx @eigent-ai/agent-skills install -a cursor mintlify-docs-updater  # Install one skill for Cursor only
+    npx @eigent-ai/agent-skills uninstall mintlify-docs-updater # Remove one skill
     npx @eigent-ai/agent-skills update                      # Update to latest
     npx @eigent-ai/agent-skills auto-update --interval daily # Show daily auto-update cron
 
