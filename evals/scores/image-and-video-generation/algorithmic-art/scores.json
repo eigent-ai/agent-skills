@@ -1,0 +1,116 @@
+{
+  "skill": "algorithmic-art",
+  "category": "image-and-video-generation",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:21:06.110Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"algorithmic-art\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (324 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"algorithmic-art\" matches directory \"algorithmic-art\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 324 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": true,
+        "severity": "warning",
+        "message": "Found 2 trigger patterns"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 19327 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      }
+    ]
+  },
+  "qualityScore": 73,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 3,
+      "reasoning": "Description is precise: specifies p5.js, seeded randomness, interactive parameter exploration, and lists concrete use cases like flow fields and particle systems."
+    },
+    "triggerCoverage": {
+      "score": 2,
+      "reasoning": "Covers main triggers: 'generative art', 'algorithmic art', 'flow fields', 'particle systems', 'creating art using code'. Missing some natural language variations like 'procedural art', 'creative coding', or 'make me some code art'."
+    },
+    "boundaryclarity": {
+      "score": 1,
+      "reasoning": "Mentions avoiding copying existing artists' work (copyright), but does not explicitly exclude static image creation, data visualization, or other adjacent domains. No negative trigger phrases."
+    },
+    "distinctiveness": {
+      "score": 2,
+      "reasoning": "Mostly distinct from canvas-design (code-based vs static visual), but there is overlap in the art creation space. The p5.js and generative code focus differentiates it, though someone asking for 'art' could trigger either skill."
+    },
+    "totalScore": 8,
+    "normalizedScore": 0.67,
+    "summary": "Description is specific about the technology stack (p5.js) and core capability. Trigger coverage is decent but could include more natural language variations. Boundary clarity is weak - only mentions copyright, not what types of requests to reject. Mostly distinct from canvas-design due to code focus."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 3,
+      "reasoning": "Every step is concrete and specific: read the template first, create philosophy with named format, implement with p5.js using seeded randomness, use specific parameter structures. The two-step workflow (philosophy then code) is unambiguous."
+    },
+    "completeness": {
+      "score": 3,
+      "reasoning": "Covers the full workflow from philosophy creation through implementation, including template usage, parameter design, interactive UI creation, seed navigation, variations/exploration, and multiple philosophy examples. Handles both the creative and technical sides thoroughly."
+    },
+    "codeQuality": {
+      "score": 2,
+      "reasoning": "Code examples are clear and runnable (p5.js setup, seeded randomness, parameter structure, HTML template). However, the actual template files are referenced but not inline, and the code snippets are more illustrative than complete. The HTML structure example is a skeleton rather than a working snippet."
+    },
+    "conciseness": {
+      "score": 1,
+      "reasoning": "At ~19K chars, the SKILL.md is quite verbose. There is significant repetition of the 'craftsmanship' theme (mentioned 10+ times), redundant explanations of the philosophy concept, and the philosophy examples section is lengthy. The 'CRITICAL' and emphasis markers are overused throughout."
+    },
+    "totalScore": 9,
+    "normalizedScore": 0.75,
+    "summary": "Highly actionable and comprehensive skill with a well-structured two-phase workflow. Code quality is good but relies on external templates. Main weakness is verbosity - the craftsmanship emphasis is repeated excessively and the document could be 40% shorter without losing information."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 73
+}

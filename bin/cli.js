@@ -525,7 +525,7 @@ function setupAutoUpdate(interval) {
 // ── CLI parsing ──────────────────────────────────────────────────────────────
 
 function parseArgs(argv) {
-  const args = { command: null, agent: null, global: false, yes: false, interval: null, skills: [] };
+  const args = { command: null, agent: null, global: false, yes: false, interval: null, skills: [], json: false };
   const positional = [];
 
   for (let i = 0; i < argv.length; i++) {
@@ -538,6 +538,11 @@ function parseArgs(argv) {
       args.yes = true;
     } else if (arg === "--interval") {
       args.interval = argv[++i];
+    } else if (arg === "--json") {
+      args.json = true;
+    } else if (arg === "--all") {
+      // handled per-command
+      args.all = true;
     } else if (arg === "--help" || arg === "-h") {
       args.command = "help";
     } else if (arg === "--version" || arg === "-v") {
@@ -569,6 +574,7 @@ function printHelp() {
     uninstall     Remove installed Eigent skills (all or specific)
     list          List available skills in this package
     status        Show installation status per agent
+    eval          Run structural checks and show quality scores
     auto-update   Show instructions for scheduled auto-updates
     doctor        Check agent detection and installation health
 
@@ -588,6 +594,9 @@ function printHelp() {
     npx @eigent-ai/agent-skills install -a cursor mintlify-docs-updater  # Install one skill for Cursor only
     npx @eigent-ai/agent-skills uninstall mintlify-docs-updater # Remove one skill
     npx @eigent-ai/agent-skills update                      # Update to latest
+    npx @eigent-ai/agent-skills eval                         # Structural checks on all skills
+    npx @eigent-ai/agent-skills eval docx                    # Check a specific skill
+    npx @eigent-ai/agent-skills eval --json                  # Output as JSON
     npx @eigent-ai/agent-skills auto-update --interval daily # Show daily auto-update cron
 
   SUPPORTED AGENTS
@@ -606,6 +615,77 @@ function doctor() {
     const icon = detected ? "+" : "-";
     console.log(`    ${icon} ${agent.name} (${id}): ${detected ? "detected" : "not found"}`);
   }
+}
+
+// ── Eval command ────────────────────────────────────────────────────────────
+
+function runEval(skillsRoot, args) {
+  const { scoreSkill, loadScores } = require(path.join(__dirname, "..", "evals", "scorer"));
+
+  const allSkills = discoverSkills(skillsRoot);
+
+  // Determine which skills to evaluate
+  let targets;
+  if (args.skills.length > 0) {
+    targets = resolveSkillNames(skillsRoot, args.skills);
+  } else {
+    targets = allSkills;
+  }
+
+  if (targets.length === 0) {
+    console.error("  No skills found to evaluate.");
+    process.exit(1);
+  }
+
+  const results = [];
+  console.log(`  Evaluating ${targets.length} skill(s)...\n`);
+
+  for (const skill of targets) {
+    const result = scoreSkill(skill.path);
+    results.push(result);
+
+    if (!args.json) {
+      const icon = result.structural.overallPassed ? "PASS" : "FAIL";
+      const scoreInfo = result.existingScores?.qualityScore != null
+        ? ` — Quality: ${result.existingScores.qualityScore}/100`
+        : "";
+      let line = `  [${icon}] ${result.category}/${result.skill}${scoreInfo}`;
+
+      if (result.structural.errorCount > 0) {
+        line += ` (${result.structural.errorCount} error(s))`;
+      }
+      console.log(line);
+
+      // Show structural issues
+      for (const c of result.structural.checks) {
+        if (!c.passed) {
+          const sev = c.severity === "error" ? "ERR" : "WRN";
+          console.log(`         [${sev}] ${c.name}: ${c.message}`);
+        }
+      }
+    }
+  }
+
+  if (args.json) {
+    console.log(JSON.stringify(results, null, 2));
+  } else {
+    // Summary
+    const passed = results.filter((r) => r.structural.overallPassed).length;
+    const scored = results.filter((r) => r.existingScores?.qualityScore != null);
+    console.log(`\n  Structural: ${passed}/${results.length} passed`);
+    if (scored.length > 0) {
+      const avg = Math.round(scored.reduce((s, r) => s + r.existingScores.qualityScore, 0) / scored.length);
+      console.log(`  Avg quality: ${avg}/100 (${scored.length} with scores)`);
+    }
+    const unscored = results.filter((r) => r.structural.overallPassed && !r.existingScores);
+    if (unscored.length > 0) {
+      console.log(`  Unscored: ${unscored.length} skill(s) need LLM evaluation`);
+    }
+  }
+
+  console.log();
+  const hasErrors = results.some((r) => !r.structural.overallPassed);
+  process.exit(hasErrors ? 1 : 0);
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
@@ -698,6 +778,15 @@ function main() {
       doctor();
       console.log();
       break;
+    }
+
+    case "eval": {
+      if (!skillsRoot) {
+        console.error("Skills directory not found. Run from the repo.");
+        process.exit(1);
+      }
+      runEval(skillsRoot, args);
+      return;
     }
 
     default:

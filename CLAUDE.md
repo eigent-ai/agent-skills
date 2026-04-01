@@ -211,6 +211,7 @@ Key commands:
 - `npx @eigent-ai/agent-skills update` — fetch latest from GitHub and update
 - `npx @eigent-ai/agent-skills uninstall` — remove installed skills
 - `npx @eigent-ai/agent-skills list` — list available skills
+- `npx @eigent-ai/agent-skills eval` — run structural checks and show quality scores
 - `npx @eigent-ai/agent-skills doctor` — check agent detection
 
 The CLI auto-detects Claude Code, Cursor, Windsurf, Codex, and Copilot.
@@ -222,7 +223,119 @@ Also compatible with the Skills ecosystem:
 npx skills add eigent-ai/agent-skills
 ```
 
+## Skill Evaluation System
+
+Skills are scored across four pillars: Quality, Impact, Compatibility, and Community.
+All evaluation data is stored separately from skill source code so that skill downloads
+(ZIP packages) remain clean and do not include eval artifacts.
+
+**No API keys required** — all LLM scoring is done interactively via Claude Code during PR review.
+
+### Evaluation Workflow
+
+When a user uploads a new skill, it opens as a PR. During review:
+
+1. **CI runs structural checks** automatically (`.github/workflows/skill-review.yml`)
+2. **Reviewer uses Claude Code** to run the full quality evaluation:
+
+```bash
+# Step 1: Run structural checks + output eval context
+node evals/evaluate.js <skill-name>
+
+# Step 2: Claude Code reads the judge prompts and scores the skill
+#   - Read evals/judges/description-judge.md
+#   - Read evals/judges/content-judge.md
+#   - Score each dimension 0–3, compute normalizedScore
+
+# Step 3: Save scores (pipe JSON to stdin)
+echo '<judge-results-json>' | node evals/evaluate.js <skill-name> --save
+```
+
+The judge results JSON must have this shape:
+
+```json
+{
+  "descriptionJudge": {
+    "specificity": { "score": 0, "reasoning": "..." },
+    "triggerCoverage": { "score": 0, "reasoning": "..." },
+    "boundaryclarity": { "score": 0, "reasoning": "..." },
+    "distinctiveness": { "score": 0, "reasoning": "..." },
+    "totalScore": 0,
+    "normalizedScore": 0.0,
+    "summary": "..."
+  },
+  "contentJudge": {
+    "actionability": { "score": 0, "reasoning": "..." },
+    "completeness": { "score": 0, "reasoning": "..." },
+    "codeQuality": { "score": 0, "reasoning": "..." },
+    "conciseness": { "score": 0, "reasoning": "..." },
+    "totalScore": 0,
+    "normalizedScore": 0.0,
+    "summary": "..."
+  }
+}
+```
+
+Quality score formula: `(descriptionJudge.normalizedScore * 0.3 + contentJudge.normalizedScore * 0.7) * 100`
+
+Scores are committed as part of the PR so they are reviewed alongside the skill itself.
+
+### Score Files (Separate from Skills)
+
+Per-skill scores are stored **outside** the skill directories at:
+```
+evals/scores/{category}/{skill}/scores.json
+```
+
+This separation ensures:
+- `skills/` directories stay clean for user downloads (ZIP packages exclude eval data)
+- Eval data is centralized and easy to query programmatically
+
+Scores are fetchable from the website via GitHub raw URLs:
+```
+https://raw.githubusercontent.com/eigent-ai/agent-skills/main/evals/scores/{category}/{skill}/scores.json
+```
+
+### Mapping: Skill → Score
+
+The mapping between skills and their scores follows the same `{category}/{skill}` path:
+
+| Skill Source | Score File |
+|---|---|
+| `skills/{category}/{skill}/SKILL.md` | `evals/scores/{category}/{skill}/scores.json` |
+
+To fetch all scores for display on eigent.ai/skills, enumerate `evals/scores/` or use the GitHub API with a token.
+
+### Eval File Structure
+
+```
+evals/
+  judges/
+    description-judge.md    # LLM prompt for description scoring
+    content-judge.md        # LLM prompt for content scoring
+    assessment-judge.md     # LLM prompt for impact eval rubric scoring (Phase 2)
+  validators/
+    structural.js           # Deterministic SKILL.md checks
+  scorer.js                 # Score persistence and calculation
+  evaluate.js               # Context builder for Claude Code evaluation
+  scores/                   # Per-skill score files (mirrors skills/ structure)
+    {category}/
+      {skill}/
+        scores.json
+  scenarios/                # Per-skill eval scenarios (Phase 2)
+    {category}/
+      {skill}/
+        *.yaml
+  rubrics/                  # Per-skill eval rubrics (Phase 2)
+    {category}/
+      {skill}/
+        *.yaml
+  schema/
+    scenario.schema.json    # YAML schema for eval scenarios (Phase 2)
+    rubric.schema.json      # YAML schema for rubrics (Phase 2)
+```
+
 ## License
 
-This repository is licensed under Apache License 2.0.  
+This repository is licensed under Apache License 2.0.
 See `LICENSE` for full terms.

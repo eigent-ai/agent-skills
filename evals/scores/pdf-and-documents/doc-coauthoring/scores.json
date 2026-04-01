@@ -1,0 +1,116 @@
+{
+  "skill": "doc-coauthoring",
+  "category": "pdf-and-documents",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:22:14.049Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"doc-coauthoring\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (428 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"doc-coauthoring\" matches directory \"doc-coauthoring\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 428 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": true,
+        "severity": "warning",
+        "message": "Found 4 trigger patterns"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 15341 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      }
+    ]
+  },
+  "qualityScore": 81,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 3,
+      "reasoning": "Precise description: structured workflow for co-authoring documentation. Lists specific document types (proposals, technical specs, decision docs). Mentions the three key capabilities: context transfer, iterative refinement, reader verification."
+    },
+    "triggerCoverage": {
+      "score": 3,
+      "reasoning": "Comprehensive triggers: 'writing docs', 'creating proposals', 'drafting specs', 'documentation tasks'. The SKILL.md body adds more: 'write a doc', 'draft a proposal', 'create a spec', 'write up', 'PRD', 'design doc', 'decision doc', 'RFC'. Covers natural language, doc types, and action verbs."
+    },
+    "boundaryclarity": {
+      "score": 1,
+      "reasoning": "No explicit exclusions mentioned. Doesn't clarify what it does NOT handle - e.g., code documentation (mintlify-docs-updater territory), internal comms (internal-comms territory), or simple editing tasks. Could overlap with docx skill for document creation."
+    },
+    "distinctiveness": {
+      "score": 2,
+      "reasoning": "Mostly distinct - the structured co-authoring workflow (3-stage process with reader testing) is unique. However, there is some overlap with docx (creating documents), internal-comms (proposals/comms writing), and mintlify-docs-updater (documentation). The workflow-focus differentiates it but the description could be clearer about this."
+    },
+    "totalScore": 9,
+    "normalizedScore": 0.75,
+    "summary": "Strong description with precise capability definition and comprehensive trigger coverage. The three-stage workflow is well-articulated. Main weakness is lack of boundary clarity - doesn't explicitly distinguish itself from related skills (docx, internal-comms, mintlify-docs-updater)."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 3,
+      "reasoning": "Extremely actionable. Every stage has specific steps, questions to ask, formats to use, and exit conditions. The brainstorming step specifies '5-20 options'. The curation step includes example shorthand formats. Even handles edge cases like 'user gives freeform feedback instead of numbered selections'."
+    },
+    "completeness": {
+      "score": 3,
+      "reasoning": "Comprehensive three-stage workflow covering: trigger conditions, initial offer, context gathering (questions, info dumping, clarifying), refinement (6 detailed sub-steps per section), reader testing (with and without sub-agents), final review, quality checking, and tips for effective guidance. Handles both artifact and file-based workflows."
+    },
+    "codeQuality": {
+      "score": 2,
+      "reasoning": "No code is needed for this skill (it is a workflow/process skill, not a coding skill). It appropriately references tool usage (str_replace, create_file) without code examples. The references to artifacts and integrations are practical. Scored 2 rather than 3 because the tool references could be more specific about exact syntax."
+    },
+    "conciseness": {
+      "score": 2,
+      "reasoning": "At ~15K chars, the skill is moderately verbose for a process workflow. Some sections repeat similar instructions for artifact vs file contexts. The per-section workflow (Steps 1-6) could be more compact. However, the verbosity is mostly justified by the complexity of the workflow and the need for clear procedural guidance."
+    },
+    "totalScore": 10,
+    "normalizedScore": 0.83,
+    "summary": "Exceptionally well-structured workflow skill with high actionability and completeness. The three-stage process is thoroughly documented with clear steps, exit conditions, and handling of variations (artifacts vs files, sub-agents vs manual testing). Minor verbosity from duplicated instructions across contexts."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 81
+}

@@ -1,0 +1,130 @@
+{
+  "skill": "mintlify-docs-updater",
+  "category": "coding-agents-and-ides",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:21:12.056Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"mintlify-docs-updater\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (290 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"mintlify-docs-updater\" matches directory \"mintlify-docs-updater\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 290 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": true,
+        "severity": "warning",
+        "message": "Found 2 trigger patterns"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 2467 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      },
+      {
+        "name": "scripts-exist",
+        "rule": "Referenced scripts/ paths actually exist",
+        "passed": true,
+        "severity": "error",
+        "message": "All 1 script reference(s) found"
+      },
+      {
+        "name": "references-exist",
+        "rule": "Referenced references/ paths actually exist",
+        "passed": true,
+        "severity": "warning",
+        "message": "All 2 reference(s) found"
+      }
+    ]
+  },
+  "qualityScore": 81,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 3,
+      "reasoning": "Very precise: specifies the exact task (maintain Mintlify docs), the exact directories (docs/), exact sections (get_started, core, core/models, troubleshooting), and the nav sync requirement (docs/docs.json). Concrete and actionable."
+    },
+    "triggerCoverage": {
+      "score": 2,
+      "reasoning": "Structural check found 2 trigger patterns. Covers add/update/organize actions and mentions specific paths. Could benefit from more natural language triggers like upload docs, add a page, update navigation."
+    },
+    "boundaryclarity": {
+      "score": 1,
+      "reasoning": "Implicitly scoped to Mintlify docs in this repository, but does not explicitly exclude general documentation writing, README updates, or non-Mintlify doc systems. Boundary is somewhat vague."
+    },
+    "distinctiveness": {
+      "score": 3,
+      "reasoning": "Clearly unique in the collection. No other skill handles Mintlify documentation or docs.json navigation. The doc-coauthoring skill is about general documentation workflows, not Mintlify-specific."
+    },
+    "totalScore": 9,
+    "normalizedScore": 0.75,
+    "summary": "Strong description with precise specificity and clear distinctiveness. The main weakness is limited boundary clarity - it could better define what it does NOT handle (e.g., general docs writing, non-Mintlify systems)."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 3,
+      "reasoning": "Every step is concrete with exact commands to run. The workflow is numbered and unambiguous: read site map, decide path, run ingest script with specific flags, validate results. Multiple command examples cover different scenarios."
+    },
+    "completeness": {
+      "score": 2,
+      "reasoning": "Covers the main workflows: adding pages, subgroups, insertion ordering, and dry-run preview. Editing rules are clear. However, lacks guidance on handling errors (what if ingest fails, what if docs.json is malformed), updating existing pages vs adding new ones, or removing pages."
+    },
+    "codeQuality": {
+      "score": 2,
+      "reasoning": "Command examples are correct and cover key scenarios (basic add, subgroup, insert-after, dry-run). However, there are no inline code examples beyond CLI commands - no Python or JSON snippets showing the expected frontmatter format or docs.json structure."
+    },
+    "conciseness": {
+      "score": 3,
+      "reasoning": "Extremely efficient. No redundancy at all. Every section serves a clear purpose. The skill delegates complexity to the script and references, keeping SKILL.md lean."
+    },
+    "totalScore": 10,
+    "normalizedScore": 0.83,
+    "summary": "Well-structured and concise skill with highly actionable instructions. The delegation to scripts and references is well done. Could improve with error handling guidance and page update/removal workflows."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 81
+}

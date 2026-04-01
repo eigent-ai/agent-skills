@@ -1,0 +1,123 @@
+{
+  "skill": "docx",
+  "category": "pdf-and-documents",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:21:29.718Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"docx\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (785 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"docx\" matches directory \"docx\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": false,
+        "severity": "warning",
+        "message": "Description length: 785 chars (expected 50–500)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": true,
+        "severity": "warning",
+        "message": "Found 7 trigger patterns"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 19182 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      },
+      {
+        "name": "scripts-exist",
+        "rule": "Referenced scripts/ paths actually exist",
+        "passed": true,
+        "severity": "error",
+        "message": "All 1 script reference(s) found"
+      }
+    ]
+  },
+  "qualityScore": 94,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 3,
+      "reasoning": "Very precise: mentions create/read/edit/manipulate, specific formatting features (TOC, headings, page numbers, letterheads), tracked changes, comments, find-and-replace, images"
+    },
+    "triggerCoverage": {
+      "score": 3,
+      "reasoning": "Comprehensive triggers: Word doc, word document, .docx, report/memo/letter/template, plus action verbs for extraction, reorganization, images, tracked changes"
+    },
+    "boundaryclarity": {
+      "score": 3,
+      "reasoning": "Explicit negative triggers: Do NOT use for PDFs, spreadsheets, Google Docs, or general coding tasks unrelated to document generation"
+    },
+    "distinctiveness": {
+      "score": 3,
+      "reasoning": "Clearly distinct from pdf/pptx/xlsx by file type (.docx) and use case (Word documents). No meaningful overlap with other skills"
+    },
+    "totalScore": 12,
+    "normalizedScore": 1,
+    "summary": "Excellent description with precise capabilities, comprehensive trigger phrases covering file types and natural language terms, explicit exclusions, and clear distinctiveness from sibling document skills."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 3,
+      "reasoning": "Every instruction is concrete with exact code examples, bash commands, and critical rules clearly marked. Quick reference table maps tasks to approaches immediately."
+    },
+    "completeness": {
+      "score": 3,
+      "reasoning": "Covers creation (docx-js), editing (unpack/XML/repack), reading (pandoc), conversion (.doc to .docx, to images), tracked changes, comments, images, XML reference, validation, and auto-repair. Error handling via validate.py."
+    },
+    "codeQuality": {
+      "score": 3,
+      "reasoning": "Excellent runnable JavaScript and bash code with critical warnings (e.g., never use unicode bullets, always set page size, tables need dual widths). Common pitfalls well documented."
+    },
+    "conciseness": {
+      "score": 2,
+      "reasoning": "At 19K chars it is lengthy, but the complexity of the OOXML format and the number of gotchas (docx-js quirks, XML schema compliance, tracked changes patterns) justifies most of the content. Some redundancy in critical rules section vs inline warnings."
+    },
+    "totalScore": 11,
+    "normalizedScore": 0.917,
+    "summary": "Highly actionable and comprehensive skill covering all major docx workflows with excellent code quality. Slightly verbose due to the inherent complexity of the format, but nearly all content is justified."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 94
+}

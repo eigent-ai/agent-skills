@@ -1,0 +1,116 @@
+{
+  "skill": "brand-guidelines",
+  "category": "web-and-frontend-development",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:21:14.978Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"brand-guidelines\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (236 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"brand-guidelines\" matches directory \"brand-guidelines\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 236 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": false,
+        "severity": "warning",
+        "message": "Only 1 trigger pattern(s) found (expected at least 2)"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 1913 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      }
+    ]
+  },
+  "qualityScore": 25,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 1,
+      "reasoning": "Description says 'applies brand colors and typography' which is somewhat specific, but 'any sort of artifact' is vague. It names Anthropic but doesn't specify concrete actions like 'recolor slides' or 'restyle HTML'."
+    },
+    "triggerCoverage": {
+      "score": 1,
+      "reasoning": "Structural check found only 1 trigger pattern. The description mentions 'brand colors', 'style guidelines', 'visual formatting' but lacks action verbs and file type triggers."
+    },
+    "boundaryclarity": {
+      "score": 0,
+      "reasoning": "No mention of what this skill does NOT do. No exclusions or negative triggers. Could easily be confused with general styling tasks."
+    },
+    "distinctiveness": {
+      "score": 1,
+      "reasoning": "Significant overlap with theme-factory (both apply colors/fonts to artifacts) and frontend-design (both deal with visual styling). The Anthropic-specific angle helps somewhat but is narrow."
+    },
+    "totalScore": 3,
+    "normalizedScore": 0.25,
+    "summary": "The description is narrowly focused on Anthropic branding but lacks trigger coverage, boundary clarity, and distinctiveness from other styling skills."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 1,
+      "reasoning": "Lists colors and fonts but provides no step-by-step workflow for applying them. No instructions on how to actually apply branding to different artifact types (HTML, slides, docs). The 'Features' section describes behaviors but not how to invoke them."
+    },
+    "completeness": {
+      "score": 1,
+      "reasoning": "Covers only the happy path of knowing the colors/fonts. No guidance on handling different artifact types, no error handling, no workflow for when fonts aren't available beyond mentioning fallbacks. Missing instructions for HTML/CSS artifacts vs slides vs docs."
+    },
+    "codeQuality": {
+      "score": 0,
+      "reasoning": "No code examples despite being a styling skill. Mentions python-pptx RGBColor class but provides no code snippets. No CSS examples, no HTML examples, no script to automate branding application."
+    },
+    "conciseness": {
+      "score": 1,
+      "reasoning": "Moderate redundancy - the 'Features' and 'Technical Details' sections repeat information about fonts and fallbacks that was already stated. The typography information appears three times in slightly different forms."
+    },
+    "totalScore": 3,
+    "normalizedScore": 0.25,
+    "summary": "The skill is essentially a color/font reference card with no actionable workflow, no code, and significant redundancy. It needs concrete implementation steps and code examples for different artifact types."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 25
+}

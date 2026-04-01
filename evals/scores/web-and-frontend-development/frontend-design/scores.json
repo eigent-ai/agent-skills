@@ -1,0 +1,116 @@
+{
+  "skill": "frontend-design",
+  "category": "web-and-frontend-development",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:21:32.025Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"frontend-design\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (399 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"frontend-design\" matches directory \"frontend-design\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 399 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": true,
+        "severity": "warning",
+        "message": "Found 4 trigger patterns"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 3956 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      }
+    ]
+  },
+  "qualityScore": 55,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 3,
+      "reasoning": "Very precise: 'production-grade frontend interfaces with high design quality'. Lists concrete outputs (websites, landing pages, dashboards, React components, HTML/CSS layouts). Specifies the differentiator of avoiding generic AI aesthetics."
+    },
+    "triggerCoverage": {
+      "score": 2,
+      "reasoning": "Structural check found 4 trigger patterns. Covers web components, pages, applications, styling/beautifying. Could improve with file type triggers (.html, .css, .jsx) and more natural language variations like 'make it look better' or 'redesign this UI'."
+    },
+    "boundaryclarity": {
+      "score": 1,
+      "reasoning": "Implicitly excludes non-web design but doesn't explicitly state what it does NOT do. No mention of excluding backend, data processing, or non-visual tasks. The 'not generic AI aesthetics' is a quality boundary, not a scope boundary."
+    },
+    "distinctiveness": {
+      "score": 2,
+      "reasoning": "Mostly distinct from other skills. Overlaps somewhat with web-artifacts-builder (both create web UIs) but frontend-design focuses on design quality while web-artifacts-builder focuses on the build toolchain. Could be confused with canvas-design for visual work."
+    },
+    "totalScore": 8,
+    "normalizedScore": 0.67,
+    "summary": "Strong specificity with concrete examples and clear purpose. Good trigger coverage but could add file type triggers and more natural language. Lacks explicit exclusions and has some overlap with web-artifacts-builder."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 2,
+      "reasoning": "Provides a clear design thinking framework (Purpose, Tone, Constraints, Differentiation) and specific aesthetic guidelines. The typography, color, motion, spatial, and background sections give concrete direction. However, instructions are more philosophical than procedural - no step-by-step build process."
+    },
+    "completeness": {
+      "score": 2,
+      "reasoning": "Covers the main design workflow well: thinking phase, aesthetic guidelines, anti-patterns. Handles the important case of avoiding generic AI output. Missing: accessibility considerations beyond a brief mention, responsive design guidance, performance optimization, testing/validation steps."
+    },
+    "codeQuality": {
+      "score": 0,
+      "reasoning": "No code examples at all despite being a coding-focused skill. No CSS snippets, no React component examples, no HTML templates. The skill tells the agent what to build but never shows how. Even a single example of a well-designed component would help."
+    },
+    "conciseness": {
+      "score": 2,
+      "reasoning": "Mostly efficient with good information density. The anti-patterns section and aesthetic guidelines are well-organized. Some redundancy between the opening paragraph and the Design Thinking section, and the final motivational paragraph adds little actionable content."
+    },
+    "totalScore": 6,
+    "normalizedScore": 0.5,
+    "summary": "Strong design philosophy and aesthetic direction but lacks any code examples, which is a significant gap for a skill focused on generating code. The guidelines are more inspirational than procedural."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 55
+}

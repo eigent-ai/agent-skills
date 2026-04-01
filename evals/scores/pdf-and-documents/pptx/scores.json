@@ -1,0 +1,123 @@
+{
+  "skill": "pptx",
+  "category": "pdf-and-documents",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:21:53.581Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"pptx\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (694 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"pptx\" matches directory \"pptx\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": false,
+        "severity": "warning",
+        "message": "Description length: 694 chars (expected 50–500)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": true,
+        "severity": "warning",
+        "message": "Found 3 trigger patterns"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 8344 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      },
+      {
+        "name": "scripts-exist",
+        "rule": "Referenced scripts/ paths actually exist",
+        "passed": true,
+        "severity": "error",
+        "message": "All 1 script reference(s) found"
+      }
+    ]
+  },
+  "qualityScore": 86,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 3,
+      "reasoning": "Very precise about scope: lists creating, reading/parsing/extracting, editing/modifying, combining/splitting, templates/layouts/speaker notes/comments. Clarifies that even reading for downstream use triggers this skill."
+    },
+    "triggerCoverage": {
+      "score": 3,
+      "reasoning": "Comprehensive triggers: deck, slides, presentation, .pptx filename. Covers input/output/both scenarios. Natural language terms well covered."
+    },
+    "boundaryclarity": {
+      "score": 2,
+      "reasoning": "Implies broad scope (any time .pptx is involved in any way) which sets clear positive boundaries, but lacks explicit Do NOT exclusions like docx and xlsx have."
+    },
+    "distinctiveness": {
+      "score": 3,
+      "reasoning": "Clearly unique as the presentation/slides skill. No meaningful overlap with other skills in the collection."
+    },
+    "totalScore": 11,
+    "normalizedScore": 0.917,
+    "summary": "Strong description with precise capability listing and comprehensive trigger coverage. Would benefit from explicit negative triggers but overall very clear about when to activate."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 3,
+      "reasoning": "Clear workflows with concrete commands for reading, editing, and creating. QA section provides specific grep patterns for finding leftover placeholders. Visual QA prompt template is directly usable."
+    },
+    "completeness": {
+      "score": 3,
+      "reasoning": "Covers reading, editing workflow, creating from scratch, design guidance with color palettes and typography, comprehensive QA process with verification loop, and image conversion. Delegates detailed instructions to reference files appropriately."
+    },
+    "codeQuality": {
+      "score": 2,
+      "reasoning": "Main SKILL.md provides bash commands but delegates most code to editing.md and pptxgenjs.md reference files. Inline code is correct but limited to commands rather than full examples."
+    },
+    "conciseness": {
+      "score": 2,
+      "reasoning": "Design ideas section with 10 color palettes, typography tables, and spacing guidelines adds significant bulk. While useful, some of this could be more concise or in a reference file."
+    },
+    "totalScore": 10,
+    "normalizedScore": 0.833,
+    "summary": "Well-structured skill with strong actionability and completeness. Design guidance is valuable but adds bulk. Code is delegated to reference files which is reasonable but means the main SKILL.md has fewer inline examples."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 86
+}

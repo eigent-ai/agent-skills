@@ -1,0 +1,16 @@
+name: create-invoice-rubric
+type: weighted_checklist
+context: Evaluating a generated .docx invoice document
+checklist:
+  - name: valid-docx
+    description: Output is a valid, openable .docx file
+    max_score: 3
+  - name: table-formatting
+    description: Invoice table has correct columns, alignment, and totals
+    max_score: 3
+  - name: professional-layout
+    description: Document has proper margins, fonts, and visual hierarchy
+    max_score: 2
+  - name: required-content
+    description: All required fields present (company names, amounts, payment terms)
+    max_score: 2
