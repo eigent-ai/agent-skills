@@ -1,0 +1,123 @@
+{
+  "skill": "xlsx",
+  "category": "pdf-and-documents",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:22:04.773Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"xlsx\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (943 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"xlsx\" matches directory \"xlsx\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": false,
+        "severity": "warning",
+        "message": "Description length: 943 chars (expected 50–500)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": true,
+        "severity": "warning",
+        "message": "Found 3 trigger patterns"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 10423 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      },
+      {
+        "name": "scripts-exist",
+        "rule": "Referenced scripts/ paths actually exist",
+        "passed": true,
+        "severity": "error",
+        "message": "All 2 script reference(s) found"
+      }
+    ]
+  },
+  "qualityScore": 94,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 3,
+      "reasoning": "Precise about spreadsheet operations: open/read/edit/fix, create from scratch or other sources, convert between formats. Includes messy data cleaning as a trigger. Specifies deliverable must be a spreadsheet file."
+    },
+    "triggerCoverage": {
+      "score": 3,
+      "reasoning": "Covers .xlsx, .xlsm, .csv, .tsv file types. Includes casual file references. Action verbs: open, read, edit, fix, create, convert, clean, restructure. Natural language like the xlsx in my downloads."
+    },
+    "boundaryclarity": {
+      "score": 3,
+      "reasoning": "Explicit and thorough exclusions: Do NOT trigger for Word documents, HTML reports, standalone Python scripts, database pipelines, or Google Sheets API integration, even if tabular data is involved."
+    },
+    "distinctiveness": {
+      "score": 3,
+      "reasoning": "Clearly unique as the spreadsheet skill. The explicit boundary exclusions make it very distinct from other document format skills."
+    },
+    "totalScore": 12,
+    "normalizedScore": 1,
+    "summary": "Excellent description with precise capabilities, comprehensive file type and action verb triggers, thorough explicit exclusions, and clear distinctiveness. One of the strongest descriptions in the collection."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 3,
+      "reasoning": "Concrete code for every workflow. Wrong/right code examples for formulas vs hardcoding. Clear step-by-step common workflow. Formula verification checklist with specific checks."
+    },
+    "completeness": {
+      "score": 3,
+      "reasoning": "Covers creation, editing, reading/analysis, formula recalculation with error detection, financial modeling standards (color coding, number formatting, formula construction). Verification checklist addresses common pitfalls."
+    },
+    "codeQuality": {
+      "score": 3,
+      "reasoning": "Excellent Python code examples using openpyxl and pandas. Wrong/right patterns prevent common mistakes. recalc.py output format documented with JSON example. Library selection guidance."
+    },
+    "conciseness": {
+      "score": 2,
+      "reasoning": "Financial modeling section adds significant length with color coding standards, number formatting, and documentation requirements. While valuable for finance use cases, it makes the skill lengthy for general spreadsheet tasks."
+    },
+    "totalScore": 11,
+    "normalizedScore": 0.917,
+    "summary": "Highly actionable and comprehensive skill with excellent code quality. Financial modeling standards add domain-specific value but increase length. Strong wrong/right examples prevent common mistakes."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 94
+}

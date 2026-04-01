@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Skill Eval Rubric",
+  "description": "Defines a scoring rubric for evaluating agent task outputs",
+  "type": "object",
+  "required": ["name", "type", "context", "checklist"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Unique identifier for this rubric (kebab-case)",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["weighted_checklist"],
+      "description": "Rubric type (currently only weighted_checklist supported)"
+    },
+    "context": {
+      "type": "string",
+      "description": "Context for the LLM judge about what is being evaluated"
+    },
+    "checklist": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "max_score"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Criterion identifier (kebab-case)",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "description": {
+            "type": "string",
+            "description": "What this criterion evaluates"
+          },
+          "max_score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Maximum score for this criterion (1-5)"
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "description": "List of scoring criteria"
+    }
+  },
+  "additionalProperties": false
+}

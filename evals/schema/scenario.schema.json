@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Skill Eval Scenario",
+  "description": "Defines an evaluation scenario for A/B testing a skill's impact",
+  "type": "object",
+  "required": ["name", "description", "task", "rubric", "variants"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Unique identifier for this scenario (kebab-case)",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of what this scenario tests"
+    },
+    "task": {
+      "type": "string",
+      "description": "The full task prompt given to the agent"
+    },
+    "rubric": {
+      "type": "string",
+      "description": "Name of the rubric file (without extension) in the rubrics/ directory"
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["baseline", "with-skill"]
+      },
+      "minItems": 2,
+      "description": "Which variants to run (baseline = no skill, with-skill = skill loaded)"
+    },
+    "timeout": {
+      "type": "integer",
+      "description": "Max execution time in seconds per variant (default: 120)",
+      "default": 120
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Optional tags for filtering scenarios"
+    }
+  },
+  "additionalProperties": false
+}

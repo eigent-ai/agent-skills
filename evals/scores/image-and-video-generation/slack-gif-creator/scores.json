@@ -1,0 +1,116 @@
+{
+  "skill": "slack-gif-creator",
+  "category": "image-and-video-generation",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:21:49.207Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"slack-gif-creator\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (227 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"slack-gif-creator\" matches directory \"slack-gif-creator\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 227 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": true,
+        "severity": "warning",
+        "message": "Found 2 trigger patterns"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 7527 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      }
+    ]
+  },
+  "qualityScore": 93,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 3,
+      "reasoning": "Very precise: animated GIFs, optimized for Slack, provides constraints/validation tools/animation concepts. Includes a concrete example trigger phrase: 'make me a GIF of X doing Y for Slack'."
+    },
+    "triggerCoverage": {
+      "score": 2,
+      "reasoning": "Includes one explicit natural language trigger example. Covers 'animated GIFs for Slack' well. Missing triggers for emoji creation, Slack custom emoji, reaction GIFs, or variations like 'create a Slack emoji' or 'animated sticker'."
+    },
+    "boundaryclarity": {
+      "score": 1,
+      "reasoning": "Implicitly scoped to Slack (mentions 'optimized for Slack') but doesn't explicitly exclude non-Slack GIFs, video creation, or static image creation. No negative triggers defined."
+    },
+    "distinctiveness": {
+      "score": 3,
+      "reasoning": "Clearly unique in the collection. No other skill creates animated GIFs or targets Slack specifically. No meaningful overlap with any other skill."
+    },
+    "totalScore": 9,
+    "normalizedScore": 0.75,
+    "summary": "Highly specific and clearly unique skill. The description precisely identifies the capability and includes a concrete trigger example. Could improve trigger coverage with more variations and add explicit boundary exclusions."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 3,
+      "reasoning": "Every section provides specific, actionable instructions. The core workflow is a concrete 3-step process with runnable code. Drawing instructions include exact PIL primitives with parameters. Animation concepts provide specific implementation approaches (math functions, easing types, parameter ranges)."
+    },
+    "completeness": {
+      "score": 3,
+      "reasoning": "Comprehensive coverage: Slack requirements (dimensions, FPS, colors), core workflow, drawing from scratch, user-uploaded images, available utilities (GIFBuilder, validators, easing, frame helpers), animation concepts (8 types), optimization strategies, dependencies, and philosophy section clarifying what the skill does/doesn't do."
+    },
+    "codeQuality": {
+      "score": 3,
+      "reasoning": "Excellent code examples throughout. Core workflow is complete and runnable. Drawing primitives have clear syntax. Utility imports are well-documented with usage examples. The code is practical Python/PIL that would actually work. Backed by real utility files (gif_builder, validators, easing, frame_composer)."
+    },
+    "conciseness": {
+      "score": 3,
+      "reasoning": "At ~7.5K chars, this is lean and efficient. No redundancy. Each section serves a distinct purpose. The animation concepts section is a particularly good example of density - 8 animation types described concisely with implementation hints. The philosophy section at the end cleanly clarifies scope."
+    },
+    "totalScore": 12,
+    "normalizedScore": 1,
+    "summary": "Exemplary skill content. Every section is actionable with runnable code, the coverage is comprehensive without being verbose, and the supporting utility files are well-documented. The skill is concise yet thorough, with excellent code quality backed by real implementation files."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 93
+}

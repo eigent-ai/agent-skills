@@ -1,0 +1,119 @@
+name: Skill Review
+
+on:
+  pull_request:
+    paths: ['skills/**/SKILL.md']
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  structural-validation:
+    name: Structural Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run structural checks
+        id: structural
+        run: |
+          node evals/validators/structural.js --all 2>&1 | tee /tmp/structural-output.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
+
+      - name: Generate PR comment
+        if: always()
+        run: |
+          node -e "
+            const fs = require('fs');
+            const path = require('path');
+            const { validateSkill } = require('./evals/validators/structural');
+
+            const skillsRoot = path.join(__dirname, 'skills');
+            const results = [];
+
+            for (const cat of fs.readdirSync(skillsRoot, { withFileTypes: true })) {
+              if (!cat.isDirectory()) continue;
+              for (const skill of fs.readdirSync(path.join(skillsRoot, cat.name), { withFileTypes: true })) {
+                if (!skill.isDirectory()) continue;
+                const skillDir = path.join(skillsRoot, cat.name, skill.name);
+                if (fs.existsSync(path.join(skillDir, 'SKILL.md'))) {
+                  results.push(validateSkill(skillDir));
+                }
+              }
+            }
+
+            const total = results.length;
+            const passed = results.filter(r => r.overallPassed).length;
+            const failed = results.filter(r => !r.overallPassed);
+
+            let body = '## Skill Review — Structural Validation\n\n';
+            body += '| Status | Count |\n|--------|-------|\n';
+            body += '| ✅ Passed | ' + passed + '/' + total + ' |\n';
+            body += '| ❌ Failed | ' + (total - passed) + '/' + total + ' |\n\n';
+
+            if (failed.length > 0) {
+              body += '### Issues Found\n\n';
+              for (const r of failed) {
+                body += '#### \`' + r.category + '/' + r.skill + '\`\n';
+                for (const c of r.checks) {
+                  if (!c.passed) {
+                    const icon = c.severity === 'error' ? '🔴' : '🟡';
+                    body += '- ' + icon + ' **' + c.name + '**: ' + c.message + '\n';
+                  }
+                }
+                body += '\n';
+              }
+            } else {
+              body += '✅ All skills pass structural validation.\n';
+            }
+
+            // Check for existing quality scores (stored in evals/scores/{category}/{skill}/)
+            const evalsScoresRoot = path.join(__dirname, 'evals', 'scores');
+            const scored = [];
+            for (const r of results) {
+              const scoresPath = path.join(evalsScoresRoot, r.category, r.skill, 'scores.json');
+              if (fs.existsSync(scoresPath)) {
+                try {
+                  const scores = JSON.parse(fs.readFileSync(scoresPath, 'utf-8'));
+                  if (scores.qualityScore != null) {
+                    scored.push({ ...r, qualityScore: scores.qualityScore, evaluatedAt: scores.evaluatedAt });
+                  }
+                } catch {}
+              }
+            }
+
+            if (scored.length > 0) {
+              body += '\n### Quality Scores\n\n';
+              body += '| Skill | Quality | Last Evaluated |\n|-------|---------|----------------|\n';
+              for (const s of scored) {
+                const emoji = s.qualityScore >= 80 ? '🟢' : s.qualityScore >= 60 ? '🟡' : '🔴';
+                const evaluated = s.evaluatedAt && String(s.evaluatedAt).includes('T')
+                  ? String(s.evaluatedAt).split('T')[0]
+                  : (s.evaluatedAt ? String(s.evaluatedAt) : '—');
+                body += '| \`' + s.category + '/' + s.skill + '\` | ' + emoji + ' ' + s.qualityScore + '/100 | ' + evaluated + ' |\n';
+              }
+            }
+
+            const unscored = results.filter(r => {
+              const scoresPath = path.join(evalsScoresRoot, r.category, r.skill, 'scores.json');
+              return r.overallPassed && !fs.existsSync(scoresPath);
+            });
+            if (unscored.length > 0) {
+              body += '\n> **' + unscored.length + ' skill(s)** need LLM evaluation. ';
+              body += 'Use Claude Code to run: \`node evals/evaluate.js <skill-name>\`\n';
+            }
+
+            fs.writeFileSync('/tmp/comment-body.md', body);
+          "
+
+      - name: Post PR comment
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: /tmp/comment-body.md
+          header: skill-review
+
+      - name: Check for errors
+        run: |
+          node evals/validators/structural.js --all > /dev/null 2>&1

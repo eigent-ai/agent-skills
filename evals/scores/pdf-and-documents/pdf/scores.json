@@ -1,0 +1,116 @@
+{
+  "skill": "pdf",
+  "category": "pdf-and-documents",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:21:42.437Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"pdf\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (437 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"pdf\" matches directory \"pdf\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 437 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": true,
+        "severity": "warning",
+        "message": "Found 4 trigger patterns"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 7511 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      }
+    ]
+  },
+  "qualityScore": 82,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 2,
+      "reasoning": "Lists capabilities well (read, merge, split, rotate, watermark, encrypt, OCR, forms, create) but at a high level without mentioning specific concrete actions like the other document skills do"
+    },
+    "triggerCoverage": {
+      "score": 2,
+      "reasoning": "Covers main cases with action verbs (reading, merging, splitting, rotating, watermarking, creating, filling, encrypting, extracting, OCR) but fewer explicit trigger phrases compared to siblings. Mentions .pdf file trigger."
+    },
+    "boundaryclarity": {
+      "score": 1,
+      "reasoning": "No explicit Do NOT exclusions. Does not mention what should not trigger this skill, unlike docx and xlsx which have clear negative triggers."
+    },
+    "distinctiveness": {
+      "score": 2,
+      "reasoning": "Mostly distinct by file type (.pdf) but has slight overlap with canvas-design skill which also outputs .pdf documents. The description does not address this boundary."
+    },
+    "totalScore": 7,
+    "normalizedScore": 0.583,
+    "summary": "Adequate description covering the main PDF capabilities but lacking explicit boundary exclusions and with fewer trigger phrases than sibling document skills. Could benefit from negative triggers and addressing overlap with canvas-design."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 3,
+      "reasoning": "Every section has concrete, directly runnable Python code and CLI commands. Quick start, library-specific examples, and command-line alternatives all provide copy-paste-ready code."
+    },
+    "completeness": {
+      "score": 2,
+      "reasoning": "Good coverage of main workflows (read, merge, split, rotate, extract, create, watermark, encrypt, OCR, tables). Delegates advanced features to REFERENCE.md and forms to FORMS.md. No error handling guidance in main file."
+    },
+    "codeQuality": {
+      "score": 3,
+      "reasoning": "Clean, correct Python code covering pypdf, pdfplumber, reportlab, and CLI tools. Important warning about Unicode subscripts in ReportLab. Multiple library alternatives for each task."
+    },
+    "conciseness": {
+      "score": 3,
+      "reasoning": "Efficient and well-structured at 7.5K chars. Quick reference table at the end. No redundancy. Clean separation between inline content and reference docs."
+    },
+    "totalScore": 11,
+    "normalizedScore": 0.917,
+    "summary": "Strong content with excellent code quality and conciseness. Covers main PDF workflows well and delegates advanced topics cleanly to reference files. Could improve completeness by adding error handling guidance."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 82
+}

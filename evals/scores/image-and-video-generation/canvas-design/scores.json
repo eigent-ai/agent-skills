@@ -1,0 +1,116 @@
+{
+  "skill": "canvas-design",
+  "category": "image-and-video-generation",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:21:27.952Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"canvas-design\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (289 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"canvas-design\" matches directory \"canvas-design\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 289 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": true,
+        "severity": "warning",
+        "message": "Found 3 trigger patterns"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 11566 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      }
+    ]
+  },
+  "qualityScore": 47,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 2,
+      "reasoning": "Describes output formats (.png, .pdf) and mentions 'design philosophy' approach. Lists examples like 'poster, piece of art, design, or other static piece'. However 'beautiful visual art' and 'other static piece' are somewhat vague."
+    },
+    "triggerCoverage": {
+      "score": 2,
+      "reasoning": "Covers main triggers: poster, art, design, static piece. Missing more specific triggers like 'infographic', 'album cover', 'event flyer', 'wall art', 'print design', or natural language like 'design me something beautiful'."
+    },
+    "boundaryclarity": {
+      "score": 1,
+      "reasoning": "Mentions copyright avoidance (never copying existing artists), but no explicit exclusions for what this skill should NOT handle. Doesn't differentiate from frontend-design, brand-guidelines, or algorithmic-art in the description."
+    },
+    "distinctiveness": {
+      "score": 2,
+      "reasoning": "Mostly distinct from algorithmic-art (static vs code-based), but has overlap with frontend-design and brand-guidelines. The 'design philosophy' approach and static output focus help differentiate it, but 'create beautiful visual art' is broad enough to overlap with multiple skills."
+    },
+    "totalScore": 7,
+    "normalizedScore": 0.58,
+    "summary": "Description communicates the core capability (static visual design via philosophy-driven approach) but uses somewhat vague language. Trigger coverage handles main cases but misses many specific design types. Weak boundary clarity with no explicit exclusions. Overlap risk with several other visual skills."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 2,
+      "reasoning": "The two-phase workflow (philosophy then canvas) is clear. Philosophy creation steps are well-defined with naming, articulation, and examples. However, the canvas creation phase is more aspirational than prescriptive - lots of 'museum quality' and 'masterpiece' language but fewer concrete technical steps for actual PDF/PNG generation."
+    },
+    "completeness": {
+      "score": 2,
+      "reasoning": "Covers philosophy creation thoroughly with examples, canvas creation guidelines, refinement step, and multi-page option. However, missing practical details: how to actually generate PDFs/PNGs (what library? what tool?), no error handling, no guidance on canvas sizes or resolution, and the 'FINAL STEP' auto-refinement is assumed without clear mechanics."
+    },
+    "codeQuality": {
+      "score": 0,
+      "reasoning": "No code examples at all despite being a skill that requires programmatic generation of PDF/PNG files. The skill mentions using fonts from canvas-fonts directory but provides no code for loading or using them. No examples of how to actually render the design to a file."
+    },
+    "conciseness": {
+      "score": 1,
+      "reasoning": "At ~11.5K chars, there is substantial repetition of craftsmanship emphasis (mentioned 8+ times with variations). The philosophy examples are useful but could be more compact. The CANVAS CREATION section has a very long paragraph that mixes many concerns. The 'FINAL STEP' section essentially repeats the quality mandate already stated multiple times."
+    },
+    "totalScore": 5,
+    "normalizedScore": 0.42,
+    "summary": "Strong philosophy creation framework but weak on technical execution. The complete absence of code is a significant gap for a skill that must generate PDF/PNG files programmatically. Heavy repetition of quality/craftsmanship emphasis adds verbosity without actionable guidance. The creative vision is clear but the practical implementation path is not."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 47
+}

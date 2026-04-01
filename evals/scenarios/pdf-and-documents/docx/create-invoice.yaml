@@ -1,0 +1,15 @@
+name: create-invoice
+description: Create a professional invoice document with a table, logo, and proper formatting
+task: |
+  Create a Word document for an invoice from "Acme Corp" to "Widget Inc"
+  for 3 line items totaling $4,250. Include company logo, payment terms,
+  and a formatted table.
+rubric: create-invoice-rubric
+variants:
+  - baseline
+  - with-skill
+timeout: 120
+tags:
+  - creation
+  - formatting
+  - tables

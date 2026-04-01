@@ -1,0 +1,123 @@
+{
+  "skill": "webapp-testing",
+  "category": "browser-and-automation",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:20:53.312Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"webapp-testing\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (204 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"webapp-testing\" matches directory \"webapp-testing\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 204 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": false,
+        "severity": "warning",
+        "message": "Only 0 trigger pattern(s) found (expected at least 2)"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 3574 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      },
+      {
+        "name": "scripts-exist",
+        "rule": "Referenced scripts/ paths actually exist",
+        "passed": true,
+        "severity": "error",
+        "message": "All 1 script reference(s) found"
+      }
+    ]
+  },
+  "qualityScore": 77,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 2,
+      "reasoning": "Describes concrete capabilities (verifying frontend, debugging UI, screenshots, browser logs) but could be more precise about specific actions like form filling, navigation testing, or API response validation."
+    },
+    "triggerCoverage": {
+      "score": 1,
+      "reasoning": "The structural check found 0 trigger patterns. The description mentions general capabilities but lacks explicit trigger phrases like file types, action verbs, or natural language patterns that would help an agent decide when to activate."
+    },
+    "boundaryclarity": {
+      "score": 0,
+      "reasoning": "No mention of what this skill does NOT do. No exclusions or negative triggers. Could be confused with general browser automation, scraping, or end-to-end testing frameworks."
+    },
+    "distinctiveness": {
+      "score": 2,
+      "reasoning": "Reasonably distinct from other skills in the collection since no other skill focuses on Playwright-based webapp testing. However, some overlap potential with browser-related tasks in other skills."
+    },
+    "totalScore": 5,
+    "normalizedScore": 0.42,
+    "summary": "Description conveys the core purpose but lacks trigger phrases and boundary definitions. Adding explicit trigger patterns and exclusions would significantly improve routing accuracy."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 3,
+      "reasoning": "Every instruction is concrete and actionable: decision tree for choosing approach, specific commands for with_server.py, exact Playwright code patterns, and clear best practices. The reconnaissance-then-action pattern is particularly well-structured."
+    },
+    "completeness": {
+      "score": 2,
+      "reasoning": "Covers main workflows (static HTML, dynamic apps with/without server) and includes common pitfalls. However, lacks error handling guidance (what to do when Playwright install fails, port conflicts, timeout issues) and does not cover testing assertions or reporting."
+    },
+    "codeQuality": {
+      "score": 3,
+      "reasoning": "Code examples are correct, runnable, and well-commented. The with_server.py usage examples cover single and multiple server scenarios. Playwright code includes critical annotations like the networkidle wait comment. Example files are referenced for additional patterns."
+    },
+    "conciseness": {
+      "score": 3,
+      "reasoning": "Very efficient use of space. Decision tree is compact yet informative. No redundant explanations. The instruction to run --help first rather than reading source is an excellent context-saving pattern."
+    },
+    "totalScore": 11,
+    "normalizedScore": 0.92,
+    "summary": "Excellent content quality with highly actionable instructions, good code examples, and efficient use of context. The decision tree approach is particularly effective. Main gap is limited error handling coverage."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 77
+}

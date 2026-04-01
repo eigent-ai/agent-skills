@@ -1,0 +1,123 @@
+{
+  "skill": "web-artifacts-builder",
+  "category": "web-and-frontend-development",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:22:06.257Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"web-artifacts-builder\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (288 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"web-artifacts-builder\" matches directory \"web-artifacts-builder\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 288 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": false,
+        "severity": "warning",
+        "message": "Only 0 trigger pattern(s) found (expected at least 2)"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 2695 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      },
+      {
+        "name": "scripts-exist",
+        "rule": "Referenced scripts/ paths actually exist",
+        "passed": true,
+        "severity": "error",
+        "message": "All 2 script reference(s) found"
+      }
+    ]
+  },
+  "qualityScore": 78,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 3,
+      "reasoning": "Very precise: 'multi-component claude.ai HTML artifacts using React, Tailwind CSS, shadcn/ui'. Specifies when to use (complex artifacts with state management, routing, shadcn/ui) and when NOT to use (simple single-file HTML/JSX). Names exact technologies."
+    },
+    "triggerCoverage": {
+      "score": 0,
+      "reasoning": "Structural check found 0 trigger patterns. Despite the precise description, it lacks explicit trigger phrases, action verbs, or file type patterns. Missing triggers like 'build an artifact', 'create a React app', 'multi-page app'."
+    },
+    "boundaryclarity": {
+      "score": 3,
+      "reasoning": "Excellent boundary clarity: explicitly states 'not for simple single-file HTML/JSX artifacts'. This is a clear, explicit negative trigger that draws a precise line between this skill and simpler alternatives."
+    },
+    "distinctiveness": {
+      "score": 2,
+      "reasoning": "Mostly distinct. The claude.ai artifact focus and build toolchain (init + bundle scripts) differentiate it from frontend-design which is about design quality. Some overlap with frontend-design for web UI creation, but the scope (complex multi-component apps) is clear."
+    },
+    "totalScore": 8,
+    "normalizedScore": 0.67,
+    "summary": "Excellent specificity and boundary clarity with explicit negative triggers. Falls short on trigger phrase coverage - needs more natural language patterns despite the precise technical description."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 3,
+      "reasoning": "Every step is specific and unambiguous: run init-artifact.sh with project name, edit generated files, run bundle-artifact.sh, share bundle.html. Exact commands are provided. The bundling process is explained in detail (what it installs, what it creates, how it works)."
+    },
+    "completeness": {
+      "score": 2,
+      "reasoning": "Covers the main workflow end-to-end including initialization, development, bundling, sharing, and optional testing. Lists what the init script creates (React, TypeScript, Tailwind, shadcn/ui, etc.). Missing: troubleshooting common errors, what to do when bundling fails, how to add new shadcn/ui components, detailed development guidance (Step 2 says 'See Common Development Tasks below' but that section doesn't exist)."
+    },
+    "codeQuality": {
+      "score": 2,
+      "reasoning": "Provides runnable bash commands for init and bundle scripts. References actual script files in the skill directory. The shadcn-components.tar.gz is included. Missing: example App.tsx code, example of importing/using shadcn components, example of the generated project structure."
+    },
+    "conciseness": {
+      "score": 3,
+      "reasoning": "Extremely efficient. No redundancy. Each section adds new information. The 5-step overview at the top is a perfect summary, and each subsequent section expands without repeating. The optional testing step is appropriately flagged as optional with clear guidance on when to skip it."
+    },
+    "totalScore": 10,
+    "normalizedScore": 0.83,
+    "summary": "Highly actionable with concrete commands and clear workflow. Excellent conciseness with no wasted content. Could improve with troubleshooting guidance and code examples for the development step. References a 'Common Development Tasks' section that doesn't exist."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 78
+}

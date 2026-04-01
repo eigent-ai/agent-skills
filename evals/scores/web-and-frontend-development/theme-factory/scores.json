@@ -1,0 +1,116 @@
+{
+  "skill": "theme-factory",
+  "category": "web-and-frontend-development",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:21:48.651Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"theme-factory\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (262 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"theme-factory\" matches directory \"theme-factory\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 262 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": false,
+        "severity": "warning",
+        "message": "Only 0 trigger pattern(s) found (expected at least 2)"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 2778 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      }
+    ]
+  },
+  "qualityScore": 43,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 2,
+      "reasoning": "Clear primary capability: applying pre-set themes with colors/fonts to artifacts. Mentions 10 themes and on-the-fly generation. Lists artifact types (slides, docs, reportings, HTML landing pages). Could be more precise about what 'applying a theme' means technically."
+    },
+    "triggerCoverage": {
+      "score": 0,
+      "reasoning": "Structural check found 0 trigger patterns. No action verbs like 'style', 'theme', 'apply theme'. No file type mentions. No natural language triggers like 'make it look professional' or 'change the colors'."
+    },
+    "boundaryclarity": {
+      "score": 0,
+      "reasoning": "No exclusions mentioned. Doesn't clarify it's not for creating new designs from scratch, not for brand-specific styling, not for code-level CSS changes. Easy to confuse with brand-guidelines or frontend-design."
+    },
+    "distinctiveness": {
+      "score": 1,
+      "reasoning": "Significant overlap with brand-guidelines (both apply colors/fonts to artifacts) and frontend-design (both involve visual styling). The pre-set theme catalog is distinctive but the description doesn't emphasize this enough as a differentiator."
+    },
+    "totalScore": 3,
+    "normalizedScore": 0.25,
+    "summary": "The description conveys the core capability but completely lacks trigger phrases and boundary clarity. It needs explicit triggers, file type mentions, and clear differentiation from brand-guidelines and frontend-design."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 2,
+      "reasoning": "Clear 4-step workflow: show showcase PDF, ask for choice, wait for selection, apply theme. The application process is concrete (read theme file, apply colors/fonts, ensure contrast). Custom theme creation process is also outlined. However, the actual 'apply' step lacks specifics for different artifact types."
+    },
+    "completeness": {
+      "score": 2,
+      "reasoning": "Covers the main workflow well including the custom theme edge case. Lists all 10 themes with descriptions. References the themes/ directory with detailed specs. Missing: how to handle artifacts where themes partially apply, error cases, what to do if fonts aren't available, handling of different artifact formats differently."
+    },
+    "codeQuality": {
+      "score": 1,
+      "reasoning": "No code examples but the skill relies on theme definition files in themes/ directory rather than code. The theme files themselves serve as structured references. However, no examples of how to programmatically apply a theme to any artifact type, which would be valuable."
+    },
+    "conciseness": {
+      "score": 1,
+      "reasoning": "Noticeable redundancy. The 'Theme Details' section repeats almost verbatim what was said in 'Purpose' (cohesive color palette, complementary font pairings, distinct visual identity). The theme list in 'Themes Available' and 'Theme Details' sections overlap. The usage instructions and application process sections also partially repeat."
+    },
+    "totalScore": 6,
+    "normalizedScore": 0.5,
+    "summary": "Good workflow structure with clear steps and a useful theme catalog, but suffers from redundancy and lacks code examples for applying themes programmatically. The custom theme creation feature adds completeness."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 43
+}

@@ -1,0 +1,116 @@
+{
+  "skill": "internal-comms",
+  "category": "communication",
+  "version": "1.0.0",
+  "evaluatedAt": "2026-04-01T13:21:52.392Z",
+  "structural": {
+    "passed": true,
+    "errorCount": 0,
+    "warningCount": 1,
+    "checks": [
+      {
+        "name": "frontmatter-present",
+        "rule": "YAML block with `name` and `description`",
+        "passed": true,
+        "severity": "error",
+        "message": "Frontmatter found"
+      },
+      {
+        "name": "name-field",
+        "rule": "`name` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "name: \"internal-comms\""
+      },
+      {
+        "name": "description-field",
+        "rule": "`description` field present in frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "description present (329 chars)"
+      },
+      {
+        "name": "name-matches-directory",
+        "rule": "`name:` field matches the skill's directory name",
+        "passed": true,
+        "severity": "error",
+        "message": "name \"internal-comms\" matches directory \"internal-comms\""
+      },
+      {
+        "name": "description-length",
+        "rule": "Description 50–500 characters",
+        "passed": true,
+        "severity": "warning",
+        "message": "Description length: 329 chars (within range)"
+      },
+      {
+        "name": "trigger-phrases",
+        "rule": "Description includes at least 2 explicit trigger phrases",
+        "passed": false,
+        "severity": "warning",
+        "message": "Only 1 trigger pattern(s) found (expected at least 2)"
+      },
+      {
+        "name": "body-not-empty",
+        "rule": "SKILL.md has content beyond frontmatter",
+        "passed": true,
+        "severity": "error",
+        "message": "Body content: 1098 chars"
+      },
+      {
+        "name": "no-merge-conflicts",
+        "rule": "No `<<<<<<<` markers in file",
+        "passed": true,
+        "severity": "error",
+        "message": "No merge conflict markers"
+      }
+    ]
+  },
+  "qualityScore": 58,
+  "descriptionJudge": {
+    "specificity": {
+      "score": 2,
+      "reasoning": "Lists concrete communication types (status reports, leadership updates, 3P updates, newsletters, FAQs, incident reports, project updates). However, it is somewhat generic - resources to help write is vague about the actual mechanism or output format."
+    },
+    "triggerCoverage": {
+      "score": 2,
+      "reasoning": "Structural check found 1 pattern but the description actually lists many trigger phrases: status reports, leadership updates, 3P updates, company newsletters, FAQs, incident reports, project updates. Good enumeration of communication types as implicit triggers."
+    },
+    "boundaryclarity": {
+      "score": 1,
+      "reasoning": "Scoped to internal communications but does not explicitly exclude external comms, marketing copy, customer-facing content, or blog posts. The word internal provides some boundary but no explicit negative triggers."
+    },
+    "distinctiveness": {
+      "score": 2,
+      "reasoning": "Mostly distinct - no other skill focuses on internal business communications. However, there is some potential overlap with doc-coauthoring for documentation writing and general writing tasks. The internal focus differentiates it."
+    },
+    "totalScore": 7,
+    "normalizedScore": 0.58,
+    "summary": "Decent description with good enumeration of communication types as triggers. Main weaknesses are vague specificity about the mechanism and limited boundary clarity between internal comms and other writing tasks."
+  },
+  "contentJudge": {
+    "actionability": {
+      "score": 2,
+      "reasoning": "The 3-step workflow is clear and concrete: identify type, load guideline file, follow instructions. The mapping between communication types and example files is explicit. However, the actual writing guidance is entirely delegated to example files, so the SKILL.md itself provides limited direct instruction."
+    },
+    "completeness": {
+      "score": 1,
+      "reasoning": "Covers only the happy path: identify type, load file, follow it. No guidance on what to do when the type is ambiguous, how to handle mixed-format requests, how to gather information from the user, or how to adapt templates. The fallback is simply ask for clarification. Heavy reliance on example files means the SKILL.md alone is quite thin."
+    },
+    "codeQuality": {
+      "score": 2,
+      "reasoning": "No code is needed for this skill - it is a writing/template skill. The file references are correct and well-organized. The examples directory structure with 4 guideline files is appropriate for the scope. Score reflects that what is present is correct and functional."
+    },
+    "conciseness": {
+      "score": 2,
+      "reasoning": "The body is only 1098 characters, which is efficient. However, the When to use this skill section in the body duplicates information already in the description frontmatter, which is redundant. The Keywords section also partially duplicates the description."
+    },
+    "totalScore": 7,
+    "normalizedScore": 0.58,
+    "summary": "A lean, functional skill that delegates well to example files. However, it is too thin on its own - lacking edge case handling, user interaction guidance, and adaptation instructions. The body also duplicates description content."
+  },
+  "impactScore": null,
+  "compatibilityScore": null,
+  "communityScore": null,
+  "aggregateScore": 58
+}
