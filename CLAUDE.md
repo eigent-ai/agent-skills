@@ -77,9 +77,17 @@ skills/
     canvas-design/
       SKILL.md
       canvas-fonts/
+    instagram-reel-editor/
+      SKILL.md
+      scripts/
+      references/
     slack-gif-creator/
       SKILL.md
       core/
+  marketing-and-sales/
+    instagram-posting/
+      SKILL.md
+      scripts/
   pdf-and-documents/
     pdf/
       SKILL.md
@@ -109,7 +117,9 @@ packages/
   browser-and-automation/webapp-testing.zip
   image-and-video-generation/algorithmic-art.zip
   image-and-video-generation/canvas-design.zip
+  image-and-video-generation/instagram-reel-editor.zip
   image-and-video-generation/slack-gif-creator.zip
+  marketing-and-sales/instagram-posting.zip
   pdf-and-documents/pdf.zip
   pdf-and-documents/docx.zip
   pdf-and-documents/xlsx.zip
@@ -187,7 +197,9 @@ For this repo, keep these package artifacts updated:
 - `packages/browser-and-automation/webapp-testing.zip`
 - `packages/image-and-video-generation/algorithmic-art.zip`
 - `packages/image-and-video-generation/canvas-design.zip`
+- `packages/image-and-video-generation/instagram-reel-editor.zip`
 - `packages/image-and-video-generation/slack-gif-creator.zip`
+- `packages/marketing-and-sales/instagram-posting.zip`
 - `packages/pdf-and-documents/pdf.zip`
 - `packages/pdf-and-documents/docx.zip`
 - `packages/pdf-and-documents/xlsx.zip`

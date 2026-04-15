@@ -43,7 +43,9 @@ _TBD — Category placeholder for future skills._
 
 #### Marketing & Sales
 
-_TBD — Category placeholder for future skills._
+| Skill | Description |
+| --- | --- |
+| [`instagram-posting`](skills/marketing-and-sales/instagram-posting/SKILL.md) | Post images or video to an already logged-in Instagram session via browser automation. Includes a script to pick the correct crop aspect ratio before upload. |
 
 #### Data & Analytics
 _TBD — Category placeholder for future skills._
@@ -55,6 +57,7 @@ _TBD — Category placeholder for future skills._
 | [`algorithmic-art`](skills/image-and-video-generation/algorithmic-art/SKILL.md) | Create algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Generates generative art from algorithmic philosophies expressed as flow fields, particle systems, and noise fields. |
 | [`canvas-design`](skills/image-and-video-generation/canvas-design/SKILL.md) | Create beautiful visual art in .png and .pdf documents using design philosophy. Generates posters, artwork, and static visual pieces with curated typography and intentional composition. |
 | [`slack-gif-creator`](skills/image-and-video-generation/slack-gif-creator/SKILL.md) | Create animated GIFs optimized for Slack with proper dimensions, frame rates, and file sizes. Includes PIL-based utilities for frame composition, easing, and validation. |
+| [`instagram-reel-editor`](skills/image-and-video-generation/instagram-reel-editor/SKILL.md) | Turn raw travel-style footage folders into cinematic Instagram Reels (9:16) with grading, cuts, overlays, and music. Includes Python helpers to scan clips and build the final MP4. |
 
 #### Git & GitHub
 
@@ -201,6 +204,8 @@ Examples:
 - "Test my local web app with Playwright and capture screenshots."
 - "Apply the Ocean Depths theme to my slide deck."
 - "Help me co-author a technical design doc."
+- "Edit this folder of travel clips into an Instagram Reel with music."
+- "Post this video to Instagram with this caption and hashtags."
 
 ## Skill Structure
 
