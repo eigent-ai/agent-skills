@@ -21,9 +21,20 @@ skills/
       SKILL.md
       scripts/
       references/
+    mcp-builder/
+      SKILL.md
+      scripts/
+      references/
+      LICENSE.txt
+  web-and-frontend-development/
+    excalidraw/
+      SKILL.md
+      references/
 packages/
   coding-agents-and-ides/mintlify-docs-updater.zip
   coding-agents-and-ides/skill-creator.zip
+  coding-agents-and-ides/mcp-builder.zip
+  web-and-frontend-development/excalidraw.zip
 ```
 
 ## Creating or Updating a Skill
@@ -88,6 +99,8 @@ For this repo, keep these package artifacts updated:
 
 - `packages/coding-agents-and-ides/mintlify-docs-updater.zip`
 - `packages/coding-agents-and-ides/skill-creator.zip`
+- `packages/coding-agents-and-ides/mcp-builder.zip`
+- `packages/web-and-frontend-development/excalidraw.zip`
 
 ## README Sync Requirements
 

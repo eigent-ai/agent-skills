@@ -19,6 +19,7 @@ _TBD — Category placeholder for future skills._
 | --- | --- |
 | [`mintlify-docs-updater`](skills/coding-agents-and-ides/mintlify-docs-updater/SKILL.md) | Maintain Mintlify documentation from uploaded Markdown files. Handles page placement under `docs/`, required frontmatter checks, and `docs/docs.json` navigation updates via `ingest_markdown_doc.py`. |
 | [`skill-creator`](skills/coding-agents-and-ides/skill-creator/SKILL.md) | Create, modify, and evaluate skills. Covers authoring `SKILL.md` files, bundling scripts and references, running evals, and benchmarking skill performance. |
+| [`mcp-builder`](skills/coding-agents-and-ides/mcp-builder/SKILL.md) | Build MCP (Model Context Protocol) servers in Python (FastMCP) or Node/TypeScript. Includes planning workflows, MCP best-practices references, evaluation scripts (`evaluation.py`, `connections.py`), and language-specific implementation guides. |
 
 #### Web & Frontend Development
 
@@ -28,6 +29,7 @@ _TBD — Category placeholder for future skills._
 | [`brand-guidelines`](skills/web-and-frontend-development/brand-guidelines/SKILL.md) | Apply Anthropic's official brand colors and typography to artifacts. Use when brand styling, visual formatting, or company design standards apply. |
 | [`web-artifacts-builder`](skills/web-and-frontend-development/web-artifacts-builder/SKILL.md) | Build elaborate, multi-component claude.ai HTML artifacts using React, Tailwind CSS, and shadcn/ui. Includes project scaffolding and single-file bundling scripts. |
 | [`theme-factory`](skills/web-and-frontend-development/theme-factory/SKILL.md) | Apply professional color and font themes to artifacts like slides, docs, reports, and landing pages. Includes 10 curated themes with a visual showcase PDF. |
+| [`excalidraw`](skills/web-and-frontend-development/excalidraw/SKILL.md) | Generate architecture and system diagrams as `.excalidraw` files from codebase analysis. Covers valid Excalidraw JSON, element IDs, labels, arrows, and styling rules so diagrams open correctly in Excalidraw. |
 
 #### DevOps & Cloud
 _TBD — Category placeholder for future skills._
@@ -206,6 +208,8 @@ Examples:
 - "Help me co-author a technical design doc."
 - "Edit this folder of travel clips into an Instagram Reel with music."
 - "Post this video to Instagram with this caption and hashtags."
+- "Generate an architecture diagram as an excalidraw file for this repo."
+- "Help me build an MCP server in TypeScript that wraps our internal API."
 
 ## Skill Structure
 

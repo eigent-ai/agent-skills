@@ -56,6 +56,9 @@ skills/
     theme-factory/
       SKILL.md
       themes/
+    excalidraw/
+      SKILL.md
+      references/
   coding-agents-and-ides/
     mintlify-docs-updater/
       SKILL.md
@@ -65,6 +68,11 @@ skills/
       SKILL.md
       scripts/
       references/
+    mcp-builder/
+      SKILL.md
+      scripts/
+      references/
+      LICENSE.txt
   browser-and-automation/
     webapp-testing/
       SKILL.md
@@ -112,8 +120,10 @@ packages/
   web-and-frontend-development/brand-guidelines.zip
   web-and-frontend-development/web-artifacts-builder.zip
   web-and-frontend-development/theme-factory.zip
+  web-and-frontend-development/excalidraw.zip
   coding-agents-and-ides/mintlify-docs-updater.zip
   coding-agents-and-ides/skill-creator.zip
+  coding-agents-and-ides/mcp-builder.zip
   browser-and-automation/webapp-testing.zip
   image-and-video-generation/algorithmic-art.zip
   image-and-video-generation/canvas-design.zip
@@ -192,8 +202,10 @@ For this repo, keep these package artifacts updated:
 - `packages/web-and-frontend-development/brand-guidelines.zip`
 - `packages/web-and-frontend-development/web-artifacts-builder.zip`
 - `packages/web-and-frontend-development/theme-factory.zip`
+- `packages/web-and-frontend-development/excalidraw.zip`
 - `packages/coding-agents-and-ides/mintlify-docs-updater.zip`
 - `packages/coding-agents-and-ides/skill-creator.zip`
+- `packages/coding-agents-and-ides/mcp-builder.zip`
 - `packages/browser-and-automation/webapp-testing.zip`
 - `packages/image-and-video-generation/algorithmic-art.zip`
 - `packages/image-and-video-generation/canvas-design.zip`
