@@ -1,6 +1,7 @@
 ---
 name: pm-skills
 description: Product management workflows covering the full work lifecycle — discovery, strategy, execution, launch, and growth. Write PRDs, plan OKRs, and structure meeting notes. Useful beyond PMs — applicable to any knowledge worker managing projects, stakeholders, or strategy. Triggers: /write-prd, /plan-okrs, /meeting-notes
+author: phuryn (github.com/phuryn/pm-skills)
 ---
 
 ## Overview

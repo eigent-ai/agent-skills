@@ -1,6 +1,7 @@
 ---
 name: remotion
 description: Create videos programmatically using React (Remotion) or generate mathematical/conceptual animations (Manim). Use when the user asks to make a video, animation, product demo, tutorial, social clip, or branded video pipeline. Triggers: /remotion-video, /video-animation, /video-toolkit
+author: remotion-dev (github.com/remotion-dev/remotion)
 ---
 
 ## Overview

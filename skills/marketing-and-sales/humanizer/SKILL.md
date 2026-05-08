@@ -1,6 +1,7 @@
 ---
 name: humanizer
 description: Detect and rewrite AI writing patterns to make content sound authentically human. Supports voice calibration from the author's own writing samples. Use when asked to humanize text, remove AI patterns, calibrate voice, audit content for AI detectability, or check if writing sounds like ChatGPT. Triggers: /humanize, /voice-calibrate, /audit-ai
+author: blader (github.com/blader/humanizer)
 ---
 
 ## Overview
