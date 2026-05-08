@@ -89,13 +89,20 @@ skills/
       SKILL.md
       scripts/
       references/
+    remotion/
+      SKILL.md
     slack-gif-creator/
       SKILL.md
       core/
   marketing-and-sales/
+    humanizer/
+      SKILL.md
     instagram-posting/
       SKILL.md
       scripts/
+  productivity-and-tasks/
+    pm-skills/
+      SKILL.md
   pdf-and-documents/
     pdf/
       SKILL.md
@@ -128,8 +135,11 @@ packages/
   image-and-video-generation/algorithmic-art.zip
   image-and-video-generation/canvas-design.zip
   image-and-video-generation/instagram-reel-editor.zip
+  image-and-video-generation/remotion.zip
   image-and-video-generation/slack-gif-creator.zip
+  marketing-and-sales/humanizer.zip
   marketing-and-sales/instagram-posting.zip
+  productivity-and-tasks/pm-skills.zip
   pdf-and-documents/pdf.zip
   pdf-and-documents/docx.zip
   pdf-and-documents/xlsx.zip
