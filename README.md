@@ -20,6 +20,9 @@ _TBD — Category placeholder for future skills._
 | [`mintlify-docs-updater`](skills/coding-agents-and-ides/mintlify-docs-updater/SKILL.md) | Maintain Mintlify documentation from uploaded Markdown files. Handles page placement under `docs/`, required frontmatter checks, and `docs/docs.json` navigation updates via `ingest_markdown_doc.py`. |
 | [`skill-creator`](skills/coding-agents-and-ides/skill-creator/SKILL.md) | Create, modify, and evaluate skills. Covers authoring `SKILL.md` files, bundling scripts and references, running evals, and benchmarking skill performance. |
 | [`mcp-builder`](skills/coding-agents-and-ides/mcp-builder/SKILL.md) | Build MCP (Model Context Protocol) servers in Python (FastMCP) or Node/TypeScript. Includes planning workflows, MCP best-practices references, evaluation scripts (`evaluation.py`, `connections.py`), and language-specific implementation guides. |
+| [`spec`](skills/coding-agents-and-ides/spec/SKILL.md) | Write comprehensive product and engineering specs before implementation. Covers problem statements, user stories, acceptance criteria, edge cases, rollout notes, and open decisions. |
+| [`review`](skills/coding-agents-and-ides/review/SKILL.md) | Perform five-axis code reviews across correctness, security, performance, readability, and maintainability. Leads with severity-ranked findings and concrete fixes. |
+| [`ship`](skills/coding-agents-and-ides/ship/SKILL.md) | Prepare releases for production with launch checklists, staged rollout criteria, monitoring plans, rollback paths, communications, and post-launch validation. |
 
 #### Web & Frontend Development
 
@@ -41,13 +44,20 @@ _TBD — Category placeholder for future skills._
 | [`webapp-testing`](skills/browser-and-automation/webapp-testing/SKILL.md) | Test local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing screenshots, and viewing browser logs with server lifecycle helpers. |
 
 #### Search & Research
-_TBD — Category placeholder for future skills._
+
+| Skill | Description |
+| --- | --- |
+| [`last30days`](skills/search-and-research/last30days/SKILL.md) | Research recent public discussion across Reddit, Hacker News, GitHub, X, YouTube, Polymarket, and similar sources, then synthesize engagement-ranked findings into a grounded brief. |
 
 #### Marketing & Sales
 
 | Skill | Description |
 | --- | --- |
 | [`instagram-posting`](skills/marketing-and-sales/instagram-posting/SKILL.md) | Post images or video to an already logged-in Instagram session via browser automation. Includes a script to pick the correct crop aspect ratio before upload. |
+| [`copywriting`](skills/marketing-and-sales/copywriting/SKILL.md) | Write marketing copy for landing pages, launches, ads, campaigns, and email sequences using product context and direct-response frameworks where useful. |
+| [`seo-audit`](skills/marketing-and-sales/seo-audit/SKILL.md) | Audit technical, on-page, and AI-search SEO, including metadata, page structure, keyword intent, internal links, content gaps, and AEO/GEO/LLMO readiness. |
+| [`marketing-ideas`](skills/marketing-and-sales/marketing-ideas/SKILL.md) | Generate practical SaaS and product marketing ideas across organic, paid, community, partnerships, product-led growth, retention, and launch channels. |
+| [`ab-test-setup`](skills/marketing-and-sales/ab-test-setup/SKILL.md) | Design, analyze, and document A/B tests, including hypotheses, sample size, implementation checks, decision rules, and ICE-scored experiment backlogs. |
 
 #### Data & Analytics
 _TBD — Category placeholder for future skills._
@@ -210,6 +220,14 @@ Examples:
 - "Post this video to Instagram with this caption and hashtags."
 - "Generate an architecture diagram as an excalidraw file for this repo."
 - "Help me build an MCP server in TypeScript that wraps our internal API."
+- "/last30days AI writing tools market sentiment --emit=html."
+- "Write a 3-email launch sequence for our new pricing plan."
+- "Run an SEO audit on this landing page and give me a prioritized fix list."
+- "Generate marketing ideas for a B2B SaaS tool with a $5k/month budget."
+- "Help me design an A/B test for our signup CTA button."
+- "/spec - Design a public webhooks API with retries and reliable delivery."
+- "/review - Audit this API endpoint handler for security issues."
+- "/ship - Plan a staged rollout for our new recommendation engine."
 
 ## Skill Structure
 
