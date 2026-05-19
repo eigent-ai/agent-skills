@@ -60,7 +60,10 @@ _TBD — Category placeholder for future skills._
 | [`ab-test-setup`](skills/marketing-and-sales/ab-test-setup/SKILL.md) | Design, analyze, and document A/B tests, including hypotheses, sample size, implementation checks, decision rules, and ICE-scored experiment backlogs. |
 
 #### Data & Analytics
-_TBD — Category placeholder for future skills._
+
+| Skill | Description |
+| --- | --- |
+| [`ml-failure-audit`](skills/data-and-analytics/ml-failure-audit/SKILL.md) | Audit ML CI failures, experiment regressions, training run failures, golden metric failures, and telemetry-backed ML claims. Classifies failures across model, correctness, data/config, runtime, metric-policy, observability, and unsupported-claim categories with evidence-backed recommendations. |
 
 #### Image & Video Generation
 
@@ -220,6 +223,7 @@ Examples:
 - "Post this video to Instagram with this caption and hashtags."
 - "Generate an architecture diagram as an excalidraw file for this repo."
 - "Help me build an MCP server in TypeScript that wraps our internal API."
+- "Audit this ML CI failure and decide whether it is a real training regression or a gate/policy issue."
 - "/last30days AI writing tools market sentiment --emit=html."
 - "Write a 3-email launch sequence for our new pricing plan."
 - "Run an SEO audit on this landing page and give me a prioritized fix list."

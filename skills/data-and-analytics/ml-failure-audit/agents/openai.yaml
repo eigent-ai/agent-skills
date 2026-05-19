@@ -1,0 +1,4 @@
+interface:
+  display_name: "ML Failure Audit"
+  short_description: "Audit ML CI and experiment failures"
+  default_prompt: "Use $ml-failure-audit to audit this ML failure from the provided repo, logs, and artifacts."
