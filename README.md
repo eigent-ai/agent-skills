@@ -50,7 +50,10 @@ _TBD — Category placeholder for future skills._
 | [`instagram-posting`](skills/marketing-and-sales/instagram-posting/SKILL.md) | Post images or video to an already logged-in Instagram session via browser automation. Includes a script to pick the correct crop aspect ratio before upload. |
 
 #### Data & Analytics
-_TBD — Category placeholder for future skills._
+
+| Skill | Description |
+| --- | --- |
+| [`ml-failure-audit`](skills/data-and-analytics/ml-failure-audit/SKILL.md) | Audit ML CI failures, experiment regressions, training run failures, golden metric failures, and telemetry-backed ML claims. Classifies failures across model, correctness, data/config, runtime, metric-policy, observability, and unsupported-claim categories with evidence-backed recommendations. |
 
 #### Image & Video Generation
 
@@ -210,6 +213,7 @@ Examples:
 - "Post this video to Instagram with this caption and hashtags."
 - "Generate an architecture diagram as an excalidraw file for this repo."
 - "Help me build an MCP server in TypeScript that wraps our internal API."
+- "Audit this ML CI failure and decide whether it is a real training regression or a gate/policy issue."
 
 ## Skill Structure
 
