@@ -2,11 +2,18 @@
 name: remotion
 description: Create videos programmatically using React (Remotion) or generate mathematical/conceptual animations (Manim). Use when the user asks to make a video, animation, product demo, tutorial, social clip, or branded video pipeline. Triggers: /remotion-video, /video-animation, /video-toolkit
 author: remotion-dev (github.com/remotion-dev/remotion)
+metadata:
+  source-repo: https://github.com/remotion-dev/remotion
 ---
 
 ## Overview
 
 Make videos programmatically — describe what you want and the skill writes the components, handles timing, animations, and renders to MP4. No video editor needed. Covers three workflows: React-based video composition, mathematical animation, and a full branded production pipeline.
+
+## Source Repository
+
+- **GitHub:** [remotion-dev/remotion](https://github.com/remotion-dev/remotion)
+- **Install upstream:** `npx skills add remotion-dev/remotion`
 
 ---
 

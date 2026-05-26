@@ -2,11 +2,18 @@
 name: pm-skills
 description: Product management workflows covering the full work lifecycle — discovery, strategy, execution, launch, and growth. Write PRDs, plan OKRs, and structure meeting notes. Useful beyond PMs — applicable to any knowledge worker managing projects, stakeholders, or strategy. Triggers: /write-prd, /plan-okrs, /meeting-notes
 author: phuryn (github.com/phuryn/pm-skills)
+metadata:
+  source-repo: https://github.com/phuryn/pm-skills
 ---
 
 ## Overview
 
 65 skills and 36 chained workflows covering the full PM work lifecycle. The three core skills below cover the most common PM artifacts: requirements, goal-setting, and meeting capture. Each produces a structured, shareable output ready to hand off to stakeholders or a team.
+
+## Source Repository
+
+- **GitHub:** [phuryn/pm-skills](https://github.com/phuryn/pm-skills)
+- **Install upstream:** `npx skills add phuryn/pm-skills`
 
 ---
 
