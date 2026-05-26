@@ -26,13 +26,14 @@ _TBD — Category placeholder for future skills._
 
 #### Web & Frontend Development
 
-| Skill | Description |
-| --- | --- |
-| [`frontend-design`](skills/web-and-frontend-development/frontend-design/SKILL.md) | Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished web components, pages, and applications that avoid generic AI aesthetics. |
-| [`brand-guidelines`](skills/web-and-frontend-development/brand-guidelines/SKILL.md) | Apply Anthropic's official brand colors and typography to artifacts. Use when brand styling, visual formatting, or company design standards apply. |
-| [`web-artifacts-builder`](skills/web-and-frontend-development/web-artifacts-builder/SKILL.md) | Build elaborate, multi-component claude.ai HTML artifacts using React, Tailwind CSS, and shadcn/ui. Includes project scaffolding and single-file bundling scripts. |
-| [`theme-factory`](skills/web-and-frontend-development/theme-factory/SKILL.md) | Apply professional color and font themes to artifacts like slides, docs, reports, and landing pages. Includes 10 curated themes with a visual showcase PDF. |
-| [`excalidraw`](skills/web-and-frontend-development/excalidraw/SKILL.md) | Generate architecture and system diagrams as `.excalidraw` files from codebase analysis. Covers valid Excalidraw JSON, element IDs, labels, arrows, and styling rules so diagrams open correctly in Excalidraw. |
+| Skill | Source | Description |
+| --- | --- | --- |
+| [`frontend-design`](skills/web-and-frontend-development/frontend-design/SKILL.md) | — | Create distinctive, production-grade frontend interfaces with high design quality. Generates creative, polished web components, pages, and applications that avoid generic AI aesthetics. |
+| [`brand-guidelines`](skills/web-and-frontend-development/brand-guidelines/SKILL.md) | — | Apply Anthropic's official brand colors and typography to artifacts. Use when brand styling, visual formatting, or company design standards apply. |
+| [`web-artifacts-builder`](skills/web-and-frontend-development/web-artifacts-builder/SKILL.md) | — | Build elaborate, multi-component claude.ai HTML artifacts using React, Tailwind CSS, and shadcn/ui. Includes project scaffolding and single-file bundling scripts. |
+| [`theme-factory`](skills/web-and-frontend-development/theme-factory/SKILL.md) | — | Apply professional color and font themes to artifacts like slides, docs, reports, and landing pages. Includes 10 curated themes with a visual showcase PDF. |
+| [`excalidraw`](skills/web-and-frontend-development/excalidraw/SKILL.md) | — | Generate architecture and system diagrams as `.excalidraw` files from codebase analysis. Covers valid Excalidraw JSON, element IDs, labels, arrows, and styling rules so diagrams open correctly in Excalidraw. |
+| [`open-design`](skills/web-and-frontend-development/open-design/SKILL.md) | [nexu-io/open-design](https://github.com/nexu-io/open-design) | Generate web, mobile, and dashboard prototypes from a prompt using brand-grade design systems. Outputs sandboxed HTML previews exportable to HTML, PDF, PPTX, or MP4. |
 
 #### DevOps & Cloud
 _TBD — Category placeholder for future skills._
@@ -51,13 +52,14 @@ _TBD — Category placeholder for future skills._
 
 #### Marketing & Sales
 
-| Skill | Description |
-| --- | --- |
-| [`instagram-posting`](skills/marketing-and-sales/instagram-posting/SKILL.md) | Post images or video to an already logged-in Instagram session via browser automation. Includes a script to pick the correct crop aspect ratio before upload. |
-| [`copywriting`](skills/marketing-and-sales/copywriting/SKILL.md) | Write marketing copy for landing pages, launches, ads, campaigns, and email sequences using product context and direct-response frameworks where useful. |
-| [`seo-audit`](skills/marketing-and-sales/seo-audit/SKILL.md) | Audit technical, on-page, and AI-search SEO, including metadata, page structure, keyword intent, internal links, content gaps, and AEO/GEO/LLMO readiness. |
-| [`marketing-ideas`](skills/marketing-and-sales/marketing-ideas/SKILL.md) | Generate practical SaaS and product marketing ideas across organic, paid, community, partnerships, product-led growth, retention, and launch channels. |
-| [`ab-test-setup`](skills/marketing-and-sales/ab-test-setup/SKILL.md) | Design, analyze, and document A/B tests, including hypotheses, sample size, implementation checks, decision rules, and ICE-scored experiment backlogs. |
+| Skill | Source | Description |
+| --- | --- | --- |
+| [`instagram-posting`](skills/marketing-and-sales/instagram-posting/SKILL.md) | — | Post images or video to an already logged-in Instagram session via browser automation. Includes a script to pick the correct crop aspect ratio before upload. |
+| [`copywriting`](skills/marketing-and-sales/copywriting/SKILL.md) | — | Write marketing copy for landing pages, launches, ads, campaigns, and email sequences using product context and direct-response frameworks where useful. |
+| [`seo-audit`](skills/marketing-and-sales/seo-audit/SKILL.md) | — | Audit technical, on-page, and AI-search SEO, including metadata, page structure, keyword intent, internal links, content gaps, and AEO/GEO/LLMO readiness. |
+| [`marketing-ideas`](skills/marketing-and-sales/marketing-ideas/SKILL.md) | — | Generate practical SaaS and product marketing ideas across organic, paid, community, partnerships, product-led growth, retention, and launch channels. |
+| [`ab-test-setup`](skills/marketing-and-sales/ab-test-setup/SKILL.md) | — | Design, analyze, and document A/B tests, including hypotheses, sample size, implementation checks, decision rules, and ICE-scored experiment backlogs. |
+| [`humanizer`](skills/marketing-and-sales/humanizer/SKILL.md) | [blader/humanizer](https://github.com/blader/humanizer) | Detect and rewrite AI writing patterns to make content sound authentically human, with optional voice calibration from writing samples. |
 
 #### Data & Analytics
 
@@ -67,31 +69,41 @@ _TBD — Category placeholder for future skills._
 
 #### Image & Video Generation
 
-| Skill | Description |
-| --- | --- |
-| [`algorithmic-art`](skills/image-and-video-generation/algorithmic-art/SKILL.md) | Create algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Generates generative art from algorithmic philosophies expressed as flow fields, particle systems, and noise fields. |
-| [`canvas-design`](skills/image-and-video-generation/canvas-design/SKILL.md) | Create beautiful visual art in .png and .pdf documents using design philosophy. Generates posters, artwork, and static visual pieces with curated typography and intentional composition. |
-| [`slack-gif-creator`](skills/image-and-video-generation/slack-gif-creator/SKILL.md) | Create animated GIFs optimized for Slack with proper dimensions, frame rates, and file sizes. Includes PIL-based utilities for frame composition, easing, and validation. |
-| [`instagram-reel-editor`](skills/image-and-video-generation/instagram-reel-editor/SKILL.md) | Turn raw travel-style footage folders into cinematic Instagram Reels (9:16) with grading, cuts, overlays, and music. Includes Python helpers to scan clips and build the final MP4. |
+| Skill | Source | Description |
+| --- | --- | --- |
+| [`algorithmic-art`](skills/image-and-video-generation/algorithmic-art/SKILL.md) | — | Create algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Generates generative art from algorithmic philosophies expressed as flow fields, particle systems, and noise fields. |
+| [`canvas-design`](skills/image-and-video-generation/canvas-design/SKILL.md) | — | Create beautiful visual art in .png and .pdf documents using design philosophy. Generates posters, artwork, and static visual pieces with curated typography and intentional composition. |
+| [`slack-gif-creator`](skills/image-and-video-generation/slack-gif-creator/SKILL.md) | — | Create animated GIFs optimized for Slack with proper dimensions, frame rates, and file sizes. Includes PIL-based utilities for frame composition, easing, and validation. |
+| [`instagram-reel-editor`](skills/image-and-video-generation/instagram-reel-editor/SKILL.md) | — | Turn raw travel-style footage folders into cinematic Instagram Reels (9:16) with grading, cuts, overlays, and music. Includes Python helpers to scan clips and build the final MP4. |
+| [`remotion`](skills/image-and-video-generation/remotion/SKILL.md) | [remotion-dev/remotion](https://github.com/remotion-dev/remotion) | Make videos programmatically with React using Remotion. Produces product demos, tutorials, social clips, Manim-style animations, and branded pipelines with voiceover and FFmpeg. |
 
 #### Git & GitHub
 
-_TBD — Category placeholder for future skills._
+| Skill | Source | Description |
+| --- | --- | --- |
+| [`changelog-generator`](skills/git-and-github/changelog-generator/SKILL.md) | [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills) | Transform git commit history into polished changelogs and release notes. Groups changes by type, filters internal noise, and outputs Keep a Changelog formatted entries or app store notes. |
 
 ### Tier 2 — Strong Supporting Pages
 
 #### Productivity & Tasks
-_TBD — Category placeholder for future skills._
+
+| Skill | Source | Description |
+| --- | --- | --- |
+| [`pm-skills`](skills/productivity-and-tasks/pm-skills/SKILL.md) | [phuryn/pm-skills](https://github.com/phuryn/pm-skills) | Product management workflows for PRDs, OKRs, and meeting notes. Covers discovery, strategy, execution, launch, and growth workflows for knowledge workers. |
+| [`resume-tailoring`](skills/productivity-and-tasks/resume-tailoring/SKILL.md) | [varunr89/resume-tailoring-skill](https://github.com/varunr89/resume-tailoring-skill) | Tailor resumes to job descriptions with ATS keyword optimization, gap analysis, and rewritten bullets. Supports single-role and batch tailoring with zero fabrication. |
 
 #### PDF & Documents
 
-| Skill | Description |
-| --- | --- |
-| [`pdf`](skills/pdf-and-documents/pdf/SKILL.md) | Work with PDF files: extract text/tables, merge/split, rotate pages, add watermarks, fill forms, encrypt/decrypt, extract images, and OCR scanned PDFs. |
-| [`docx`](skills/pdf-and-documents/docx/SKILL.md) | Create, read, edit, and manipulate Word documents (.docx). Covers document creation, tracked changes, comments, find-and-replace, tables of contents, and professional formatting. |
-| [`xlsx`](skills/pdf-and-documents/xlsx/SKILL.md) | Work with spreadsheet files (.xlsx, .xlsm, .csv, .tsv): create, edit, format, compute formulas, clean messy data, and convert between tabular formats. |
-| [`pptx`](skills/pdf-and-documents/pptx/SKILL.md) | Create, read, edit, and manipulate PowerPoint presentations (.pptx). Covers slide decks, pitch decks, templates, layouts, speaker notes, thumbnails, and content extraction. |
-| [`doc-coauthoring`](skills/pdf-and-documents/doc-coauthoring/SKILL.md) | Guide users through structured co-authoring of documentation, proposals, technical specs, and decision docs via context gathering, iterative refinement, and reader testing. |
+| Skill | Source | Description |
+| --- | --- | --- |
+| [`pdf`](skills/pdf-and-documents/pdf/SKILL.md) | — | Work with PDF files: extract text/tables, merge/split, rotate pages, add watermarks, fill forms, encrypt/decrypt, extract images, and OCR scanned PDFs. |
+| [`docx`](skills/pdf-and-documents/docx/SKILL.md) | — | Create, read, edit, and manipulate Word documents (.docx). Covers document creation, tracked changes, comments, find-and-replace, tables of contents, and professional formatting. |
+| [`xlsx`](skills/pdf-and-documents/xlsx/SKILL.md) | — | Work with spreadsheet files (.xlsx, .xlsm, .csv, .tsv): create, edit, format, compute formulas, clean messy data, and convert between tabular formats. |
+| [`pptx`](skills/pdf-and-documents/pptx/SKILL.md) | — | Create, read, edit, and manipulate PowerPoint presentations (.pptx). Covers slide decks, pitch decks, templates, layouts, speaker notes, thumbnails, and content extraction. |
+| [`doc-coauthoring`](skills/pdf-and-documents/doc-coauthoring/SKILL.md) | — | Guide users through structured co-authoring of documentation, proposals, technical specs, and decision docs via context gathering, iterative refinement, and reader testing. |
+| [`contract-review-risk-scoring`](skills/pdf-and-documents/contract-review-risk-scoring/SKILL.md) | [evolsb/claude-legal-skill](https://github.com/evolsb/claude-legal-skill) | Review contracts with CUAD-based clause-by-clause risk scoring, market benchmarks, negotiability ratings, redline suggestions, and an overall Contract Safety Score. |
+| [`legal-work-plugin`](skills/pdf-and-documents/legal-work-plugin/SKILL.md) | [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins) | In-house legal workflows for playbook-based contract review, NDA triage (GREEN/YELLOW/RED), compliance briefings, and vendor agreement checks. |
+| [`claude-for-legal`](skills/pdf-and-documents/claude-for-legal/SKILL.md) | [anthropics/claude-for-legal](https://github.com/anthropics/claude-for-legal) | Full legal plugin suite for commercial contract review, privacy/DPA analysis, DSAR responses, and AI governance vendor reviews with EU AI Act triage. |
 
 #### Speech & Transcription
 _TBD — Category placeholder for future skills._
@@ -232,6 +244,13 @@ Examples:
 - "/spec - Design a public webhooks API with retries and reliable delivery."
 - "/review - Audit this API endpoint handler for security issues."
 - "/ship - Plan a staged rollout for our new recommendation engine."
+- "Humanize this blog post so it doesn't sound like AI wrote it."
+- "Write a PRD for a notification preferences center."
+- "Generate a changelog for commits between v1.4.0 and v1.5.0."
+- "Tailor my resume for this job description."
+- "Build a web prototype for a B2B invoicing tool."
+- "Create a 30-second product demo video with Remotion."
+- "Review this NDA as the receiving party and give me a Contract Safety Score."
 
 ## Skill Structure
 
