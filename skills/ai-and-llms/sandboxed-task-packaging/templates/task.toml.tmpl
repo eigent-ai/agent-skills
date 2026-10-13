@@ -1,0 +1,25 @@
+# Harbor / Verifiers v1 Task Configuration Template (`task.toml`)
+# Reference: https://docs.primeintellect.ai/verifiers/v1/harbor.md (checked 2026-10-12)
+
+[task]
+id = "{{TASK_ID}}"
+difficulty = "medium"
+category = "software-engineering"
+tags = ["python", "bugfix", "deterministic-verifier"]
+
+[environment]
+allow_internet = false
+cpus = 2
+memory_mb = 2048
+disk_mb = 4096
+timeout_sec = 180
+
+[agent]
+network_mode = "no-network"
+timeout_sec = 120
+
+[verifier]
+# Grade in a fresh container/directory that the solver agent never touched
+environment_mode = "separate"
+timeout_sec = 60
+artifacts = ["/app/src", "/logs/artifacts"]

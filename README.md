@@ -11,7 +11,13 @@ Skills are organized by category under `skills/{category}/{skill-name}`:
 ### Tier 1 — High Priority
 
 #### AI & LLMs
-_TBD — Category placeholder for future skills._
+
+| Skill | Description |
+| --- | --- |
+| [`multi-turn-env-scaffold`](skills/ai-and-llms/multi-turn-env-scaffold/SKILL.md) | Scaffold reproducible multi-turn RL agent environments with immutable task datasets, isolated episode reset, deterministic per-turn seeding, and stratified difficulty sampling. |
+| [`sandboxed-task-packaging`](skills/ai-and-llms/sandboxed-task-packaging/SKILL.md) | Package terminal and coding tasks into Harbor / Terminal-Bench and Verifiers directories with held-out pytest verification, oracle solution checks, and anti-tampering boundaries. |
+| [`rubric-verifier-anti-hack`](skills/ai-and-llms/rubric-verifier-anti-hack/SKILL.md) | Design evidence-grounded verifiers and multi-objective rewards that isolate rubric criteria, separate process scores from environment failures, and flag reward hacking. |
+| [`trajectory-rollout-curation`](skills/ai-and-llms/trajectory-rollout-curation/SKILL.md) | Collect and score multi-turn rollouts, preserve message-and-token trace masks, compute group-relative advantages, and filter verified trajectories into SFT datasets. |
 
 #### Coding Agents & IDEs
 
@@ -251,6 +257,10 @@ Examples:
 - "Build a web prototype for a B2B invoicing tool."
 - "Create a 30-second product demo video with Remotion."
 - "Review this NDA as the receiving party and give me a Contract Safety Score."
+- "Scaffold a multi-turn RL environment with deterministic seeding and a stratified task dataset."
+- "Package this coding bug as a Harbor / Terminal-Bench task with a held-out verifier."
+- "Build a verifier rubric that catches reward hacking and confident-liar false positives."
+- "Collect agent rollouts and curate an SFT dataset from verified trajectories."
 
 ## Skill Structure
 

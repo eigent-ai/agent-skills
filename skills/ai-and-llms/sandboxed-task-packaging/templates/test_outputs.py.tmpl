@@ -1,0 +1,23 @@
+"""Template: Outcome-based verification suite (`tests/test_outputs.py`).
+
+Evaluates the repaired artifact in a separate verifier sandbox without inspecting
+how the agent edited the file.
+"""
+
+from __future__ import annotations
+import importlib.util
+from pathlib import Path
+
+
+def load_target_module(module_path: Path):
+    assert module_path.exists(), f"Expected artifact missing: {module_path}"
+    spec = importlib.util.spec_from_file_location("target_mod", module_path)
+    assert spec and spec.loader
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_core_invariants():
+    mod = load_target_module(Path("src/ledger.py"))
+    assert hasattr(mod, "reconcile_balances"), "Missing reconcile_balances()"
