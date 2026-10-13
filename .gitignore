@@ -4,9 +4,5 @@ evals/results/*.json
 # OS
 .DS_Store
 
-# Python
-__pycache__/
-*.pyc
-
 # Dependencies
 node_modules/
