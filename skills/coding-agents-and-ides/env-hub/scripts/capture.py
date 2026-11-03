@@ -90,7 +90,7 @@ HUB_URL = os.environ.get("HARBOR_HUB_URL", "https://harbor-hub.eigent.ai").rstri
 # The skill's public OAuth client at Harbor Hub (PKCE, no secret).
 HUB_CLIENT_ID = os.environ.get("HARBOR_HUB_CLIENT_ID", "")
 CREDENTIALS = Path(
-    os.environ.get("HARBOR_TASK_CONFIG_DIR", Path.home() / ".config" / "harbor-task")
+    os.environ.get("ENV_HUB_CONFIG_DIR", Path.home() / ".config" / "env-hub")
 ) / "credentials.json"
 
 

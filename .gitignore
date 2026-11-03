@@ -6,3 +6,5 @@ evals/results/*.json
 
 # Dependencies
 node_modules/
+__pycache__/
+*.pyc

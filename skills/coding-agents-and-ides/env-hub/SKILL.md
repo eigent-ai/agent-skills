@@ -1,9 +1,9 @@
 ---
-name: harbor-task
+name: env-hub
 description: Save a finished Claude Code or Codex session as a Harbor task (an agent benchmark task) and submit it to Harbor Hub, which writes its verifier and reference solution. Use when the user asks to "save this session as a Harbor task", "turn this into a Harbor task", "submit this to Harbor Hub", "保存为 Harbor 任务", or to check how a submitted Harbor task is going.
 ---
 
-# Harbor task
+# Env Hub
 
 `scripts/capture.py` (in this skill's folder; Python 3.9+, standard library
 only) does every step. Run it with the absolute path to this skill's folder.
@@ -42,7 +42,7 @@ python3 <skill>/scripts/capture.py submit <task folder> --json
 The first time, the user signs in: run `capture.py login`, which opens their
 browser (Eigent account, Google or email) and asks them to accept the
 contribution agreement and allow the skill. Never handle their password or
-token; the script keeps the token in `~/.config/harbor-task/`.
+token; the script keeps the token in `~/.config/env-hub/`.
 
 ## Follow it
 
