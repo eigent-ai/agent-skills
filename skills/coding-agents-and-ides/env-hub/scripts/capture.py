@@ -7,7 +7,7 @@ it to Env Hub.
                     [--cwd DIR] [--out DIR] [--exclude PATH ...] [--json]
     capture.py login | logout
     capture.py submit TASK_DIR [--json]
-    capture.py status SUBMISSION_ID [--json]
+    capture.py status CONVERSION_ID [--json]
     capture.py list [--json]
 
 `save` works offline and changes nothing in the repository: the instruction is
@@ -16,10 +16,14 @@ the environment is the repository at the last commit before the session
 started, left without build caches, system files, secrets, and binary or large
 files the session never named. Each file left out is listed, with why, in
 environment/omitted_files.json. The verifier and the reference solution are not
-written here: Env Hub drafts both once the task is submitted.
+written here: Env Hub drafts both once the task is submitted. Beside the task
+`save` keeps the conversation (what the user and the agent said, not the tools'
+output; anything that looks like a secret redacted) and a bundle of both, the
+zip Env Hub takes.
 
-`submit` uploads a saved task to Env Hub as the signed-in contributor (an
-Eigent account; `login` opens the browser once). Nothing is uploaded otherwise.
+`submit` uploads the bundle to Env Hub as the signed-in contributor (an Eigent
+account; `login` opens the browser once) and starts converting it into an
+environment. Nothing is uploaded otherwise.
 
 Only the Python standard library is used. The rules for what the environment
 keeps follow Eigent's own exporter (eigent backend/app/harbor_task/exporter.py).
@@ -40,13 +44,13 @@ import secrets
 import shutil
 import subprocess
 import sys
-import tarfile
 import threading
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
 import webbrowser
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 
@@ -84,6 +88,8 @@ SECRET_PATTERNS = {
 }  # fmt: skip
 PATH_TOKEN = re.compile(r"[^\s\"'`<>|;,()\[\]{}=\\]+")
 SOURCES = ("claude", "codex")
+SCOPES = "profile environments:read environments:write"
+BUNDLE_FORMAT = "1"
 DEFAULT_OUT = Path.home() / "harbor-tasks"
 
 HUB_URL = os.environ.get("ENV_HUB_URL", "https://harbor-hub.eigent.ai").rstrip("/")
@@ -154,6 +160,8 @@ class Session:
         self.commit: str | None = None
         self.messages: list[str] = []
         self.tool_inputs: list[str] = []
+        # what the user and the agent said, in order (tool calls and output left out)
+        self.turns: list[dict] = []
         (self._claude if source == "claude" else self._codex)()
         if not self.cwd:
             raise CaptureError(f"{transcript} records no working directory")
@@ -176,10 +184,13 @@ class Session:
                 for text in texts:
                     if text.strip() and not _INJECTED.match(text):
                         self.messages.append(text.strip())
-            elif d.get("type") == "assistant" and isinstance(content, list):
+                        self.turns.append({"role": "user", "content": text.strip()})
+            elif d.get("type") == "assistant" and isinstance(content, list) and not d.get("isSidechain"):
                 for block in content:
                     if isinstance(block, dict) and block.get("type") == "tool_use":
                         self.tool_inputs.extend(_strings(block.get("input")))
+                    elif isinstance(block, dict) and block.get("type") == "text" and block.get("text", "").strip():
+                        self.turns.append({"role": "assistant", "content": block["text"].strip()})
 
     def _codex(self) -> None:
         for d in _jsonl(self.transcript):
@@ -197,6 +208,12 @@ class Session:
                     text = block.get("text", "") if isinstance(block, dict) else ""
                     if text.strip() and not _INJECTED.match(text):
                         self.messages.append(text.strip())
+                        self.turns.append({"role": "user", "content": text.strip()})
+            elif kind == "response_item" and p.get("type") == "message" and p.get("role") == "assistant":
+                for block in p.get("content") or []:
+                    text = block.get("text", "") if isinstance(block, dict) else ""
+                    if text.strip():
+                        self.turns.append({"role": "assistant", "content": text.strip()})
             elif kind == "response_item" and p.get("type") in ("function_call", "custom_tool_call", "local_shell_call"):
                 for key in ("arguments", "input", "action"):
                     self.tool_inputs.extend(_strings(p.get(key)))
@@ -527,11 +544,18 @@ def save(session: Session, out_root: Path, exclude: list[str]) -> dict:
         f"starts as the repository at commit `{commit[:12]}`, before the session. "
         "The verifier and reference solution are written by Env Hub.\n"
     )
-    archive = pack(task)
+    conversation = out_root / f"{name}.conversation.json"
+    turns = [t | {"content": _redact(_localize(t["content"], session.cwd))} for t in session.turns]
+    conversation.write_text(json.dumps(
+        {"source": session.source, "session_id": session.id, "turns": turns}, indent=2, ensure_ascii=False,
+    ) + "\n")  # fmt: skip
+    archive = bundle(task, conversation)
     return {
         "task": str(task),
-        "archive": str(archive),
-        "archive_bytes": archive.stat().st_size,
+        "conversation": str(conversation),
+        "conversation_turns": len(turns),
+        "bundle": str(archive),
+        "bundle_bytes": archive.stat().st_size,
         "source": session.source,
         "session_id": session.id,
         "start_commit": commit,
@@ -545,21 +569,29 @@ def save(session: Session, out_root: Path, exclude: list[str]) -> dict:
     }
 
 
-def pack(task: Path) -> Path:
-    archive = task.parent / f"{task.name}.tar.gz"
+def _redact(text: str) -> str:
+    for pattern in SECRET_PATTERNS.values():
+        text = pattern.sub("[redacted]", text)
+    return text
+
+
+def bundle(task: Path, conversation: Path | None) -> Path:
+    """The zip Env Hub takes (format 1): ``task/``, the task folder, and the
+    conversation as ``conversation.json``; written beside the task folder."""
+    archive = task.parent / f"{task.name}.zip"
     buf = io.BytesIO()
-    with tarfile.open(fileobj=buf, mode="w:gz") as tar:
-        for path in [task, *sorted(task.rglob("*"))]:
-            rel = path.relative_to(task).as_posix()
-            info = tar.gettarinfo(str(path), arcname=task.name if rel == "." else f"{task.name}/{rel}")
-            info.uid = info.gid = 0
-            info.uname = info.gname = ""
-            info.mtime = 0
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        def add(arcname: str, data: bytes, executable: bool = False) -> None:
+            info = zipfile.ZipInfo(arcname, date_time=(2000, 1, 1, 0, 0, 0))
+            info.external_attr = (0o100755 if executable else 0o100644) << 16
+            info.compress_type = zipfile.ZIP_DEFLATED
+            z.writestr(info, data)
+        for path in sorted(task.rglob("*")):
             if path.is_file():
-                with path.open("rb") as f:
-                    tar.addfile(info, f)
-            else:
-                tar.addfile(info)
+                add(f"task/{path.relative_to(task).as_posix()}", path.read_bytes(), os.access(path, os.X_OK))
+        if conversation is not None and conversation.is_file():
+            add("conversation.json", conversation.read_bytes())
+        add("manifest.json", json.dumps({"format_version": BUNDLE_FORMAT}).encode())
     archive.write_bytes(buf.getvalue())
     return archive
 
@@ -645,7 +677,7 @@ def login() -> dict:
     redirect_uri = f"http://127.0.0.1:{server.server_port}/callback"
     query = urllib.parse.urlencode({
         "response_type": "code", "client_id": client_id, "redirect_uri": redirect_uri,
-        "scope": "tasks:submit tasks:read", "state": state,
+        "scope": SCOPES, "state": state,
         "code_challenge": challenge, "code_challenge_method": "S256",
     })  # fmt: skip
     url = f"{HUB_URL}/oauth/authorize?{query}"
@@ -665,7 +697,7 @@ def login() -> dict:
     if status != 200:
         raise CaptureError(f"Env Hub refused the sign-in: {tokens.get('error_description') or tokens}")
     _save_credentials(tokens)
-    return _hub("GET", "/api/contrib/me")
+    return _hub("GET", "/v1/me")
 
 
 def logout() -> None:
@@ -694,37 +726,44 @@ def _token() -> str:
 def _hub(method: str, path: str, body=None) -> dict:
     status, payload = _http(method, f"{HUB_URL}{path}", body=body, token=_token())
     if status >= 400:
-        detail = payload.get("detail")
-        message = detail if isinstance(detail, str) else (detail or {}).get("message") or f"HTTP {status}"
-        if status == 403 and isinstance(detail, dict) and detail.get("error") == "agreement":
-            message += " — run `capture.py login` to read and accept it"
+        error = payload.get("error") if isinstance(payload, dict) else None
+        error = error if isinstance(error, dict) else {}
+        message = error.get("message") or f"HTTP {status}"
+        if status in (401, 403):
+            message += " (run `capture.py login`)"
         raise CaptureError(f"Env Hub: {message}")
     return payload
 
 
 def submit(target: Path) -> dict:
-    """Upload a saved task (its folder, or the archive ``save`` wrote beside
-    it) and submit it; the submission as Env Hub reports it."""
+    """Upload a saved task's bundle (its folder, or the zip ``save`` wrote
+    beside it) and start converting it; the conversion as Env Hub reports it."""
     if target.is_dir():
-        folder, archive = target, pack(target)
-    elif target.is_file() and target.name.endswith(".tar.gz"):
-        folder, archive = target.with_name(target.name[: -len(".tar.gz")]), target
+        folder = target
+        archive = bundle(folder, folder.with_name(f"{folder.name}.conversation.json"))
+    elif target.is_file() and target.suffix == ".zip":
+        folder, archive = target.with_suffix(""), target
     else:
         raise CaptureError(f"no saved task at {target}")
-    source = "other"
-    toml = folder / "task.toml"
-    if toml.is_file():
-        found = re.search(r'^source = "(\w+)"', toml.read_text(), re.M)
-        source = found.group(1) if found and found.group(1) in SOURCES else "other"
+    toml = (folder / "task.toml").read_text() if (folder / "task.toml").is_file() else ""
+    found = re.search(r'^source = "(\w+)"', toml, re.M)
+    app = found.group(1) if found and found.group(1) in SOURCES else "other"
+    session_id = re.search(r'^session_id = "([^"]+)"', toml, re.M)
+    instruction = folder / "instruction.md"
+    title = " ".join(instruction.read_text().split())[:120] if instruction.is_file() else folder.name
     data = archive.read_bytes()
-    sha256 = hashlib.sha256(data).hexdigest()
-    slot = _hub("POST", "/api/contrib/uploads", {"size": len(data), "sha256": sha256})
-    status, _ = _http("PUT", slot["upload_url"], data=data, headers={
-        "Content-Range": f"bytes 0-{len(data) - 1}/{len(data)}", "Content-Type": "application/gzip",
+    upload = _hub("POST", "/v1/uploads", {
+        "filename": archive.name, "content_type": "application/zip",
+        "size_bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(),
     })  # fmt: skip
+    status, _ = _http(upload.get("method", "PUT"), upload["upload_url"], data=data, headers=upload.get("headers") or {})
     if status >= 300:
         raise CaptureError(f"the upload failed (HTTP {status})")
-    return _hub("POST", "/api/contrib/submissions", {"sha256": sha256, "source": source})
+    source = {"app": app} | ({"task_id": session_id.group(1)} if session_id else {})
+    return _hub("POST", "/v1/conversions", {
+        "upload_id": upload["upload_id"], "title": title or folder.name,
+        "format_version": BUNDLE_FORMAT, "source": source,
+    })  # fmt: skip
 
 
 # ── the command line ──
@@ -740,7 +779,8 @@ def _print(data, as_json: bool, lines) -> None:
 
 def _summary_lines(s: dict):
     yield f"Saved {s['task']}"
-    yield f"  archive: {s['archive']} ({s['archive_bytes'] / 1024:.0f} KB)"
+    yield f"  bundle: {s['bundle']} ({s['bundle_bytes'] / 1024:.0f} KB)"
+    yield f"  conversation: {s['conversation']} ({s['conversation_turns']} turns)"
     yield f"  workspace: {s['files_kept']} files, from commit {s['start_commit'][:12]}"
     for reason, n in s["files_omitted"].items():
         yield f"  left out: {n} ({reason})"
@@ -751,10 +791,17 @@ def _summary_lines(s: dict):
     yield from ("  " + line for line in s["instruction"].splitlines())
 
 
-def _submission_lines(s: dict):
-    yield f"{s['id']}: {s['stage']}" + (f" ({s['task']} rev {s['revision']})" if s.get("task") else "")
-    for e in s.get("errors") or []:
-        yield f"  {e}"
+def _conversion_lines(s: dict):
+    yield f"{s['conversion_id']}: {s['status']} ({s.get('stage')})" + (f", {s['task']}" if s.get("task") else "")
+    if s.get("error"):
+        yield f"  {s['error'].get('message')}"
+    if s.get("environment_url"):
+        yield f"  {s['environment_url']}"
+
+
+def _environment_lines(e: dict):
+    yield f"{e['id']}: {e['title']}"
+    yield f"  {e['url']}"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -777,10 +824,10 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("submit", help="submit a saved task to Env Hub")
     p.add_argument("task", type=Path)
     p.add_argument("--json", action="store_true")
-    p = sub.add_parser("status", help="how a submission is going")
+    p = sub.add_parser("status", help="how a conversion is going")
     p.add_argument("id")
     p.add_argument("--json", action="store_true")
-    p = sub.add_parser("list", help="your submissions")
+    p = sub.add_parser("list", help="your environments")
     p.add_argument("--json", action="store_true")
     args = parser.parse_args(argv)
     try:
@@ -807,17 +854,17 @@ def main(argv: list[str] | None = None) -> int:
             _print(save(session, args.out, args.exclude), args.json, _summary_lines)
         elif args.command == "login":
             me = login()
-            print(f"Signed in to Env Hub as {me.get('name') or me.get('email')}.")
+            print(f"Signed in to Env Hub as {me.get('display_name') or me.get('email')}.")
         elif args.command == "logout":
             logout()
             print("Signed out of Env Hub.")
         elif args.command == "submit":
-            _print(submit(args.task), args.json, _submission_lines)
+            _print(submit(args.task), args.json, _conversion_lines)
         elif args.command == "status":
-            _print(_hub("GET", f"/api/contrib/submissions/{urllib.parse.quote(args.id)}"), args.json, _submission_lines)
+            _print(_hub("GET", f"/v1/conversions/{urllib.parse.quote(args.id)}"), args.json, _conversion_lines)
         elif args.command == "list":
-            rows = _hub("GET", "/api/contrib/submissions")
-            _print(rows, args.json, lambda r: (line for s in r for line in _submission_lines(s)))
+            rows = _hub("GET", "/v1/environments")
+            _print(rows, args.json, lambda r: (line for e in r["items"] for line in _environment_lines(e)))
     except CaptureError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
