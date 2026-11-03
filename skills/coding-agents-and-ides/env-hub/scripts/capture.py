@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Turn a finished Claude Code or Codex session into a Harbor task, and submit
-it to Harbor Hub.
+it to Env Hub.
 
     capture.py sessions [--from claude|codex] [--cwd DIR]
     capture.py save [--from claude|codex] [--session ID | --transcript FILE]
@@ -16,9 +16,9 @@ the environment is the repository at the last commit before the session
 started, left without build caches, system files, secrets, and binary or large
 files the session never named. Each file left out is listed, with why, in
 environment/omitted_files.json. The verifier and the reference solution are not
-written here: Harbor Hub drafts both once the task is submitted.
+written here: Env Hub drafts both once the task is submitted.
 
-`submit` uploads a saved task to Harbor Hub as the signed-in contributor (an
+`submit` uploads a saved task to Env Hub as the signed-in contributor (an
 Eigent account; `login` opens the browser once). Nothing is uploaded otherwise.
 
 Only the Python standard library is used. The rules for what the environment
@@ -80,15 +80,15 @@ SECRET_PATTERNS = {
     "GitHub token": re.compile(r"\b(?:ghp|gho|ghs|ghu)_[A-Za-z0-9]{30,}|\bgithub_pat_[A-Za-z0-9_]{40,}"),
     "Slack token": re.compile(r"\bxox[abprs]-[A-Za-z0-9-]{10,}"),
     "Google API key": re.compile(r"\bAIza[0-9A-Za-z_-]{35}\b"),
-    "Harbor Hub token": re.compile(r"\bhh[a-z]?_[A-Za-z0-9_-]{30,}"),
+    "Env Hub token": re.compile(r"\bhh[a-z]?_[A-Za-z0-9_-]{30,}"),
 }  # fmt: skip
 PATH_TOKEN = re.compile(r"[^\s\"'`<>|;,()\[\]{}=\\]+")
 SOURCES = ("claude", "codex")
 DEFAULT_OUT = Path.home() / "harbor-tasks"
 
-HUB_URL = os.environ.get("HARBOR_HUB_URL", "https://harbor-hub.eigent.ai").rstrip("/")
-# The skill's public OAuth client at Harbor Hub (PKCE, no secret).
-HUB_CLIENT_ID = os.environ.get("HARBOR_HUB_CLIENT_ID", "")
+HUB_URL = os.environ.get("ENV_HUB_URL", "https://harbor-hub.eigent.ai").rstrip("/")
+# The skill's public OAuth client at Env Hub (PKCE, no secret).
+HUB_CLIENT_ID = os.environ.get("ENV_HUB_CLIENT_ID", "")
 CREDENTIALS = Path(
     os.environ.get("ENV_HUB_CONFIG_DIR", Path.home() / ".config" / "env-hub")
 ) / "credentials.json"
@@ -387,7 +387,7 @@ RUN git init -q -b main \\
 
 
 PLACEHOLDER = """#!/bin/bash
-# Placeholder: Harbor Hub writes the {what} once the task is submitted.
+# Placeholder: Env Hub writes the {what} once the task is submitted.
 echo "No {what} is defined for this task yet." >&2
 exit 1
 """
@@ -525,7 +525,7 @@ def save(session: Session, out_root: Path, exclude: list[str]) -> dict:
     (task / "README.md").write_text(
         f"# {name}\n\nSaved from {session.source} session `{session.id}`: `{WORKDIR}` "
         f"starts as the repository at commit `{commit[:12]}`, before the session. "
-        "The verifier and reference solution are written by Harbor Hub.\n"
+        "The verifier and reference solution are written by Env Hub.\n"
     )
     archive = pack(task)
     return {
@@ -564,12 +564,12 @@ def pack(task: Path) -> Path:
     return archive
 
 
-# ── Harbor Hub ──
+# ── Env Hub ──
 
 
 def _client_id() -> str:
     if not HUB_CLIENT_ID:
-        raise CaptureError("HARBOR_HUB_CLIENT_ID is not set: submitting is not set up yet")
+        raise CaptureError("ENV_HUB_CLIENT_ID is not set: submitting is not set up yet")
     return HUB_CLIENT_ID
 
 
@@ -635,7 +635,7 @@ def login() -> dict:
             self.send_response(200 if ok else 400)
             self.send_header("Content-Type", "text/html; charset=utf-8")
             self.end_headers()
-            words = "Harbor Hub is connected." if ok else "Harbor Hub was not connected."
+            words = "Env Hub is connected." if ok else "Env Hub was not connected."
             self.wfile.write(f"<p>{words} You can close this tab.</p>".encode())
 
         def log_message(self, *args):
@@ -649,7 +649,7 @@ def login() -> dict:
         "code_challenge": challenge, "code_challenge_method": "S256",
     })  # fmt: skip
     url = f"{HUB_URL}/oauth/authorize?{query}"
-    print(f"Opening your browser to sign in to Harbor Hub:\n  {url}", file=sys.stderr)
+    print(f"Opening your browser to sign in to Env Hub:\n  {url}", file=sys.stderr)
     webbrowser.open(url)
     thread = threading.Thread(target=server.handle_request, daemon=True)
     server.timeout = 600
@@ -657,13 +657,13 @@ def login() -> dict:
     thread.join(610)
     server.server_close()
     if not result.get("code"):
-        raise CaptureError(f"Harbor Hub was not connected ({result.get('error') or 'no answer'})")
+        raise CaptureError(f"Env Hub was not connected ({result.get('error') or 'no answer'})")
     status, tokens = _http("POST", f"{HUB_URL}/oauth/token", form={
         "grant_type": "authorization_code", "code": result["code"], "redirect_uri": redirect_uri,
         "client_id": client_id, "code_verifier": verifier,
     })  # fmt: skip
     if status != 200:
-        raise CaptureError(f"Harbor Hub refused the sign-in: {tokens.get('error_description') or tokens}")
+        raise CaptureError(f"Env Hub refused the sign-in: {tokens.get('error_description') or tokens}")
     _save_credentials(tokens)
     return _hub("GET", "/api/contrib/me")
 
@@ -678,7 +678,7 @@ def logout() -> None:
 def _token() -> str:
     creds = _load_credentials()
     if creds is None:
-        raise CaptureError("not signed in to Harbor Hub: run `capture.py login`")
+        raise CaptureError("not signed in to Env Hub: run `capture.py login`")
     if creds["expires_at"] - 60 > time.time():
         return creds["access_token"]
     status, tokens = _http("POST", f"{HUB_URL}/oauth/token", form={
@@ -686,7 +686,7 @@ def _token() -> str:
     })  # fmt: skip
     if status != 200:
         CREDENTIALS.unlink(missing_ok=True)
-        raise CaptureError("your Harbor Hub sign-in ended: run `capture.py login`")
+        raise CaptureError("your Env Hub sign-in ended: run `capture.py login`")
     _save_credentials(tokens)
     return tokens["access_token"]
 
@@ -698,13 +698,13 @@ def _hub(method: str, path: str, body=None) -> dict:
         message = detail if isinstance(detail, str) else (detail or {}).get("message") or f"HTTP {status}"
         if status == 403 and isinstance(detail, dict) and detail.get("error") == "agreement":
             message += " — run `capture.py login` to read and accept it"
-        raise CaptureError(f"Harbor Hub: {message}")
+        raise CaptureError(f"Env Hub: {message}")
     return payload
 
 
 def submit(target: Path) -> dict:
     """Upload a saved task (its folder, or the archive ``save`` wrote beside
-    it) and submit it; the submission as Harbor Hub reports it."""
+    it) and submit it; the submission as Env Hub reports it."""
     if target.is_dir():
         folder, archive = target, pack(target)
     elif target.is_file() and target.name.endswith(".tar.gz"):
@@ -772,9 +772,9 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--out", type=Path, default=DEFAULT_OUT)
     p.add_argument("--exclude", action="append", default=[], help="a path to leave out (repeatable)")
     p.add_argument("--json", action="store_true")
-    sub.add_parser("login", help="sign in to Harbor Hub in the browser")
-    sub.add_parser("logout", help="sign out of Harbor Hub")
-    p = sub.add_parser("submit", help="submit a saved task to Harbor Hub")
+    sub.add_parser("login", help="sign in to Env Hub in the browser")
+    sub.add_parser("logout", help="sign out of Env Hub")
+    p = sub.add_parser("submit", help="submit a saved task to Env Hub")
     p.add_argument("task", type=Path)
     p.add_argument("--json", action="store_true")
     p = sub.add_parser("status", help="how a submission is going")
@@ -807,10 +807,10 @@ def main(argv: list[str] | None = None) -> int:
             _print(save(session, args.out, args.exclude), args.json, _summary_lines)
         elif args.command == "login":
             me = login()
-            print(f"Signed in to Harbor Hub as {me.get('name') or me.get('email')}.")
+            print(f"Signed in to Env Hub as {me.get('name') or me.get('email')}.")
         elif args.command == "logout":
             logout()
-            print("Signed out of Harbor Hub.")
+            print("Signed out of Env Hub.")
         elif args.command == "submit":
             _print(submit(args.task), args.json, _submission_lines)
         elif args.command == "status":

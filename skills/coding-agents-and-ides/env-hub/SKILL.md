@@ -1,6 +1,6 @@
 ---
 name: env-hub
-description: Save a finished Claude Code or Codex session as a Harbor task (an agent benchmark task) and submit it to Harbor Hub, which writes its verifier and reference solution. Use when the user asks to "save this session as a Harbor task", "turn this into a Harbor task", "submit this to Harbor Hub", "保存为 Harbor 任务", or to check how a submitted Harbor task is going.
+description: Save a finished Claude Code or Codex session as a Harbor task (an agent benchmark task) and submit it to Env Hub, which writes its verifier and reference solution. Use when the user asks to "save this session as a Harbor task", "turn this into a Harbor task", "submit this to Env Hub", "保存为 Harbor 任务", or to check how a submitted Harbor task is going.
 ---
 
 # Env Hub
@@ -31,7 +31,7 @@ how many files the workspace keeps, what was left out and why
 
 ## Submit (only after the user says yes)
 
-Submitting uploads the task to Harbor Hub under the user's Eigent account, as
+Submitting uploads the task to Env Hub under the user's Eigent account, as
 the contribution agreement they accept says. Ask first, every time; say what
 will be uploaded (the task folder and its size). Then:
 
@@ -51,7 +51,7 @@ python3 <skill>/scripts/capture.py status <submission id> --json
 python3 <skill>/scripts/capture.py list --json
 ```
 
-`stage`: `rejected` (`errors` says why), `publishing`, `drafting` (Harbor Hub
+`stage`: `rejected` (`errors` says why), `publishing`, `drafting` (Env Hub
 writes the verifier and reference solution), `gating` (oracle and nop runs),
 `repairing`, `passed`, `needs_attention`, or `failed`. Drafting and gating
 take minutes; check back rather than waiting in a loop.
