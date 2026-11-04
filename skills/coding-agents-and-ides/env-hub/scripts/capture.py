@@ -92,7 +92,7 @@ SCOPES = "profile environments:read environments:write"
 BUNDLE_FORMAT = "1"
 DEFAULT_OUT = Path.home() / "harbor-tasks"
 
-HUB_URL = os.environ.get("ENV_HUB_URL", "https://harbor-hub.eigent.ai").rstrip("/")
+HUB_URL = os.environ.get("ENV_HUB_URL", "https://hub.env-lab.ai").rstrip("/")
 # The skill's public OAuth client at Env Hub (PKCE, no secret).
 HUB_CLIENT_ID = os.environ.get("ENV_HUB_CLIENT_ID", "")
 CREDENTIALS = Path(

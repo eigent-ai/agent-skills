@@ -46,7 +46,7 @@ python3 <skill>/scripts/capture.py submit <task folder> --json
 ```
 
 The first time, the user signs in: run `capture.py login`, which opens their
-browser (Eigent account, Google or email) and asks them to accept the
+browser (Eigent account, Google or GitHub) and asks them to accept the
 contribution agreement and allow the skill. Never handle their password or
 token; the script keeps the token in `~/.config/env-hub/`.
 
