@@ -10,29 +10,48 @@ only) does every step. Run it with the absolute path to this skill's folder.
 
 ## Save
 
+First read the user's messages in the session, numbered:
+
 ```bash
-python3 <skill>/scripts/capture.py save --from claude --json   # or: --from codex
+python3 <skill>/scripts/capture.py messages --from claude --json   # or: --from codex
 ```
 
-It takes the newest session that ran in the current folder (`--session ID` or
-`--transcript FILE` for another; `sessions --from claude` lists them). The
-folder must be a git repository: the task starts from the last commit before
-the session. Nothing leaves the machine and the repository is not changed.
+It reads the newest session that ran in the current folder (`--session ID` or
+`--transcript FILE` for another; `sessions --from claude` lists them).
+
+Choose the messages that state the task: the request, and later messages that
+correct it or add to it. Leave out what is not the task: asking to save or
+submit, thanks, questions about this skill, and a different task in the same
+session (save that one on its own). `taken_by_default` marks what `save` takes
+without a choice: every message before the request to save. Then:
+
+```bash
+python3 <skill>/scripts/capture.py save --from claude --session ID --messages 1,3 --json
+```
+
+`--messages` takes numbers and ranges (`1,3`, `2-4`). The instruction is the
+chosen messages word for word: choose, never rewrite. The conversation kept
+runs from the first chosen message through your replies to the last. A task
+that starts at a later message starts from the last commit before it, so
+earlier work in the session is there only if it was committed; say so when it
+matters. The folder must be a git repository. Nothing leaves the machine and
+the repository is not changed.
 
 Beside the task folder it keeps the conversation (what the user and the agent
 said, without the tools' output, anything that looks like a secret redacted)
 and a bundle of both, the zip Env Hub takes.
 
-Show the user the summary: the instruction (their own words from the session),
-how many files the workspace keeps, what was left out and why
-(`files_omitted`), every file left out because it looks like a secret
-(`secrets_left_out`), and that the conversation goes with the task
-(`conversation`, `conversation_turns`). To leave out more, run `save` again
-with `--exclude PATH` (repeatable).
+Show the user the summary: the instruction, which of their messages were taken
+and which left out and why (`messages`, `messages_left_out`), how many files
+the workspace keeps, what was left out and why (`files_omitted`), every file
+left out because it looks like a secret (`secrets_left_out`), and that the
+conversation goes with the task (`conversation_turns`). To leave out files,
+run `save` again with `--exclude PATH` (repeatable); to change what the task
+says, again with other `--messages`.
 
-- Never edit the saved task's files; the instruction is the user's words.
-- If `save` says the user's own messages hold what looks like a secret, stop
-  and tell them; do not work around it.
+- Never edit the saved task's files.
+- If `save` says the chosen messages hold what looks like a secret, stop and
+  tell the user; do not work around it.
 
 ## Submit (only after the user says yes)
 
@@ -59,7 +78,9 @@ python3 <skill>/scripts/capture.py list --json     # the user's environments
 
 `status`: `queued`, `running`, `succeeded` (`environment_url` is where the user
 sees the environment in full, verifier and solution included) or `failed`
-(`error.message` says why). `stage` says more: `checking`, `publishing`,
+(`error.message` says why). Until then the user follows it on the web at
+`account_url`, which `submit` and `status` return; give that address, never
+one of your own (the hub may not be the default one). `stage` says more: `checking`, `publishing`,
 `drafting` (Env Hub writes the verifier and reference solution), `gating`
 (oracle and nop runs), `repairing`, `passed`, `rejected`, `needs_attention`.
 Drafting and gating take minutes; check back rather than waiting in a loop.
