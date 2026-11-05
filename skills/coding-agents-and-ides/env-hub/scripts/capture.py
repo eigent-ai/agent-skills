@@ -3,8 +3,11 @@
 it to Env Hub.
 
     capture.py sessions [--from claude|codex] [--cwd DIR]
+    capture.py messages [--from claude|codex] [--session ID | --transcript FILE]
+                        [--cwd DIR] [--json]
     capture.py save [--from claude|codex] [--session ID | --transcript FILE]
-                    [--cwd DIR] [--out DIR] [--exclude PATH ...] [--json]
+                    [--messages N[,N|N-N...]] [--cwd DIR] [--out DIR]
+                    [--exclude PATH ...] [--json]
     capture.py login | logout
     capture.py submit TASK_DIR [--json]
     capture.py status CONVERSION_ID [--json]
@@ -12,14 +15,20 @@ it to Env Hub.
 
 `save` works offline and changes nothing in the repository: the instruction is
 the user's own words from the session (their workspace path becomes /app), and
-the environment is the repository at the last commit before the session
-started, left without build caches, system files, secrets, and binary or large
-files the session never named. Each file left out is listed, with why, in
+the environment is the repository at the last commit before the task started,
+left without build caches, system files, secrets, and binary or large files
+the session never named. Each file left out is listed, with why, in
 environment/omitted_files.json. The verifier and the reference solution are not
 written here: Env Hub drafts both once the task is submitted. Beside the task
 `save` keeps the conversation (what the user and the agent said, not the tools'
 output; anything that looks like a secret redacted) and a bundle of both, the
 zip Env Hub takes.
+
+Which of the user's messages make the task is chosen, never written: `messages`
+numbers them, and `save --messages` takes those that state the task, word for
+word. Without it `save` takes every message before the one that asked to save
+(the one the agent answered by running this script). The conversation kept
+runs from the first message taken through the agent's replies to the last.
 
 `submit` uploads the bundle to Env Hub as the signed-in contributor (an Eigent
 account; `login` opens the browser once) and starts converting it into an
@@ -145,6 +154,9 @@ _INJECTED = re.compile(
     r"user-memory-input|bash-input|bash-stdout|bash-stderr|turn_aborted)[\s>]|"
     r"# AGENTS\.md instructions|Caveat: The messages below)"
 )
+# The agent at work for this skill: loading it, or running this script on the
+# session. The prompt it answers asked to save; the task is what came before.
+_THIS_SKILL = re.compile(r"capture\.py['\"]?\s+(sessions|messages|save)\b")
 
 
 class Session:
@@ -159,18 +171,41 @@ class Session:
         self.started: datetime | None = None
         self.commit: str | None = None
         self.messages: list[str] = []
+        # when each message was sent, where the transcript says
+        self.sent: list[datetime | None] = []
         self.tool_inputs: list[str] = []
-        # what the user and the agent said, in order (tool calls and output left out)
+        # what the user and the agent said, in order (tool calls and output
+        # left out); a user turn carries its message's number as "n"
         self.turns: list[dict] = []
+        # how many messages came before the prompt that asked to save, once the
+        # agent turned to this skill
+        self.asked_to_save: int | None = None
+        self._prompt_at = 0
         (self._claude if source == "claude" else self._codex)()
         if not self.cwd:
             raise CaptureError(f"{transcript} records no working directory")
+
+    def _prompt(self, texts: list[str], when: datetime | None) -> None:
+        """A prompt: the person's words, or what their agent injected (a slash
+        command, the environment) in their turn."""
+        self._prompt_at = len(self.messages)
+        for text in texts:
+            if text.strip() and not _INJECTED.match(text):
+                self.messages.append(text.strip())
+                self.sent.append(when)
+                self.turns.append({"role": "user", "content": text.strip(), "n": len(self.messages)})
+
+    def _tool(self, values: list[str], skill: str | None = None) -> None:
+        self.tool_inputs.extend(values)
+        if self.asked_to_save is None and (skill == "env-hub" or any(_THIS_SKILL.search(v) for v in values)):
+            self.asked_to_save = self._prompt_at
 
     def _claude(self) -> None:
         for d in _jsonl(self.transcript):
             self.cwd = self.cwd or d.get("cwd")
             self.id = d.get("sessionId") or self.id
-            self.started = self.started or _parse_time(d.get("timestamp"))
+            when = _parse_time(d.get("timestamp"))
+            self.started = self.started or when
             message = d.get("message") or {}
             content = message.get("content")
             if d.get("type") == "user" and not d.get("isMeta") and not d.get("isSidechain"):
@@ -181,21 +216,22 @@ class Session:
                              if isinstance(b, dict) and b.get("type") == "text"]  # fmt: skip
                 else:
                     texts = []
-                for text in texts:
-                    if text.strip() and not _INJECTED.match(text):
-                        self.messages.append(text.strip())
-                        self.turns.append({"role": "user", "content": text.strip()})
+                if texts:  # a tool's result comes back as a user turn with none
+                    self._prompt(texts, when)
             elif d.get("type") == "assistant" and isinstance(content, list) and not d.get("isSidechain"):
                 for block in content:
                     if isinstance(block, dict) and block.get("type") == "tool_use":
-                        self.tool_inputs.extend(_strings(block.get("input")))
+                        tool_input = block.get("input")
+                        skill = tool_input.get("skill") if isinstance(tool_input, dict) else None
+                        self._tool(list(_strings(tool_input)), skill if block.get("name") == "Skill" else None)
                     elif isinstance(block, dict) and block.get("type") == "text" and block.get("text", "").strip():
                         self.turns.append({"role": "assistant", "content": block["text"].strip()})
 
     def _codex(self) -> None:
         for d in _jsonl(self.transcript):
             kind, p = d.get("type"), d.get("payload") or {}
-            self.started = self.started or _parse_time(d.get("timestamp"))
+            when = _parse_time(d.get("timestamp"))
+            self.started = self.started or when
             if kind == "session_meta":
                 self.id = p.get("id") or self.id
                 self.cwd = p.get("cwd") or self.cwd
@@ -204,19 +240,44 @@ class Session:
             elif kind == "turn_context":
                 self.cwd = self.cwd or p.get("cwd")
             elif kind == "response_item" and p.get("type") == "message" and p.get("role") == "user":
-                for block in p.get("content") or []:
-                    text = block.get("text", "") if isinstance(block, dict) else ""
-                    if text.strip() and not _INJECTED.match(text):
-                        self.messages.append(text.strip())
-                        self.turns.append({"role": "user", "content": text.strip()})
+                texts = [b.get("text", "") for b in p.get("content") or [] if isinstance(b, dict)]
+                self._prompt(texts, when)
             elif kind == "response_item" and p.get("type") == "message" and p.get("role") == "assistant":
                 for block in p.get("content") or []:
                     text = block.get("text", "") if isinstance(block, dict) else ""
                     if text.strip():
                         self.turns.append({"role": "assistant", "content": text.strip()})
             elif kind == "response_item" and p.get("type") in ("function_call", "custom_tool_call", "local_shell_call"):
+                values = []
                 for key in ("arguments", "input", "action"):
-                    self.tool_inputs.extend(_strings(p.get(key)))
+                    values.extend(_strings(p.get(key)))
+                self._tool(values)
+
+    def default_messages(self) -> list[int]:
+        """The numbers ``save`` takes when none are given: every message
+        before the one that asked to save, or all of them."""
+        end = self.asked_to_save if self.asked_to_save else len(self.messages)
+        return list(range(1, end + 1))
+
+
+def parse_messages(spec: str, count: int) -> list[int]:
+    """``"1,3"``, ``"2-4"``, ``"all"`` → message numbers, in order."""
+    if spec.strip().lower() == "all":
+        return list(range(1, count + 1))
+    chosen: set[int] = set()
+    for part in spec.replace(" ", "").split(","):
+        first, dash, last = part.partition("-")
+        if not first.isdigit() or (dash and not last.isdigit()):
+            raise CaptureError(f"--messages takes numbers like 1,3 or 2-4, not {spec!r}")
+        lo, hi = int(first), int(last) if dash else int(first)
+        if lo > hi:
+            raise CaptureError(f"write a range low to high: {hi}-{lo}, not {part}")
+        if lo < 1 or hi > count:
+            raise CaptureError(f"the session has messages 1 to {count}; {part} is not among them")
+        chosen.update(range(lo, hi + 1))
+    if not chosen:
+        raise CaptureError("--messages names no message")
+    return sorted(chosen)
 
 
 def _claude_dir() -> Path:
@@ -271,9 +332,10 @@ def _git(repo: Path, *args: str, data: bytes | None = None) -> bytes:
     return done.stdout
 
 
-def _start(session: Session) -> tuple[Path, str, str]:
-    """(the repository, the commit before the session, the session's folder
-    within it as a posix path, '' for the top)."""
+def _start(session: Session, first: int = 1) -> tuple[Path, str, str]:
+    """(the repository, the commit before the task, the session's folder
+    within it as a posix path, '' for the top). A task that starts at a later
+    message (``first``) starts from the last commit before that message."""
     cwd = Path(session.cwd).resolve()
     try:
         top = Path(_git(cwd, "rev-parse", "--show-toplevel").decode().strip()).resolve()
@@ -281,17 +343,18 @@ def _start(session: Session) -> tuple[Path, str, str]:
         raise CaptureError(
             f"{cwd} is not in a git repository: only sessions in a git repository can be saved"
         ) from None
-    commit = session.commit
+    commit = session.commit if first == 1 else None
     if commit:
         try:
             commit = _git(top, "rev-parse", "--verify", f"{commit}^{{commit}}").decode().strip()
         except CaptureError:
             commit = None
-    if not commit and session.started:
-        before = session.started.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    started = session.started if first == 1 else session.sent[first - 1] or session.started
+    if not commit and started:
+        before = started.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
         commit = _git(top, "rev-list", "-1", f"--before={before}", "HEAD").decode().strip() or None
     if not commit:
-        raise CaptureError("the repository has no commit from before the session")
+        raise CaptureError("the repository has no commit from before the task")
     sub = cwd.relative_to(top).as_posix()
     return top, commit, "" if sub == "." else sub
 
@@ -422,7 +485,9 @@ def _toml_value(value) -> str:
     return json.dumps(str(value), ensure_ascii=False)
 
 
-def _task_toml(name: str, description: str, session: Session, commit: str, omitted: int) -> str:
+def _task_toml(
+    name: str, description: str, session: Session, commit: str, omitted: int, chosen: list[int], explicit: bool
+) -> str:
     lines = [
         f'schema_version = "{SCHEMA_VERSION}"',
         f"artifacts = {_toml_value([{'source': WORKDIR, 'destination': 'workspace', 'exclude': ['.git', 'node_modules']}])}",
@@ -436,6 +501,10 @@ def _task_toml(name: str, description: str, session: Session, commit: str, omitt
         "[metadata.capture]",
         f"source = {_toml_value(session.source)}",
         f"session_id = {_toml_value(session.id)}",
+        # the user's messages the instruction is made of, and who chose them
+        f"messages = {_toml_value(chosen)}",
+        f"messages_in_session = {len(session.messages)}",
+        f"messages_chosen = {_toml_value('explicit' if explicit else 'default')}",
         f"start_commit = {_toml_value(commit)}",
         f"omitted_files = {omitted}",
         'omitted_list = "environment/omitted_files.json"',
@@ -456,12 +525,16 @@ def _task_toml(name: str, description: str, session: Session, commit: str, omitt
     return "\n".join(lines) + "\n"
 
 
-def save(session: Session, out_root: Path, exclude: list[str]) -> dict:
-    """Write the task folder and its archive; a summary of what is in them."""
+def save(session: Session, out_root: Path, exclude: list[str], messages: list[int] | None = None) -> dict:
+    """Write the task folder and its archive; a summary of what is in them.
+    ``messages`` are the numbers of the user's messages that make the task
+    (see ``messages``); without them, those before the request to save."""
     if not session.messages:
         raise CaptureError("the session has no message from you to make a task of")
-    repo, commit, sub = _start(session)
-    instruction = _localize("\n\n".join(session.messages), session.cwd) + "\n"
+    chosen = messages or session.default_messages()
+    words = [session.messages[n - 1] for n in chosen]
+    repo, commit, sub = _start(session, chosen[0])
+    instruction = _localize("\n\n".join(words), session.cwd) + "\n"
     instruction_hits = _secret_hits(instruction)
     if instruction_hits:
         kinds = sorted({h["kind"] for h in instruction_hits})
@@ -470,7 +543,7 @@ def save(session: Session, out_root: Path, exclude: list[str]) -> dict:
             f"({', '.join(kinds)}); this session cannot be saved as it is"
         )
     files = _tree(repo, commit, sub)
-    request_text = "\n".join(session.messages + session.tool_inputs)
+    request_text = "\n".join(words + session.tool_inputs)
     referenced = _referenced([f[0] for f in files], request_text, session.cwd)
     excluded = {e.strip("/") for e in exclude}
 
@@ -513,6 +586,8 @@ def save(session: Session, out_root: Path, exclude: list[str]) -> dict:
     omitted.sort(key=lambda o: o["path"])
 
     name = f"{session.source}-{re.sub(r'[^A-Za-z0-9]', '', session.id)[:12] or 'session'}"
+    if chosen[0] > 1:  # another task from the same session gets its own folder
+        name += f"-m{chosen[0]}"
     task = out_root / name
     if task.exists():
         shutil.rmtree(task)
@@ -537,15 +612,23 @@ def save(session: Session, out_root: Path, exclude: list[str]) -> dict:
     description = " ".join(instruction.split())[:200]
     # Harbor names a task "<org>/<name>"
     (task / "task.toml").write_text(
-        _task_toml(f"{session.source}/{name}", description, session, commit, len(omitted))
+        _task_toml(
+            f"{session.source}/{name}", description, session, commit, len(omitted), chosen, messages is not None
+        )
     )
     (task / "README.md").write_text(
         f"# {name}\n\nSaved from {session.source} session `{session.id}`: `{WORKDIR}` "
-        f"starts as the repository at commit `{commit[:12]}`, before the session. "
+        f"starts as the repository at commit `{commit[:12]}`, before the task. "
         "The verifier and reference solution are written by Env Hub.\n"
     )
     conversation = out_root / f"{name}.conversation.json"
-    turns = [t | {"content": _redact(_localize(t["content"], session.cwd))} for t in session.turns]
+    # from the first message taken through the agent's replies to the last
+    first = next(i for i, t in enumerate(session.turns) if t.get("n") == chosen[0])
+    end = next((i for i, t in enumerate(session.turns) if t.get("n", 0) > chosen[-1]), len(session.turns))
+    turns = [
+        {"role": t["role"], "content": _redact(_localize(t["content"], session.cwd))}
+        for t in session.turns[first:end]
+    ]
     conversation.write_text(json.dumps(
         {"source": session.source, "session_id": session.id, "turns": turns}, indent=2, ensure_ascii=False,
     ) + "\n")  # fmt: skip
@@ -559,6 +642,8 @@ def save(session: Session, out_root: Path, exclude: list[str]) -> dict:
         "source": session.source,
         "session_id": session.id,
         "start_commit": commit,
+        "messages": chosen,
+        "messages_left_out": [n for n in range(1, len(session.messages) + 1) if n not in chosen],
         "instruction": instruction if len(instruction) <= 600 else instruction[:600] + "…",
         "files_kept": len(kept),
         "files_omitted": {
@@ -760,10 +845,17 @@ def submit(target: Path) -> dict:
     if status >= 300:
         raise CaptureError(f"the upload failed (HTTP {status})")
     source = {"app": app} | ({"task_id": session_id.group(1)} if session_id else {})
-    return _hub("POST", "/v1/conversions", {
+    return _followed(_hub("POST", "/v1/conversions", {
         "upload_id": upload["upload_id"], "title": title or folder.name,
         "format_version": BUNDLE_FORMAT, "source": source,
-    })  # fmt: skip
+    }))  # fmt: skip
+
+
+def _followed(conversion: dict) -> dict:
+    """A conversion with where the person follows it: their account page on
+    this Env Hub lists it from the moment it starts, the environment once it
+    has passed."""
+    return conversion | {"hub": HUB_URL, "account_url": f"{HUB_URL}/account"}
 
 
 # ── the command line ──
@@ -782,6 +874,8 @@ def _summary_lines(s: dict):
     yield f"  bundle: {s['bundle']} ({s['bundle_bytes'] / 1024:.0f} KB)"
     yield f"  conversation: {s['conversation']} ({s['conversation_turns']} turns)"
     yield f"  workspace: {s['files_kept']} files, from commit {s['start_commit'][:12]}"
+    left_out = ", ".join(map(str, s["messages_left_out"])) or "none"
+    yield f"  your messages taken: {', '.join(map(str, s['messages']))} (left out: {left_out})"
     for reason, n in s["files_omitted"].items():
         yield f"  left out: {n} ({reason})"
     for f in s["secrets_left_out"]:
@@ -797,6 +891,16 @@ def _conversion_lines(s: dict):
         yield f"  {s['error'].get('message')}"
     if s.get("environment_url"):
         yield f"  {s['environment_url']}"
+    elif s.get("account_url"):
+        yield f"  follow it at {s['account_url']}"
+
+
+def _messages_lines(m: dict):
+    for row in m["messages"]:
+        mark = "*" if row["taken_by_default"] else " "
+        first = row["text"].splitlines()[0] if row["text"] else ""
+        yield f"{mark} {row['n']:>3}  {first[:100]}"
+    yield "(* taken by `save` without --messages)"
 
 
 def _environment_lines(e: dict):
@@ -811,14 +915,17 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--from", dest="source", choices=SOURCES, default="claude")
     p.add_argument("--cwd", type=Path, default=Path.cwd())
     p.add_argument("--json", action="store_true")
-    p = sub.add_parser("save", help="save a session as a Harbor task")
-    p.add_argument("--from", dest="source", choices=SOURCES, default="claude")
-    p.add_argument("--session", help="the session id (default: the newest in --cwd)")
-    p.add_argument("--transcript", type=Path, help="the session's transcript file")
-    p.add_argument("--cwd", type=Path, default=Path.cwd())
+    for command, words in (("messages", "the user's messages in a session, numbered"),
+                           ("save", "save a session as a Harbor task")):  # fmt: skip
+        p = sub.add_parser(command, help=words)
+        p.add_argument("--from", dest="source", choices=SOURCES, default="claude")
+        p.add_argument("--session", help="the session id (default: the newest in --cwd)")
+        p.add_argument("--transcript", type=Path, help="the session's transcript file")
+        p.add_argument("--cwd", type=Path, default=Path.cwd())
+        p.add_argument("--json", action="store_true")
+    p.add_argument("--messages", help="the messages that make the task, as `messages` numbers them: 1,3 or 2-4")
     p.add_argument("--out", type=Path, default=DEFAULT_OUT)
     p.add_argument("--exclude", action="append", default=[], help="a path to leave out (repeatable)")
-    p.add_argument("--json", action="store_true")
     sub.add_parser("login", help="sign in to Env Hub in the browser")
     sub.add_parser("logout", help="sign out of Env Hub")
     p = sub.add_parser("submit", help="submit a saved task to Env Hub")
@@ -844,14 +951,21 @@ def main(argv: list[str] | None = None) -> int:
                 if len(rows) >= 15:
                     break
             _print(rows, args.json, lambda r: (f"{x['id']}  {x['started']}  {x['first_message']}" for x in r))
-        elif args.command == "save":
+        elif args.command in ("messages", "save"):
             session = (
                 Session(args.source, args.transcript)
                 if args.transcript
                 else find_session(args.source, args.session, args.cwd.resolve())
             )
-            args.out.mkdir(parents=True, exist_ok=True)
-            _print(save(session, args.out, args.exclude), args.json, _summary_lines)
+            if args.command == "messages":
+                default = session.default_messages()
+                rows = [{"n": n, "text": text if len(text) <= 1500 else text[:1500] + "…", "taken_by_default": n in default}
+                        for n, text in enumerate(session.messages, 1)]  # fmt: skip
+                _print({"source": session.source, "session_id": session.id, "messages": rows}, args.json, _messages_lines)
+            else:
+                chosen = parse_messages(args.messages, len(session.messages)) if args.messages else None
+                args.out.mkdir(parents=True, exist_ok=True)
+                _print(save(session, args.out, args.exclude, chosen), args.json, _summary_lines)
         elif args.command == "login":
             me = login()
             print(f"Signed in to Env Hub as {me.get('display_name') or me.get('email')}.")
@@ -861,7 +975,8 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "submit":
             _print(submit(args.task), args.json, _conversion_lines)
         elif args.command == "status":
-            _print(_hub("GET", f"/v1/conversions/{urllib.parse.quote(args.id)}"), args.json, _conversion_lines)
+            conversion = _hub("GET", f"/v1/conversions/{urllib.parse.quote(args.id)}")
+            _print(_followed(conversion), args.json, _conversion_lines)
         elif args.command == "list":
             rows = _hub("GET", "/v1/environments")
             _print(rows, args.json, lambda r: (line for e in r["items"] for line in _environment_lines(e)))
