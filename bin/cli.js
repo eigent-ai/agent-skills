@@ -168,6 +168,41 @@ function discoverSkills(skillsRoot) {
   return skills;
 }
 
+// ── Placement ────────────────────────────────────────────────────────────────
+
+// Agents find a skill only directly under their skills folder
+// (<skills>/<name>/SKILL.md); the category is how this repo is organized, not
+// part of where a skill is installed. Earlier versions installed into
+// <skills>/<category>/<name>, which agents do not see; those copies are
+// removed when a skill is installed, updated or uninstalled.
+
+function skillDir(targetBase, skill) {
+  return path.join(targetBase, skill.name);
+}
+
+function removeSkill(targetBase, skill) {
+  removeDir(skillDir(targetBase, skill));
+  if (!skill.category) return;
+  removeDir(path.join(targetBase, skill.category, skill.name));
+  const catDir = path.join(targetBase, skill.category);
+  if (dirExists(catDir) && fs.readdirSync(catDir).length === 0) fs.rmdirSync(catDir);
+}
+
+/**
+ * Copy a skill into place. A folder of the same name that these skills did not
+ * install (one the person made, or from another source) is left alone.
+ */
+function placeSkill(targetBase, skill, tracked) {
+  const dest = skillDir(targetBase, skill);
+  if (dirExists(dest) && !tracked.has(skill.name)) {
+    console.log(`    ! ${skill.name}: ${dest} already exists and was not installed by eigent-skills; skipped`);
+    return false;
+  }
+  removeSkill(targetBase, skill);
+  copyDir(skill.path, dest);
+  return true;
+}
+
 /** Resolve skill names (e.g. "mintlify-docs-updater" or "category/mintlify-docs-updater") to skill objects. */
 function resolveSkillNames(skillsRoot, skillNames) {
   if (!skillNames || skillNames.length === 0) return null;
@@ -294,18 +329,20 @@ function installSkills(skillsRoot, agents, isGlobal, projectRoot, skillFilter) {
     console.log(`\n  Installing to ${agent.name}${isGlobal ? " (global)" : ""}...`);
     console.log(`  Target: ${targetBase}`);
 
+    const tracked = new Set((existingLock.skills || []).map((s) => s.name));
+    const installed = [];
     for (const skill of skills) {
-      const dest = path.join(targetBase, skill.category, skill.name);
-      copyDir(skill.path, dest);
-      console.log(`    + ${skill.category}/${skill.name}`);
+      if (!placeSkill(targetBase, skill, tracked)) continue;
+      console.log(`    + ${skill.name}`);
+      installed.push(skill);
       totalInstalled++;
     }
 
     // Merge with existing lock when installing specific skills; otherwise replace
     const existingSkills = (existingLock.skills || []).filter(
-      (s) => !skills.some((n) => n.category === s.category && n.name === s.name)
+      (s) => !installed.some((n) => n.name === s.name)
     );
-    const mergedSkills = [...existingSkills, ...skills.map((s) => ({ name: s.name, category: s.category }))];
+    const mergedSkills = [...existingSkills, ...installed.map((s) => ({ name: s.name, category: s.category }))];
 
     const lockData = {
       version: getPackageVersion(),
@@ -344,19 +381,16 @@ function updateSkills(agents, isGlobal, projectRoot) {
     console.log(`  ${agent.name}: Updating skills...`);
 
     // Remove old skills that were tracked
-    if (lock.skills) {
-      for (const s of lock.skills) {
-        const oldDir = path.join(targetBase, s.category, s.name);
-        removeDir(oldDir);
-      }
-    }
+    const tracked = new Set((lock.skills || []).map((s) => s.name));
+    for (const s of lock.skills || []) removeSkill(targetBase, s);
 
     // Install fresh
     const skills = discoverSkills(remoteSkillsRoot);
+    const installed = [];
     for (const skill of skills) {
-      const dest = path.join(targetBase, skill.category, skill.name);
-      copyDir(skill.path, dest);
-      console.log(`    ~ ${skill.category}/${skill.name}`);
+      if (!placeSkill(targetBase, skill, tracked)) continue;
+      console.log(`    ~ ${skill.name}`);
+      installed.push(skill);
       updatedCount++;
     }
 
@@ -365,7 +399,7 @@ function updateSkills(agents, isGlobal, projectRoot) {
       installedAt: new Date().toISOString(),
       hash: remoteHash,
       source: REPO_URL,
-      skills: skills.map((s) => ({
+      skills: installed.map((s) => ({
         name: s.name,
         category: s.category,
       })),
@@ -411,19 +445,9 @@ function uninstallSkills(agents, isGlobal, projectRoot, skillFilter) {
 
     console.log(`  ${agent.name}: Removing skills...`);
     for (const s of toRemove) {
-      const dir = path.join(targetBase, s.category, s.name);
-      removeDir(dir);
-      console.log(`    - ${s.category}/${s.name}`);
+      removeSkill(targetBase, s);
+      console.log(`    - ${s.name}`);
       removed++;
-    }
-
-    // Clean up empty category dirs
-    for (const s of toRemove) {
-      const catDir = path.join(targetBase, s.category);
-      if (dirExists(catDir)) {
-        const entries = fs.readdirSync(catDir);
-        if (entries.length === 0) fs.rmdirSync(catDir);
-      }
     }
 
     const remaining = lock.skills.filter(
