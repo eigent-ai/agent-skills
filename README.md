@@ -77,6 +77,7 @@ _TBD — Category placeholder for future skills._
 | [`slack-gif-creator`](skills/image-and-video-generation/slack-gif-creator/SKILL.md) | — | Create animated GIFs optimized for Slack with proper dimensions, frame rates, and file sizes. Includes PIL-based utilities for frame composition, easing, and validation. |
 | [`instagram-reel-editor`](skills/image-and-video-generation/instagram-reel-editor/SKILL.md) | — | Turn raw travel-style footage folders into cinematic Instagram Reels (9:16) with grading, cuts, overlays, and music. Includes Python helpers to scan clips and build the final MP4. |
 | [`remotion`](skills/image-and-video-generation/remotion/SKILL.md) | [remotion-dev/remotion](https://github.com/remotion-dev/remotion) | Make videos programmatically with React using Remotion. Produces product demos, tutorials, social clips, Manim-style animations, and branded pipelines with voiceover and FFmpeg. |
+| [`popnow-video`](skills/image-and-video-generation/popnow-video/SKILL.md) | [popnow-ai/popnow-skills](https://github.com/popnow-ai/popnow-skills) | Discover video model inputs, quote and confirm a paid PopNow API request, then monitor the job and download outputs. Includes an MIT-licensed Python helper; API access is a separate commercial service. |
 
 #### Git & GitHub
 
@@ -265,3 +266,5 @@ Each skill contains:
 ## License
 
 Apache License 2.0. See `LICENSE` for the full text.
+
+The `popnow-video` skill preserves its upstream [MIT license](skills/image-and-video-generation/popnow-video/LICENSE); its hosted API service is separate from that source license.
